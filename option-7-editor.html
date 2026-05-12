@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Workpaper editor · RC-047 · Helios Robotics</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+<style>
+  body { background: #fafaf5; overflow: hidden; }
+</style>
+</head>
+<body>
+
+<nav class="wp-topnav">
+  <div class="brand"><span class="pip"></span><strong>Optro Provenance · Practice</strong></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-7.html">Queue</a>
+    <span class="sep">/</span>
+    <span>RC-047 editor</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab" href="option-7.html">Queue</a>
+    <a class="wp-tab active" href="option-7-editor.html">Editor</a>
+    <a class="wp-tab" href="option-7-scorer.html">Scorer</a>
+    <a class="wp-tab" href="option-7-templates.html">Templates</a>
+    <a class="wp-tab" href="option-7-handoff.html">Handoff</a>
+  </div>
+  <span class="as-of">As of 2026-05-12</span>
+</nav>
+
+<div class="editor-shell">
+
+  <!-- LEFT — editable workpaper -->
+  <div class="editor-left">
+    <div class="editor-paper">
+      <div class="ep-head">
+        <div class="row1">
+          <span class="ep-tag">Helios Robotics · Q1 2026 · Deloitte engagement</span>
+          <span class="ep-ref">D-WP-RC-047-Q12026</span>
+        </div>
+        <h1>RC-047 — Manual journal entry approval — revenue recognition</h1>
+        <div class="ep-meta">
+          <span><span class="ki">State:</span> <span class="state-pill fde_review"><span class="sp-dot"></span>FDE review</span></span>
+          <span><span class="ki">Assigned:</span> Jamie Okonkwo</span>
+          <span><span class="ki">Defensibility:</span> 92/100</span>
+          <span><span class="ki">T-minus:</span> 4 days to customer review</span>
+        </div>
+      </div>
+
+      <div class="section" id="sec-objective">
+        <div class="sec-head">
+          <div><span class="sec-title">Control objective</span> <span class="sec-status reviewed">REVIEWED</span></div>
+          <div class="sec-actions">
+            <button class="sec-btn">Edit</button>
+            <button class="sec-btn">Ask agent</button>
+          </div>
+        </div>
+        <div class="sec-body">
+          <p>Manual journal entries posted to revenue accounts are reviewed and approved by an individual independent of the preparer prior to posting, and the threshold for required dual approval is monitored and updated quarterly.</p>
+        </div>
+      </div>
+
+      <div class="section" id="sec-narrative">
+        <div class="sec-head">
+          <div><span class="sec-title">Narrative</span> <span class="sec-status reviewed">REVIEWED</span></div>
+          <div class="sec-actions">
+            <button class="sec-btn">Edit</button>
+            <button class="sec-btn">Ask agent</button>
+          </div>
+        </div>
+        <div class="sec-body">
+          <p>Helios Robotics applies a $250,000 single-entry threshold to its manual journal entry approval workflow within NetSuite. Manual entries posted to any of the 47 in-scope revenue ledger accounts that meet or exceed the threshold require a second-level approval from the Controller prior to posting. Entries below the threshold require single approval by a Senior Accountant.</p>
+          <p>The control owner reviews the threshold quarterly against the materiality benchmark established by the engagement team for the current audit period. The current threshold is supported by memo M-2026-Q1-MJE, signed by the Controller on 2026-01-09.</p>
+        </div>
+      </div>
+
+      <div class="section" id="sec-procedures">
+        <div class="sec-head">
+          <div><span class="sec-title">Testing procedures</span> <span class="sec-status" id="proc-status">EMPTY</span></div>
+          <div class="sec-actions">
+            <button class="sec-btn primary" id="ask-agent-btn">⚡ Ask agent</button>
+            <button class="sec-btn" id="edit-btn" disabled style="opacity:.55;">Edit</button>
+          </div>
+        </div>
+        <div class="sec-body" id="proc-body" style="min-height: 36px;">
+          <p style="color: var(--muted); font-style: italic; margin: 0;">No content yet. Click <strong>Ask agent</strong> to stream a draft. Drafts will be tagged AGENT_DRAFT and require FDE review before promotion.</p>
+        </div>
+      </div>
+
+      <div class="section" id="sec-sampling">
+        <div class="sec-head">
+          <div><span class="sec-title">Sample selection</span> <span class="sec-status reviewed">REVIEWED</span></div>
+          <div class="sec-actions">
+            <button class="sec-btn">Edit</button>
+            <button class="sec-btn">Ask agent</button>
+          </div>
+        </div>
+        <div class="sec-body">
+          <p>Stratified judgmental selection of 25 entries from a population of 218 Q1 2026 manual entries. Tier 1 (≥ $1M): 4 entries, 100% coverage. Tier 2 ($250k–$1M): 11 entries, judgmental, period-end-weighted. Tier 3 (< $250k): 10 entries, judgmental, biased toward unusual postings.</p>
+          <p>Methodology agreed in walkthrough with Deloitte engagement team 2026-02-04, memo MEMO-SS-RC-047.</p>
+        </div>
+      </div>
+
+      <div class="section" id="sec-evidence">
+        <div class="sec-head">
+          <div><span class="sec-title">Evidence attachments</span> <span class="sec-status reviewed">5 ARTIFACTS</span></div>
+          <div class="sec-actions">
+            <button class="sec-btn">Manage</button>
+          </div>
+        </div>
+        <div class="sec-body" style="font-family: var(--mono); font-size: 11.5px; line-height: 1.7;">
+          <div>RC-047_population_query_NS_MJE_ALL_2026-04-08.csv  · PBC</div>
+          <div>RC-047_journal_entry_review_sample_Q2.xlsx        · §</div>
+          <div>RC-047_supporting_memo_2026-03.pdf                · ‡</div>
+          <div>RC-047_workflow_screenshot_NS_WF-MJE-RR-047.png   · ✓</div>
+          <div>RC-047_exception_report_weekly_Q1_2026.xlsx       · †</div>
+        </div>
+      </div>
+
+      <div class="section" id="sec-exceptions">
+        <div class="sec-head">
+          <div><span class="sec-title">Exceptions &amp; dispositions</span> <span class="sec-status reviewed">2 DISPOSITIONED</span></div>
+          <div class="sec-actions">
+            <button class="sec-btn">Edit</button>
+          </div>
+        </div>
+        <div class="sec-body">
+          <p>JE-2026-0098 · Approver initials illegible on $312,400 manual entry. Re-confirmed approval electronically via NetSuite workflow record. No financial-statement impact.</p>
+          <p>JE-2026-0214 · Threshold-bypass override on $248,900 deferred-revenue true-up. Rationale documented in ovr_rc047_021 (\"corresponds to ticket SF-2026-0419\"). Reviewed and reclassified informational.</p>
+        </div>
+      </div>
+
+      <div class="section" id="sec-conclusion">
+        <div class="sec-head">
+          <div><span class="sec-title">Conclusion</span> <span class="sec-status reviewed">REVIEWED</span></div>
+          <div class="sec-actions">
+            <button class="sec-btn">Edit</button>
+          </div>
+        </div>
+        <div class="sec-body">
+          <p>The control operated effectively throughout Q1 2026. All 25 sampled manual journal entries showed appropriate approval evidence in NetSuite workflow WF-MJE-RR-047. Two minor exceptions were dispositioned and present no financial-statement impact. The $250,000 threshold was reaffirmed by the Controller per memo M-2026-Q1-MJE. <span class="state-pill customer_review" style="margin-left:8px"><span class="sp-dot"></span>Ready for customer review</span></p>
+        </div>
+      </div>
+
+      <div class="def-sig">
+        <div class="seal">v1</div>
+        <div class="sig-text">
+          <strong>Optro Provenance v1</strong> — chain verified · 5 evidence artifacts · 1 FDE sign-off recorded · awaiting customer sign-off · defensibility 92/100.
+        </div>
+        <div class="sig-rec">rec_optro_defens_047<br>last touched 2026-05-12 09:08 PT</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT — Provenance & review panel -->
+  <div class="editor-right">
+    <div class="rpane-head">
+      <div class="ph-label">Provenance &amp; review · this workpaper</div>
+      <div class="ph-title">RC-047 · last touched 09:08 PT</div>
+    </div>
+
+    <div class="rpane-tabs">
+      <div class="rpane-tab active" data-tab="trail">Audit trail</div>
+      <div class="rpane-tab" data-tab="attr">Attribution</div>
+      <div class="rpane-tab" data-tab="check">Defensibility</div>
+    </div>
+
+    <div class="rpane-body" id="rpane-trail">
+      <h4>State transitions &amp; edits</h4>
+      <div id="trail-list"></div>
+      <button class="export-btn" id="export-csv" style="margin-top: 12px;">⬇ Export audit log (CSV)</button>
+      <div id="export-status" style="margin-top: 8px; font-size: 11px; color: var(--ink-light); font-family: var(--mono);"></div>
+      <h4 style="margin-top: 18px;">Next state</h4>
+      <button class="export-btn" style="background: #047857; width: 100%;" id="advance-btn">Mark customer_review →</button>
+      <div id="advance-status" style="margin-top: 8px; font-size: 11px; color: var(--ink-light); font-family: var(--mono);"></div>
+    </div>
+
+    <div class="rpane-body" id="rpane-attr" style="display:none;">
+      <h4>Agent vs human attribution</h4>
+      <div class="attr-row"><span class="label">Header &amp; metadata</span><span class="val human">HUMAN</span></div>
+      <div class="attr-row"><span class="label">Control objective</span><span class="val human">HUMAN</span></div>
+      <div class="attr-row"><span class="label">Narrative</span><span class="val human">HUMAN (agent-seeded)</span></div>
+      <div class="attr-row" id="attr-procs"><span class="label">Testing procedures</span><span class="val agent">EMPTY</span></div>
+      <div class="attr-row"><span class="label">Sample selection</span><span class="val human">HUMAN</span></div>
+      <div class="attr-row"><span class="label">Evidence list</span><span class="val human">HUMAN</span></div>
+      <div class="attr-row"><span class="label">Exceptions &amp; dispositions</span><span class="val human">HUMAN</span></div>
+      <div class="attr-row"><span class="label">Conclusion</span><span class="val human">HUMAN</span></div>
+      <h4 style="margin-top: 18px;">Token mix this workpaper</h4>
+      <div style="display: flex; height: 10px; border-radius: 5px; overflow: hidden; margin-top: 4px;">
+        <div style="background: #6d28d9; flex: 24;"></div>
+        <div style="background: #047857; flex: 76;"></div>
+      </div>
+      <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 6px; font-family: var(--mono);">
+        <span style="color: #6d28d9; font-weight: 600;">Agent · 24%</span>
+        <span style="color: #047857; font-weight: 600;">Human · 76%</span>
+      </div>
+    </div>
+
+    <div class="rpane-body" id="rpane-check" style="display:none;">
+      <h4>Defensibility checklist · 10 items</h4>
+      <div class="defens-checklist" id="defens-checklist"></div>
+      <div style="margin-top: 14px; padding: 10px 12px; background: var(--bg); border-radius: 6px; font-size: 12px; color: var(--ink-light); line-height: 1.5;">
+        Click <a href="option-7-scorer.html" style="color: var(--accent); font-weight: 600;">run the defensibility scorer</a> for a full Claude-driven Big-4 review pass with line-by-line fix suggestions.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  injectGate();
+
+  (function () {
+    // ----- Audit trail render
+    const pod = window.FDE_POD;
+    const trail = window.AUDIT_TRAIL_RC_047;
+    document.getElementById('trail-list').innerHTML = trail.map(t => {
+      const p = pod[t.actor];
+      return `<div class="trail-row">
+        <div class="miniav" style="background:${p.color}">${p.initials}</div>
+        <div class="body">
+          <div><span class="who">${escapeHtml(p.name)}</span> <span class="when">· ${escapeHtml(t.at.slice(0,16).replace('T',' '))} PT</span></div>
+          <div class="action">${escapeHtml(t.action)}</div>
+          <div class="diff"><strong>Before:</strong> ${escapeHtml(t.before_summary)} → <strong>After:</strong> ${escapeHtml(t.after_summary)}<br><em>${escapeHtml(t.reason)}</em></div>
+        </div>
+      </div>`;
+    }).join('');
+
+    // ----- Defensibility checklist
+    const checklist = [
+      { state: "ok", label: "Workpaper header includes period, framework, preparer, reviewer" },
+      { state: "ok", label: "Tickmark legend present (Deloitte conventions)" },
+      { state: "ok", label: "Evidence artifacts captured with source system + timestamp" },
+      { state: "partial", label: "Sample selection rationale references walkthrough memo" },
+      { state: "ok", label: "Exceptions tied to specific evidence artifacts" },
+      { state: "ok", label: "Override reasons documented in audit log" },
+      { state: "miss", label: "Testing procedures drafted and reviewed" },
+      { state: "ok", label: "Reviewer comments captured and resolved" },
+      { state: "partial", label: "Threshold review judgment evidenced in workpaper" },
+      { state: "ok", label: "Optro Provenance v1 signature present" },
+    ];
+    const checkIcons = { ok: '✓', partial: '~', miss: '×' };
+    document.getElementById('defens-checklist').innerHTML = checklist.map(c =>
+      `<div class="ci ${c.state}"><div class="box">${checkIcons[c.state]}</div><div class="lbl">${escapeHtml(c.label)}</div></div>`
+    ).join('');
+
+    // ----- Rpane tabs
+    document.querySelectorAll('.rpane-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        const k = tab.getAttribute('data-tab');
+        document.querySelectorAll('.rpane-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        document.querySelectorAll('.rpane-body').forEach(b => b.style.display = 'none');
+        document.getElementById('rpane-' + k).style.display = '';
+      });
+    });
+
+    // ----- Streaming agent draft for testing procedures
+    document.getElementById('ask-agent-btn').addEventListener('click', () => {
+      const sec = document.getElementById('sec-procedures');
+      const body = document.getElementById('proc-body');
+      const status = document.getElementById('proc-status');
+      const tokens = window.AGENT_DRAFT_PROCEDURES.tokens;
+      sec.classList.add('streaming');
+      status.textContent = 'STREAMING';
+      status.className = 'sec-status editing';
+      body.innerHTML = '';
+      let buf = '';
+      let i = 0;
+      const tick = () => {
+        if (i >= tokens.length) {
+          sec.classList.remove('streaming');
+          status.textContent = 'AGENT_DRAFT';
+          status.className = 'sec-status agent';
+          body.classList.add('agent-draft');
+          // Format the final body — split on double-newlines for paragraphs
+          const paras = buf.split('\n\n').map(p => p.trim()).filter(Boolean);
+          body.innerHTML = paras.map(p => {
+            // Highlight bracketed tickmark annotations
+            const r = p.replace(/\[([^\]]+)\]/g, '<span style="font-family: var(--mono); color: var(--accent); font-weight: 600;">[$1]</span>');
+            // Highlight REQUIRES HUMAN REVIEW
+            const r2 = r.replace(/REQUIRES HUMAN REVIEW/, '<span style="background: #fef3c7; color: #b45309; padding: 1px 6px; border-radius: 3px; font-weight: 700; font-family: var(--sans); font-style: normal;">REQUIRES HUMAN REVIEW</span>');
+            return `<p>${r2}</p>`;
+          }).join('');
+          // Replace Ask agent button with FDE actions
+          document.getElementById('ask-agent-btn').remove();
+          const edit = document.getElementById('edit-btn');
+          edit.disabled = false; edit.style.opacity = '';
+          edit.textContent = 'Edit';
+          // Add approve button
+          const approve = document.createElement('button');
+          approve.className = 'sec-btn primary';
+          approve.textContent = 'Promote to REVIEWED';
+          approve.addEventListener('click', () => {
+            body.classList.remove('agent-draft');
+            status.textContent = 'REVIEWED';
+            status.className = 'sec-status reviewed';
+            approve.remove();
+            // Update the attribution panel
+            const attr = document.querySelector('#attr-procs .val');
+            if (attr) { attr.textContent = 'HUMAN (agent-seeded)'; attr.className = 'val human'; }
+            // Update checklist
+            const items = document.querySelectorAll('#defens-checklist .ci');
+            items[6].classList.remove('miss'); items[6].classList.add('ok');
+            items[6].querySelector('.box').textContent = '✓';
+            // Push audit trail row
+            addTrailRow('jamie', 'Section status: AGENT_DRAFT → REVIEWED', 'Testing procedures AGENT_DRAFT', 'Testing procedures REVIEWED (with FDE edits)', 'FDE approved after edits to procedures 3 and 5');
+          });
+          edit.parentElement.appendChild(approve);
+          edit.addEventListener('click', () => {
+            body.contentEditable = 'true';
+            body.focus();
+            status.textContent = 'EDITING';
+            status.className = 'sec-status editing';
+            edit.textContent = 'Done';
+            const done = () => {
+              body.contentEditable = 'false';
+              status.textContent = 'AGENT_DRAFT · EDITED';
+              status.className = 'sec-status agent';
+              edit.textContent = 'Edit';
+              addTrailRow('jamie', 'FDE edit: refined procedures section', 'AGENT_DRAFT (167 tokens)', 'AGENT_DRAFT · EDITED (FDE revisions inline)', 'Tightened procedures 3 and 5 to match Deloitte voice');
+              edit.removeEventListener('click', done);
+              edit.addEventListener('click', () => {
+                body.contentEditable = 'true';
+                body.focus();
+                status.textContent = 'EDITING';
+                edit.textContent = 'Done';
+              }, { once: false });
+            };
+            edit.removeEventListener('click', arguments.callee);
+            edit.addEventListener('click', done, { once: true });
+          }, { once: true });
+          // Push audit trail
+          addTrailRow('jamie', 'Agent completed: testing procedures section', 'Empty', 'AGENT_DRAFT · 167 tokens · claude-sonnet-4-5', 'Initial draft of section');
+          return;
+        }
+        buf += tokens[i];
+        // Format current buffer for display
+        const paras = buf.split('\n\n').map(p => p.trim()).filter(Boolean);
+        body.innerHTML = paras.map(p => `<p>${escapeHtml(p)}</p>`).join('');
+        i += 1;
+        setTimeout(tick, 22 + Math.random() * 30);
+      };
+      tick();
+    });
+
+    function addTrailRow(actor, action, before_s, after_s, reason) {
+      const p = pod[actor];
+      const now = new Date();
+      const ts = now.toISOString().slice(0, 16).replace('T', ' ');
+      const list = document.getElementById('trail-list');
+      const row = document.createElement('div');
+      row.className = 'trail-row';
+      row.innerHTML = `<div class="miniav" style="background:${p.color}">${p.initials}</div>
+        <div class="body">
+          <div><span class="who">${escapeHtml(p.name)}</span> <span class="when">· ${escapeHtml(ts)} PT</span></div>
+          <div class="action">${escapeHtml(action)}</div>
+          <div class="diff"><strong>Before:</strong> ${escapeHtml(before_s)} → <strong>After:</strong> ${escapeHtml(after_s)}<br><em>${escapeHtml(reason)}</em></div>
+        </div>`;
+      list.appendChild(row);
+      row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ----- Export CSV
+    document.getElementById('export-csv').addEventListener('click', () => {
+      const rows = [['timestamp', 'actor', 'role', 'action', 'before_summary', 'after_summary', 'reason']];
+      // Combine seed trail + any added entries
+      window.AUDIT_TRAIL_RC_047.forEach(t => {
+        const p = pod[t.actor];
+        rows.push([t.at, p.name, p.role, t.action, t.before_summary, t.after_summary, t.reason]);
+      });
+      // Walk DOM for added rows (after the seed length)
+      const trailRows = document.querySelectorAll('#trail-list .trail-row');
+      for (let i = window.AUDIT_TRAIL_RC_047.length; i < trailRows.length; i++) {
+        const r = trailRows[i];
+        const who = r.querySelector('.who').textContent;
+        const when = r.querySelector('.when').textContent.replace('· ', '').replace(' PT', '');
+        const action = r.querySelector('.action').textContent;
+        const diff = r.querySelector('.diff').textContent;
+        rows.push([when, who, '', action, '', '', diff]);
+      }
+      const csv = rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'RC-047_audit_log_2026-05-12.csv';
+      document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+      document.getElementById('export-status').textContent = `✓ Exported ${rows.length - 1} rows · sha256 attached at ingest`;
+    });
+
+    // ----- Advance state
+    document.getElementById('advance-btn').addEventListener('click', () => {
+      const btn = document.getElementById('advance-btn');
+      btn.style.background = '#0e7490';
+      btn.textContent = '✓ Advanced to customer_review';
+      btn.disabled = true;
+      addTrailRow('jamie', 'State transition: fde_review → customer_review', 'fde_review', 'customer_review', 'FDE handoff to Helios for customer sign-off');
+      document.getElementById('advance-status').textContent = '✓ State updated · audit trail row added';
+    });
+  })();
+</script>
+</body>
+</html>

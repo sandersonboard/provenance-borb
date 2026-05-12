@@ -484,3 +484,342 @@ window.FR_021_CHAIN_PREVIEW = {
   status: "chain_broken",
   missing: ["Reviewer sign-off (Controller layer)", "Threshold memo (3 quarters missing)"],
 };
+
+// ===================================================================
+// GROUP C — Practice production tool (Agent Commodity Hell hedge)
+// ===================================================================
+
+// ---------- FDE pod (Optro Practice) ----------
+window.FDE_POD = {
+  jamie:  { name: "Jamie Okonkwo", role: "FDE Pod Lead", initials: "JO", color: "#1B5E20" },
+  priya:  { name: "Priya Raman", role: "Senior FDE",     initials: "PR", color: "#1e3a8a" },
+  marcus: { name: "Marcus Chen", role: "FDE Analyst",     initials: "MC", color: "#6d28d9" },
+};
+
+// ---------- Active Practice engagements ----------
+window.ENGAGEMENTS = [
+  {
+    id: "eng_helios_s1",
+    company: "Helios Robotics, Inc.",
+    short: "Helios",
+    program: "S-1 readiness",
+    audit_firm: "Deloitte",
+    audit_partner: "Naomi Wilkes",
+    target_filing: "Q1 2027",
+    t_minus_days: 244,
+    controls_in_scope: 175,
+    workpapers_in_production: 22,
+    pod_lead: "jamie",
+    health: "on_track",
+    defensibility_avg: 88,
+  },
+  {
+    id: "eng_aperture_s1",
+    company: "Aperture Materials, Inc.",
+    short: "Aperture",
+    program: "S-1 readiness",
+    audit_firm: "EY",
+    audit_partner: "Yuki Tanaka",
+    target_filing: "Q2 2027",
+    t_minus_days: 332,
+    controls_in_scope: 142,
+    workpapers_in_production: 4,
+    pod_lead: "priya",
+    health: "on_track",
+    defensibility_avg: 79,
+  },
+  {
+    id: "eng_pelagic_s1",
+    company: "Pelagic Climate Systems, Inc.",
+    short: "Pelagic",
+    program: "S-1 readiness",
+    audit_firm: "PwC",
+    audit_partner: "David Mensah",
+    target_filing: "Q3 2027",
+    t_minus_days: 418,
+    controls_in_scope: 96,
+    workpapers_in_production: 2,
+    pod_lead: "marcus",
+    health: "at_risk",
+    defensibility_avg: 71,
+  },
+];
+
+// ---------- Workpaper production queue (28 items) ----------
+// States: agent_drafted -> fde_review -> customer_review -> customer_signoff -> auditor_handoff
+const WP_STATES = ["agent_drafted", "fde_review", "customer_review", "customer_signoff", "auditor_handoff"];
+const WP_STATE_LABELS = {
+  agent_drafted:    "Agent drafted",
+  fde_review:       "FDE review",
+  customer_review:  "Customer review",
+  customer_signoff: "Customer sign-off",
+  auditor_handoff:  "Auditor handoff",
+};
+const WP_STATE_DOTS = {
+  agent_drafted:    "#6d28d9",  // violet — synthesized
+  fde_review:       "#f59e0b",  // amber — needs human
+  customer_review:  "#0e7490",  // teal — at customer
+  customer_signoff: "#047857",  // green — signed
+  auditor_handoff:  "#1B5E20",  // dark green — at auditor
+};
+window.WP_STATE_LABELS = WP_STATE_LABELS;
+window.WP_STATE_DOTS = WP_STATE_DOTS;
+
+// Build 28 workpapers spread across engagements + states with realistic deadlines.
+function buildQueue() {
+  const items = [];
+  // Helios — 22 workpapers
+  const heliosWPs = [
+    { id: "RC-047", deadline_days:  4, state: "fde_review",       assigned: "jamie",  defensibility: 92, big4_visible: true },
+    { id: "RC-012", deadline_days:  2, state: "fde_review",       assigned: "priya",  defensibility: 84, big4_visible: true },
+    { id: "RC-053", deadline_days:  6, state: "agent_drafted",    assigned: "marcus", defensibility: 71, big4_visible: true },
+    { id: "RC-068", deadline_days:  9, state: "agent_drafted",    assigned: "marcus", defensibility: 68, big4_visible: true },
+    { id: "FR-002", deadline_days:  3, state: "customer_review",  assigned: "jamie",  defensibility: 86, big4_visible: true },
+    { id: "FR-007", deadline_days:  7, state: "fde_review",       assigned: "priya",  defensibility: 79, big4_visible: true },
+    { id: "FR-021", deadline_days:  1, state: "fde_review",       assigned: "jamie",  defensibility: 64, big4_visible: true, urgent: true },
+    { id: "FR-014", deadline_days: 14, state: "customer_review",  assigned: "priya",  defensibility: 91, big4_visible: true },
+    { id: "FR-018", deadline_days: 18, state: "customer_signoff", assigned: "jamie",  defensibility: 96, big4_visible: true },
+    { id: "IT-001", deadline_days:  5, state: "fde_review",       assigned: "jamie",  defensibility: 73, big4_visible: true },
+    { id: "IT-003", deadline_days:  8, state: "fde_review",       assigned: "marcus", defensibility: 81, big4_visible: true },
+    { id: "IT-009", deadline_days: 12, state: "customer_review",  assigned: "priya",  defensibility: 88, big4_visible: true },
+    { id: "IT-015", deadline_days: 20, state: "auditor_handoff",  assigned: "jamie",  defensibility: 100, big4_visible: true },
+    { id: "PC-002", deadline_days: 11, state: "customer_review",  assigned: "marcus", defensibility: 87, big4_visible: true },
+    { id: "PC-007", deadline_days: 22, state: "customer_signoff", assigned: "priya",  defensibility: 94, big4_visible: true },
+    { id: "PC-012", deadline_days: 28, state: "auditor_handoff",  assigned: "jamie",  defensibility: 100, big4_visible: true },
+    { id: "OP-003", deadline_days: 15, state: "customer_review",  assigned: "marcus", defensibility: 82, big4_visible: false },
+    { id: "OP-005", deadline_days: 19, state: "customer_signoff", assigned: "priya",  defensibility: 95, big4_visible: false },
+    { id: "TX-002", deadline_days: 25, state: "auditor_handoff",  assigned: "jamie",  defensibility: 100, big4_visible: false },
+    { id: "TR-001", deadline_days: 30, state: "customer_signoff", assigned: "priya",  defensibility: 93, big4_visible: false },
+    { id: "RC-101", deadline_days: 17, state: "agent_drafted",    assigned: "marcus", defensibility: 62, big4_visible: false },
+    { id: "FR-029", deadline_days: 21, state: "agent_drafted",    assigned: "marcus", defensibility: 65, big4_visible: false },
+  ];
+  heliosWPs.forEach(wp => items.push({
+    ...wp,
+    engagement_id: "eng_helios_s1",
+    engagement_short: "Helios",
+    audit_firm: "Deloitte",
+    last_change_at: ["2026-05-08T15:14:00-07:00","2026-05-09T11:22:00-07:00","2026-05-10T09:48:00-07:00","2026-05-11T13:30:00-07:00","2026-05-12T08:42:00-07:00"][wp.id.charCodeAt(wp.id.length-1) % 5],
+  }));
+  // Aperture — 4 workpapers
+  [
+    { id: "AP-RC-008", deadline_days: 38, state: "fde_review",       assigned: "priya",  defensibility: 76 },
+    { id: "AP-RC-014", deadline_days: 42, state: "agent_drafted",    assigned: "marcus", defensibility: 64 },
+    { id: "AP-IT-002", deadline_days: 50, state: "fde_review",       assigned: "priya",  defensibility: 81 },
+    { id: "AP-FR-003", deadline_days: 60, state: "customer_review",  assigned: "priya",  defensibility: 84 },
+  ].forEach(wp => items.push({ ...wp, engagement_id: "eng_aperture_s1", engagement_short: "Aperture", audit_firm: "EY", big4_visible: true, last_change_at: "2026-05-11T14:18:00-07:00" }));
+  // Pelagic — 2 workpapers
+  [
+    { id: "PL-RC-002", deadline_days: 70, state: "fde_review",     assigned: "marcus", defensibility: 70 },
+    { id: "PL-FR-001", deadline_days: 80, state: "agent_drafted",  assigned: "marcus", defensibility: 58 },
+  ].forEach(wp => items.push({ ...wp, engagement_id: "eng_pelagic_s1", engagement_short: "Pelagic", audit_firm: "PwC", big4_visible: true, last_change_at: "2026-05-10T11:45:00-07:00" }));
+  return items;
+}
+window.WP_QUEUE = buildQueue();
+
+// ---------- Big 4 firm templates ----------
+window.BIG4_TEMPLATES = [
+  {
+    firm: "Deloitte",
+    color: "#1B5E20",
+    ref_prefix: "D-WP-",
+    tickmark_conventions: [
+      { mark: "✓", meaning: "Agreed to source document without exception" },
+      { mark: "§", meaning: "Recalculated; mathematically accurate" },
+      { mark: "¶", meaning: "Footed and cross-footed" },
+      { mark: "b", meaning: "Traced to general ledger" },
+      { mark: "c", meaning: "Compared to threshold; within policy" },
+      { mark: "‡", meaning: "Significant judgment; reviewer note required" },
+      { mark: "†", meaning: "Reviewer override; rationale documented" },
+    ],
+    section_order: ["Header", "Objective", "Narrative", "Procedures", "Sampling", "Evidence", "Exceptions", "Conclusion"],
+    voice: "Direct, third-person past tense. Avoid hedging language. Tickmark annotations inline with each test step.",
+    evidence_format: "Filename · source system · captured by · timestamp · size · tickmark",
+    used_in_engagements: 1,
+    notes: "Helios uses this template. Most common Big 4 conventions in the pre-IPO segment.",
+  },
+  {
+    firm: "EY",
+    color: "#FFE600",
+    ref_prefix: "EY-WP-",
+    tickmark_conventions: [
+      { mark: "TP", meaning: "Test performed without exception" },
+      { mark: "AGR", meaning: "Agreed to supporting document" },
+      { mark: "RC", meaning: "Recalculated" },
+      { mark: "F", meaning: "Footed" },
+      { mark: "X", meaning: "Cross-footed" },
+      { mark: "INQ", meaning: "Inquired of management" },
+      { mark: "EXC", meaning: "Exception — see disposition" },
+    ],
+    section_order: ["Cover", "Background", "Risk assessment", "Procedures", "Sample selection", "Results", "Exceptions", "Conclusion"],
+    voice: "Risk-led framing. Procedures explicitly mapped to the risk they address.",
+    evidence_format: "Source system | captured | by | sha256 | tickmark",
+    used_in_engagements: 1,
+    notes: "Aperture uses this template. Risk-led framing is EY's signature.",
+  },
+  {
+    firm: "PwC",
+    color: "#D04A02",
+    ref_prefix: "PwC-WP-",
+    tickmark_conventions: [
+      { mark: "P", meaning: "Procedure performed; no exception" },
+      { mark: "A", meaning: "Agreed to source" },
+      { mark: "R", meaning: "Recalculated; accurate" },
+      { mark: "I", meaning: "Inspected supporting evidence" },
+      { mark: "O", meaning: "Observed control operation" },
+      { mark: "M", meaning: "Reperformed control procedure" },
+      { mark: "E", meaning: "Exception identified — see follow-up" },
+    ],
+    section_order: ["WP reference", "Control identification", "Risk linkage", "Test procedures", "Sample population", "Findings", "Conclusion"],
+    voice: "Procedural and evidentiary. Test steps explicit, sample populations stated up front.",
+    evidence_format: "Reference | source | captured by | timestamp | tickmark",
+    used_in_engagements: 1,
+    notes: "Pelagic uses this template. Sample populations called out before procedures.",
+  },
+  {
+    firm: "KPMG",
+    color: "#00338D",
+    ref_prefix: "KPMG-WP-",
+    tickmark_conventions: [
+      { mark: "✓", meaning: "Without exception" },
+      { mark: "✓₁", meaning: "Agreed to system" },
+      { mark: "✓₂", meaning: "Agreed to underlying support" },
+      { mark: "ƒ", meaning: "Footed" },
+      { mark: "x", meaning: "Cross-referenced" },
+      { mark: "‡", meaning: "Management judgment applied" },
+      { mark: "ε", meaning: "Exception noted" },
+    ],
+    section_order: ["WP header", "Control overview", "Procedures performed", "Test results", "Exceptions and follow-up", "Conclusion"],
+    voice: "Concise and evidentiary. Numeric subscripts on tickmarks indicate evidence depth.",
+    evidence_format: "Artifact_id · system · captured · captor · sha256 · tickmark",
+    used_in_engagements: 0,
+    notes: "Available for use; no current engagement assigned.",
+  },
+];
+
+// ---------- Defensibility scorer findings (mock Claude output for RC-047) ----------
+window.SCORER_RC_047 = {
+  control_id: "RC-047",
+  reviewer_persona: "Big-4 senior reviewing this workpaper before partner sign-off",
+  generated_at: "2026-05-12T10:42:00-07:00",
+  model: "claude-sonnet-4-5",
+  prompt_tokens: 4280,
+  completion_tokens: 1850,
+  findings: [
+    {
+      id: "find_01",
+      priority: "high",
+      category: "Sample selection rationale",
+      finding: "Procedure 3 references stratified sampling and judgmental selection, but the workpaper does not explicitly document the agreed-upon methodology with the engagement team. A Big-4 senior will flag this as a sufficiency-of-procedures risk.",
+      fix: "Add a single sentence to the sample-selection rationale: \"Methodology agreed in walkthrough with Deloitte engagement team on 2026-02-04, memo MEMO-SS-RC-047.\" Reference the artifact directly.",
+      effort: "2 min",
+    },
+    {
+      id: "find_02",
+      priority: "medium",
+      category: "Tickmark coverage",
+      finding: "Tickmarks ‡ (significant judgment) and † (reviewer override) appear in the procedure list but are not used in the evidence section. Big-4 conventions expect that any significant-judgment procedure has at least one evidence artifact tagged with the same mark.",
+      fix: "Tag the threshold memo (M-2026-Q1-MJE) artifact with ‡ in the evidence list, since it documents the management judgment that established the $250k threshold.",
+      effort: "1 min",
+    },
+    {
+      id: "find_03",
+      priority: "low",
+      category: "Reviewer comment specificity",
+      finding: "Reviewer comment rc_01 says \"sample weighting toward period-end is appropriate\" but does not state what specifically was reviewed to reach that conclusion. Partner-level reviewers prefer comments that point to the evidence consulted.",
+      fix: "Reword rc_01 to: \"Sample Tier 2 weighting toward period-end (March 2026) reviewed against the Q1 close calendar (M-2026-Q1-CALENDAR) and population concentration (NS-Saved-Search-MJE-ALL-047, row 47-218); appropriate given Q1 close timing.\"",
+      effort: "3 min",
+    },
+  ],
+  defensibility_before: 86,
+  defensibility_after_estimate: 96,
+};
+
+// ---------- Mock streaming agent draft for testing procedures section ----------
+// Split into tokens for fake streaming.
+window.AGENT_DRAFT_PROCEDURES = {
+  section: "Testing procedures",
+  triggered_by: "Jamie Okonkwo",
+  triggered_at: "2026-05-12T09:14:00-07:00",
+  model: "claude-sonnet-4-5",
+  prompt_summary: "Draft Big-4-style testing procedures for RC-047 (manual JE approval — revenue recognition). Follow Deloitte tickmark conventions. Reference threshold $250k, sample size 25, population 218.",
+  tokens: [
+    "1. Obtain ", "the ", "population ", "of all ", "manual ", "journal ", "entries ",
+    "posted ", "to ", "revenue ", "accounts ", "during ", "the ", "testing ", "period ",
+    "from ", "NetSuite ", "(saved ", "search ", "NS-Saved-Search-MJE-ALL-047). ",
+    "Foot ", "the ", "population ", "and ", "reconcile ", "to ", "general ", "ledger ", "activity. ",
+    "[PBC, b, ¶]\n\n",
+    "2. ", "From ", "the ", "population, ", "select ", "a ", "sample ", "of ", "25 ", "entries ",
+    "using ", "stratified ", "sampling: ", "100% ", "of ", "entries ", "≥ ", "$1,000,000; ",
+    "judgmental ", "selection ", "across ", "the ", "remainder ", "weighted ", "toward ",
+    "period-end ", "and ", "unusual ", "postings. ", "[§]\n\n",
+    "3. ", "For ", "each ", "sampled ", "entry, ", "agree ", "the ", "approval ", "evidence ",
+    "captured ", "in ", "NetSuite ", "to ", "the ", "underlying ", "support ", "and ",
+    "verify ", "the ", "approver ", "was ", "independent ", "of ", "the ", "preparer ",
+    "at ", "the ", "appropriate ", "authorization ", "level. ", "[✓, c]\n\n",
+    "4. ", "Verify ", "dual ", "approval ", "was ", "obtained ", "prior ", "to ", "posting ",
+    "for ", "all ", "entries ", "≥ ", "$250,000. ", "Single ", "approval ", "by ", "a ",
+    "Senior ", "Accountant ", "is ", "sufficient ", "below ", "the ", "threshold. ", "[✓, c]\n\n",
+    "5. ", "Inspect ", "the ", "weekly ", "exception ", "report ", "and ", "verify ",
+    "each ", "flagged ", "entry ", "was ", "dispositioned ", "within ", "5 ", "business ",
+    "days; ", "agree ", "any ", "overrides ", "to ", "the ", "override ", "log ", "and ",
+    "supporting ", "rationale. ", "[✓, †]\n\n",
+    "[REQUIRES HUMAN REVIEW: ", "Procedure 6 ", "(threshold ", "review) ", "involves ",
+    "management ", "judgment ", "on ", "materiality ", "and ", "should ", "be ", "drafted ",
+    "by ", "the ", "FDE ", "reviewer ", "with ", "reference ", "to ", "memo ",
+    "M-2026-Q1-MJE.]\n"
+  ],
+};
+
+// ---------- Audit trail seed for RC-047 (workpaper editor right pane) ----------
+window.AUDIT_TRAIL_RC_047 = [
+  { at: "2026-05-09T08:14:00-07:00", actor: "marcus", action: "Agent generated initial draft (narrative section)", before_summary: "—", after_summary: "847 tokens, claude-sonnet-4-5", reason: "Initial draft trigger" },
+  { at: "2026-05-09T08:14:08-07:00", actor: "marcus", action: "Tagged AGENT_DRAFT", before_summary: "—", after_summary: "Narrative tagged as AGENT_DRAFT", reason: "Auto-tag on agent output" },
+  { at: "2026-05-10T11:22:00-07:00", actor: "marcus", action: "FDE edit: rewrote para 1 of narrative", before_summary: "Manual JE >= $250k…", after_summary: "Helios Robotics applies a $250,000 single-entry threshold…", reason: "Tighten language for Big-4 voice" },
+  { at: "2026-05-10T11:24:00-07:00", actor: "marcus", action: "Section status: AGENT_DRAFT → REVIEWED", before_summary: "Narrative AGENT_DRAFT", after_summary: "Narrative REVIEWED", reason: "FDE approved revised draft" },
+  { at: "2026-05-11T13:30:00-07:00", actor: "priya", action: "FDE edit: refined narrative para 2", before_summary: "The control owner reviews quarterly", after_summary: "The control owner reviews the threshold quarterly against the materiality benchmark…", reason: "Specificity for Deloitte voice" },
+  { at: "2026-05-12T09:14:00-07:00", actor: "jamie", action: "Agent triggered: testing procedures section", before_summary: "Empty", after_summary: "(streaming)", reason: "Initial draft of section" },
+];
+
+// ---------- Handoff package data (for Helios) ----------
+window.HANDOFF_HELIOS = {
+  engagement_id: "eng_helios_s1",
+  package_id: "PKG-HELIOS-Q1-2026",
+  generated_at: "2026-05-12T11:08:00-07:00",
+  generated_by: "jamie",
+  destination: { firm: "Deloitte & Touche LLP", contact: "Naomi Wilkes, Engagement Partner" },
+  contents: {
+    workpapers_signed: 4,
+    evidence_artifacts: 23,
+    cover_memo_pages: 3,
+    audit_log_rows: 184,
+  },
+  cover_memo: {
+    scope: "Q1 2026 SOX 404 testing — 22 in-scope controls across Revenue Cycle, Financial Reporting, IT General Controls, and Period Close. Optro Provenance v1 signature attached to every workpaper.",
+    methodology: "Stratified judgmental sampling, methodology pre-agreed with Deloitte engagement team in 2026-02-04 walkthrough.",
+    exceptions: "Two low-severity exceptions across testing: JE-2026-0098 (illegible initials, electronically reconfirmed); JE-2026-0214 (threshold-bypass override, documented and reviewed).",
+    optro_metadata: "All 4 workpapers carry provenance signatures with rec_optro_defens_* citation. Audit log exports as CSV; 184 state transitions captured.",
+  },
+  manifest_preview: [
+    { file: "RC-047_workpaper_signed.pdf", size: "412 KB", sha256: "9a2f3c…", signed_by: "Pranav Iyer (Controller, Helios) · 2026-05-11", optro_rec: "rec_optro_defens_047" },
+    { file: "FR-018_workpaper_signed.pdf", size: "488 KB", sha256: "7b1e44…", signed_by: "Pranav Iyer (Controller, Helios) · 2026-05-10", optro_rec: "rec_optro_defens_018" },
+    { file: "PC-007_workpaper_signed.pdf", size: "356 KB", sha256: "4c8d11…", signed_by: "Pranav Iyer (Controller, Helios) · 2026-05-09", optro_rec: "rec_optro_defens_007" },
+    { file: "OP-005_workpaper_signed.pdf", size: "278 KB", sha256: "1f9a8d…", signed_by: "Tara Okoye (CAE, Helios) · 2026-05-08", optro_rec: "rec_optro_defens_op_005" },
+    { file: "PKG-HELIOS-Q1-2026_cover_memo.pdf", size: "84 KB", sha256: "e2c901…", signed_by: "Jamie Okonkwo (Optro Practice) · 2026-05-12", optro_rec: "rec_optro_pkg_helios_q1" },
+    { file: "PKG-HELIOS-Q1-2026_audit_log.csv", size: "62 KB", sha256: "a14c22…", signed_by: "—", optro_rec: "rec_optro_log_helios_q1" },
+  ],
+};
+
+// ---------- Portfolio metrics (Option H exec view) ----------
+window.PORTFOLIO_METRICS = {
+  as_of: "2026-05-12",
+  pod_utilization: { jamie: 92, priya: 88, marcus: 78 },
+  workpapers_shipped_this_quarter: 14,
+  workpapers_in_progress: 28,
+  avg_defensibility_at_handoff: 96,
+  avg_rework_rate_at_auditor: 4,  // %
+  industry_rework_rate: 18,
+  engagements_on_track: 2,
+  engagements_at_risk: 1,
+  hours_saved_vs_baseline: 1840,  // hours saved by agent drafting + scorer
+  customer_handoff_pkgs_shipped: 3,
+};

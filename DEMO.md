@@ -1,12 +1,14 @@
 # Provenance — Demo
 
-**Two scenario hedges, one data backbone, six demos.**
+**Three scenario hedges, one data backbone, nine demos.**
 
 **Group A (Options 1–3) — System-of-Record Premium.** *This is what audit-grade output looks like when Optro's data lineage IS the product. Every hover reveals provenance no other vendor can produce. The peer-defensibility benchmark is the moat made visible.* The Controller and Big-4 partner read the workpaper directly; every value is hover-citable to its source record.
 
 **Group B (Options 4–6) — Wrapper Era.** *Optro is the evidence-of-truth backend; the foundation-model agent is the workpaper-drafting interface.* An MCP server exposes five tools; the agent calls them and gets back audit-grade structured responses with optro_record_id citations and explicit REQUIRES HUMAN REVIEW markers where judgment was applied.
 
-Same Helios Robotics fixture. Same Optro Provenance v1 signature. Different consumer.
+**Group C (Options 7–9) — Agent Commodity Hell.** *This is what audit-grade output looks like when the FDE team is the moat and the workpaper production line is the product. Foundation models draft; Optro experts review and attach provenance; external auditors sign without rework. That's the Practice value chain in tool form.* The pod owns the judgment-shaped 24%, the agent draws the routine 76%, and the audit trail captures the seam between them.
+
+Same Helios Robotics fixture. Same Optro Provenance v1 signature. Three different consumers — Controller, agent, FDE.
 
 ## The single demo claim
 
@@ -28,19 +30,25 @@ That's the bet, in one sentence. Provenance is the proof artifact.
 
 (Smoke-and-mirrors HTML — no Next.js, no router. The PRD's `/workpapers/[id]/chain` becomes `option-1-chain.html`.)
 
-## The six demo formats
+## The nine demo formats
 
-**System-of-Record Premium hedge — the Controller sees the workpaper**
+**Group A — System-of-Record Premium hedge — the Controller sees the workpaper**
 
-- **Option A** (`option-1.html`) — the click-through. Acceptance path. A Controller walking the workpaper end-to-end. Hover any value to see provenance.
+- **Option A** (`option-1.html` → `option-1-viewer.html` → `-chain` → `-peers` → `-walkthrough`) — the click-through. Acceptance path. A Controller walking the workpaper end-to-end. Hover any value to see provenance.
 - **Option B** (`option-2.html`) — the Big-4 one-pager. Three frames stacked vertically for screensharing during the walkthrough.
 - **Option C** (`option-3.html`) — the long-scroll. Eight scenes of a Tuesday morning at Helios when the workpaper stopped being a document.
 
-**Wrapper-Era hedge — the agent sees the workpaper**
+**Group B — Wrapper-Era hedge — the agent sees the workpaper**
 
 - **Option D** (`option-4.html`) — Wire Provenance into Claude Desktop. Install walkthrough + five MCP tools + npm run smoke.
 - **Option E** (`option-5.html`) — Watch Claude draft an assertion. Simulated three-prompt transcript with collapsible tool calls and optro_record_id citations.
 - **Option F** (`option-6.html`) — See workpaper-grade output. The rendered artifact with tickmark annotations and REQUIRES HUMAN REVIEW callouts.
+
+**Group C — Agent Commodity Hell hedge — the FDE pod runs the production line**
+
+- **Option G** (`option-7.html` → `option-7-editor.html` → `-scorer` → `-templates` → `-handoff`) — the production console. Engagement queue → split-pane editor (streaming agent drafts) → defensibility scorer → Big-4 template library → customer handoff package. Hover-trigger streaming; CSV export of the full audit log.
+- **Option H** (`option-8.html`) — Practice principal portfolio. Three engagements, one pod of three, the rework-rate KPI that defines the moat (4% vs 18% baseline).
+- **Option I** (`option-9.html`) — Jamie ships four workpapers in one day. Day-in-the-life long-scroll from 07:48 to 16:47.
 
 ---
 
@@ -67,11 +75,18 @@ That's the acceptance loop. Everything else is supporting cast.
 
 ## Why this prototype matters (the strategic frame)
 
-This is **no-regret move #2 (audit-grade output layer)** from the four-scenario plan — and it pays out across two scenarios, not one.
+This is **no-regret move #2 (audit-grade output layer)** from the four-scenario plan — and it pays out across three scenarios, not one.
 
 - In **System-of-Record Premium** (Options A–C), the moat is the live citation chain on every value in the workpaper. The peer-defensibility benchmark — a number Helios can compute only because Optro sits on the actual data of 47 consented pre-IPO peers — is the moat made visible.
-- In the **Wrapper Era** (Options D–F), the moat is the structured citation envelope around every tool response the agent receives. The MCP server is the proof that the underlying data shape works for either consumer.
+- In the **Wrapper Era** (Options D–F), the moat is the structured citation envelope around every tool response the agent receives. The MCP server is the proof that the underlying data shape works for an LLM consumer too.
+- In **Agent Commodity Hell** (Options G–I), the moat is the FDE production line: agent drafts the routine 76% in seconds; the FDE pod owns the judgment-shaped 24%; the audit trail captures the seam so external auditors sign deliverables without rework. Measured at 4% rework vs an 18% industry baseline.
 
-Defensibility holds across all four scenarios; the audit firm cares about the chain whether the agent drafts the workpaper or the Controller does. Build the audit-grade output layer once; ship it under whatever GTM motion wins.
+Defensibility holds across all four scenarios; the audit firm cares about the chain whether the agent drafts the workpaper, the Controller drafts it, or the FDE pod drafts it. Build the audit-grade output layer once; ship it under whatever GTM motion wins.
 
-The note Naomi Wilkes writes in her engagement file at the end of Option C is the goal: *"Defensibility evidence is rendered live against the underlying source-of-record systems at the point of review. Reduces substantive testing requirement on selected revenue-cycle controls."* That note becomes the management-letter line either way — whether the workpaper was rendered by Optro's UI or drafted by Claude calling Optro's MCP. That is what we are selling.
+The three closing pull-quotes are the demo's spine:
+
+- **Group A · Naomi at the walkthrough.** *"Defensibility evidence is rendered live against the underlying source-of-record systems at the point of review. Reduces substantive testing requirement on selected revenue-cycle controls."*
+- **Group B · the management assertion package.** Every disclosure in the LLM-drafted assertion ships with its <code>optro_record_id</code> — no hallucination, no buried risk, no fabricated tickmark.
+- **Group C · Naomi after the handoff.** *"Reviewed all four workpapers and the cover memo. No rework requested."*
+
+Same Naomi. Different vehicle. Same outcome: the audit firm signs without rework. That is what Optro is selling, across every scenario the plan covers.

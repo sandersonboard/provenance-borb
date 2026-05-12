@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Big-4 firm templates · Provenance Practice</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav">
+  <div class="brand"><span class="pip"></span><strong>Optro Provenance · Practice</strong></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-7.html">Queue</a>
+    <span class="sep">/</span>
+    <span>Big-4 templates</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab" href="option-7.html">Queue</a>
+    <a class="wp-tab" href="option-7-editor.html">Editor</a>
+    <a class="wp-tab" href="option-7-scorer.html">Scorer</a>
+    <a class="wp-tab active" href="option-7-templates.html">Templates</a>
+    <a class="wp-tab" href="option-7-handoff.html">Handoff</a>
+  </div>
+  <span class="as-of">As of 2026-05-12</span>
+</nav>
+
+<div class="tpl-shell">
+  <h1 style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 4px;">Big-4 firm templates</h1>
+  <p style="color: var(--muted); font-size: 13px; margin-bottom: 20px;">Each template encodes the engagement firm's tickmark conventions, section ordering, narrative voice, and evidence formatting requirements. The FDE pod applies a template to a workpaper to keep deliverables consistent with what the auditor expects to see.</p>
+
+  <div class="tpl-grid" id="tpl-grid"></div>
+
+  <div style="margin-top: 24px; padding: 16px 18px; background: white; border: 1px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--ink-light); line-height: 1.6;">
+    <strong style="color: var(--ink);">Why this matters in Agent Commodity Hell.</strong> Foundation models do not know what tickmark vocabulary the Helios engagement team expects. They do not know that EY frames procedures risk-first while PwC frames them sample-first. They will draft something plausible-looking that fails the senior-reviewer pass. The templates are the firm-specific style guide that the FDE attaches when applying a draft, and the scorer enforces. That gap — between plausible-looking and accepted-without-rework — is what the Practice arm is selling.
+  </div>
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    document.getElementById('tpl-grid').innerHTML = window.BIG4_TEMPLATES.map((t, i) => {
+      const active = t.firm === 'Deloitte';
+      return `<div class="tpl-card ${active ? 'active' : ''}">
+        <div class="tc-head">
+          <div class="tc-logo" style="background:${t.color}; color: ${t.color === '#FFE600' ? '#000' : 'white'};">${escapeHtml(t.firm.slice(0,2).toUpperCase())}</div>
+          <div>
+            <div class="tc-name">${escapeHtml(t.firm)}</div>
+            <div class="tc-sub">${escapeHtml(t.ref_prefix)}…</div>
+          </div>
+          <div class="tc-used ${t.used_in_engagements > 0 ? 'in-use' : ''}">${t.used_in_engagements > 0 ? 'In use · ' + t.used_in_engagements : 'Available'}</div>
+        </div>
+
+        <h5>Tickmark conventions</h5>
+        <div class="tm-grid">
+          ${t.tickmark_conventions.map(tm => `<div class="row"><span class="mark">${escapeHtml(tm.mark)}</span><span class="meaning">${escapeHtml(tm.meaning)}</span></div>`).join('')}
+        </div>
+
+        <h5>Section ordering</h5>
+        <div class="order">${t.section_order.map(s => `<span class="seg">${escapeHtml(s)}</span>`).join('')}</div>
+
+        <h5>Voice</h5>
+        <div class="voice">${escapeHtml(t.voice)}</div>
+
+        <h5>Evidence formatting</h5>
+        <div style="font-family: var(--mono); font-size: 11px; color: var(--ink-light);">${escapeHtml(t.evidence_format)}</div>
+
+        <div class="notes">${escapeHtml(t.notes)}</div>
+
+        <div style="display: flex; gap: 8px; margin-top: 12px;">
+          ${active
+            ? `<button class="f-btn primary" style="padding: 6px 12px; font-size: 12px; background: var(--ink); color: white; border: 1px solid var(--ink); border-radius: 5px;" disabled>Applied to Helios</button>`
+            : `<button class="f-btn" style="padding: 6px 12px; font-size: 12px; background: white; color: var(--ink-light); border: 1px solid var(--border); border-radius: 5px;">Apply to workpaper…</button>`
+          }
+          <button class="f-btn" style="padding: 6px 12px; font-size: 12px; background: white; color: var(--ink-light); border: 1px solid var(--border); border-radius: 5px;">Preview</button>
+        </div>
+      </div>`;
+    }).join('');
+  })();
+</script>
+</body>
+</html>

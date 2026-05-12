@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Defensibility scorer · RC-047</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav">
+  <div class="brand"><span class="pip"></span><strong>Optro Provenance · Practice</strong></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-7.html">Queue</a>
+    <span class="sep">/</span>
+    <a href="option-7-editor.html">RC-047 editor</a>
+    <span class="sep">/</span>
+    <span>Defensibility scorer</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab" href="option-7.html">Queue</a>
+    <a class="wp-tab" href="option-7-editor.html">Editor</a>
+    <a class="wp-tab active" href="option-7-scorer.html">Scorer</a>
+    <a class="wp-tab" href="option-7-templates.html">Templates</a>
+    <a class="wp-tab" href="option-7-handoff.html">Handoff</a>
+  </div>
+  <span class="as-of">As of 2026-05-12</span>
+</nav>
+
+<div class="scorer-shell">
+
+  <div class="scorer-head">
+    <h1>Defensibility scorer · RC-047</h1>
+    <p class="sub">Claude runs a Big-4-senior review pass over the entire workpaper and surfaces every item that would generate a review note before partner sign-off. Findings are categorized; each one ships with a concrete fix the FDE can apply inline.</p>
+    <div class="prompt-box">
+      <div class="lbl">Reviewer persona prompt sent to Claude</div>
+      "You are a Big-4 senior reviewing this workpaper before partner sign-off. List every item that would generate review notes. For each finding, state the priority (high / medium / low), the category, the specific concern, and the exact fix the FDE should apply. Be concrete and reference the workpaper sections directly."
+    </div>
+    <div class="meta">
+      <span><span class="label">Model:</span><span class="val">claude-sonnet-4-5</span></span>
+      <span><span class="label">Prompt tokens:</span><span class="val">4,280</span></span>
+      <span><span class="label">Completion tokens:</span><span class="val">1,850</span></span>
+      <span><span class="label">Latency:</span><span class="val">3.2 s</span></span>
+      <span><span class="label">Generated:</span><span class="val">2026-05-12 10:42 PT</span></span>
+    </div>
+  </div>
+
+  <div class="scorer-summary">
+    <div class="s-cell"><div class="lbl">Defensibility now</div><div class="val">86<span style="font-size:14px;color:var(--muted);">/100</span></div></div>
+    <div class="s-cell improve"><div class="lbl">After fixes</div><div class="val">96<span style="font-size:14px;color:var(--muted);">/100</span></div></div>
+    <div class="s-cell"><div class="lbl">Findings</div><div class="val">3</div></div>
+    <div class="s-cell"><div class="lbl">Total fix time</div><div class="val">6<span style="font-size:14px;color:var(--muted);"> min</span></div></div>
+  </div>
+
+  <div id="findings-list"></div>
+
+  <div style="margin-top: 20px; padding: 16px 18px; background: white; border: 1px solid var(--border); border-radius: 8px;">
+    <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">Next step</div>
+    <div style="font-size: 13.5px; line-height: 1.6; color: var(--ink); font-family: var(--serif);">
+      Apply all three fixes inline in the editor (estimated 6 minutes). Re-run the scorer to confirm projected 96/100. Then advance the workpaper from <span class="state-pill fde_review"><span class="sp-dot"></span>FDE review</span> to <span class="state-pill customer_review"><span class="sp-dot"></span>Customer review</span> and queue for Pranav Iyer's sign-off at Helios.
+    </div>
+    <div style="display: flex; gap: 10px; margin-top: 14px;">
+      <a href="option-7-editor.html" class="export-btn" style="background: var(--accent); text-decoration: none;">← Apply fixes in editor</a>
+      <a href="option-7-handoff.html" class="export-btn" style="background: white; color: var(--ink); border: 1px solid var(--border); text-decoration: none;">View handoff package →</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    document.getElementById('findings-list').innerHTML = window.SCORER_RC_047.findings.map(f => `
+      <div class="finding ${f.priority}">
+        <div class="f-head">
+          <div><span class="f-prio">${f.priority}</span> <span class="f-cat" style="margin-left:10px;">${escapeHtml(f.category)}</span></div>
+          <span class="f-effort">est. ${escapeHtml(f.effort)}</span>
+        </div>
+        <div class="f-finding">${escapeHtml(f.finding)}</div>
+        <div class="f-fix">
+          <div class="lbl">Specific fix</div>
+          ${escapeHtml(f.fix)}
+        </div>
+        <div class="f-actions">
+          <button class="f-btn primary">Apply in editor</button>
+          <button class="f-btn">Defer with rationale</button>
+          <button class="f-btn">Acknowledge</button>
+        </div>
+      </div>
+    `).join('');
+  })();
+</script>
+</body>
+</html>

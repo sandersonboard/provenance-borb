@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Practice principal · portfolio view</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav">
+  <div class="brand"><span class="pip"></span><strong>Optro Provenance · Practice</strong></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <span>Principal portfolio view</span>
+  </div>
+  <div class="spacer"></div>
+  <span class="as-of">As of 2026-05-12 09:08 PT · WoW Δ enabled</span>
+</nav>
+
+<div class="port-shell">
+
+  <div class="port-hero">
+    <div class="eyebrow">Optro Practice · Principal portfolio · Q2 2026</div>
+    <h1>The production line of audit-grade output, at altitude.</h1>
+    <p class="deck">Three engagements in flight. One FDE pod of three. The agent does the draft, the FDE pod attaches the provenance, the audit firm signs without rework — that's the value chain and these are the numbers. The Practice arm is what Optro sells when foundation models commoditize the drafting layer and the moat is the production line itself.</p>
+    <div class="pkpis">
+      <div class="pkpi"><div class="num">14</div><div class="lbl">Workpapers shipped Q2-to-date</div></div>
+      <div class="pkpi"><div class="num">28</div><div class="lbl">In production now</div></div>
+      <div class="pkpi"><div class="num good">96<span style="font-size: 14px;">/100</span></div><div class="lbl">Avg defensibility at handoff</div></div>
+      <div class="pkpi"><div class="num good">4%</div><div class="lbl">Rework rate at auditor</div></div>
+      <div class="pkpi"><div class="num">1,840 h</div><div class="lbl">Saved vs baseline (agent + scorer)</div></div>
+    </div>
+  </div>
+
+  <div class="port-grid">
+
+    <div>
+      <div id="eng-cards"></div>
+
+      <div style="background: white; border: 1px solid var(--border); border-radius: 10px; padding: 18px 22px; margin-top: 14px;">
+        <h3 style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 12px;">This quarter's rework benchmark</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <div style="padding: 14px; background: var(--bg); border-radius: 6px;">
+            <div style="font-family: var(--mono); font-size: 28px; font-weight: 700; color: #047857; letter-spacing: -0.02em;">4%</div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px;">Optro Practice — workpapers requiring auditor rework</div>
+            <div style="font-size: 12px; color: var(--ink-light); margin-top: 6px; line-height: 1.5;">3 workpapers out of 14 shipped triggered any review-note follow-up; none required substantive re-test.</div>
+          </div>
+          <div style="padding: 14px; background: #fef2f2; border: 1px solid #fed7d7; border-radius: 6px;">
+            <div style="font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em;">18%</div>
+            <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px;">Industry baseline — pre-IPO advisory-firm output</div>
+            <div style="font-size: 12px; color: var(--ink-light); margin-top: 6px; line-height: 1.5;">Boutique advisory firms typically see 15–22% of deliverables flagged for rework on first auditor review.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="port-callout" style="margin-top: 14px;">
+        <div class="lbl">Hedge thesis · Agent Commodity Hell</div>
+        If foundation models commoditize the reasoning layer and software ARR economics break, Optro pivots margin to the FDE service line. The Practice product is human-plus-machine: agent drafts, FDE reviews, customer signs, auditor accepts — measured at <strong>4%</strong> rework vs industry <strong>18%</strong>. That spread is the moat made visible. Build the production tool now so the pivot is one-quarter, not one-year.
+      </div>
+    </div>
+
+    <div>
+      <div class="port-side">
+        <h3>Pod utilization · trailing 4 weeks</h3>
+        <div id="util-list"></div>
+        <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-light); line-height: 1.55;">
+          Marcus has bandwidth for an additional engagement at current utilization. Priya is capacity-bound; the Aperture and Pelagic ramp will need a fourth pod member by 2026-Q3.
+        </div>
+      </div>
+
+      <div class="port-side" style="margin-top: 14px;">
+        <h3>FDE deliverable mix · this quarter</h3>
+        <div style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+            <span style="color: var(--ink-light);">Agent-drafted &amp; FDE-reviewed</span>
+            <span style="font-family: var(--mono); font-weight: 600;">76%</span>
+          </div>
+          <div style="height: 10px; background: var(--bg); border-radius: 5px; overflow: hidden;"><div style="height: 100%; background: #6d28d9; width: 76%;"></div></div>
+        </div>
+        <div style="margin-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px;">
+            <span style="color: var(--ink-light);">Human-only sections</span>
+            <span style="font-family: var(--mono); font-weight: 600;">24%</span>
+          </div>
+          <div style="height: 10px; background: var(--bg); border-radius: 5px; overflow: hidden;"><div style="height: 100%; background: #047857; width: 24%;"></div></div>
+        </div>
+        <div style="margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 11.5px; color: var(--ink-light); line-height: 1.55;">
+          Significant-judgment procedures (threshold reviews, materiality calls, override dispositions) are FDE-only by policy and account for the 24%. Routine procedures (population queries, sample selection, evidence formatting) are agent-drafted and FDE-reviewed.
+        </div>
+      </div>
+
+      <div class="port-side" style="margin-top: 14px;">
+        <h3>Customer handoffs this quarter</h3>
+        <div style="display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px;">
+          <span style="font-family: var(--mono); font-size: 26px; font-weight: 700;">3</span>
+          <span style="font-size: 12px; color: var(--muted);">packages shipped</span>
+        </div>
+        <div style="font-size: 12px; color: var(--ink-light); line-height: 1.55;">
+          1× Helios (Q1 testing), 1× Aperture (Q4 2025 catch-up), 1× Pelagic (initial scoping). 14 workpapers across the three. 0 substantive rework requested by auditors.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    // ----- Engagement cards
+    const pod = window.FDE_POD;
+    document.getElementById('eng-cards').innerHTML = window.ENGAGEMENTS.map(e => {
+      const lead = pod[e.pod_lead];
+      const risk = e.health === 'at_risk';
+      return `<div class="eng-card${risk ? ' risk' : ''}">
+        <div class="ec-head">
+          <div>
+            <div class="ec-name">${escapeHtml(e.company)}</div>
+            <div class="ec-sub">${escapeHtml(e.program)} · ${escapeHtml(e.audit_firm)} · ${escapeHtml(e.audit_partner)} · target ${escapeHtml(e.target_filing)}</div>
+          </div>
+          <span class="ec-health ${e.health}">${e.health.replace('_',' ')}</span>
+        </div>
+        <div class="ec-metrics">
+          <div class="em-cell"><div class="em-num">${e.t_minus_days}d</div><div class="em-lbl">T-minus to filing</div></div>
+          <div class="em-cell"><div class="em-num">${e.controls_in_scope}</div><div class="em-lbl">Controls in scope</div></div>
+          <div class="em-cell"><div class="em-num">${e.workpapers_in_production}</div><div class="em-lbl">Workpapers in production</div></div>
+          <div class="em-cell"><div class="em-num">${e.defensibility_avg}<span style="font-size: 12px; color: var(--muted);">/100</span></div><div class="em-lbl">Avg defensibility</div></div>
+        </div>
+        <div class="ec-pod-lead">
+          <div class="miniav" style="background:${lead.color}">${lead.initials}</div>
+          <span><strong style="color: var(--ink); font-weight: 600;">${escapeHtml(lead.name)}</strong> · ${escapeHtml(lead.role)} on this engagement</span>
+        </div>
+      </div>`;
+    }).join('');
+
+    // ----- Pod utilization
+    const util = window.PORTFOLIO_METRICS.pod_utilization;
+    document.getElementById('util-list').innerHTML = Object.keys(pod).map(k => {
+      const p = pod[k];
+      const u = util[k];
+      return `<div class="util-row">
+        <div class="miniav" style="background:${p.color}">${p.initials}</div>
+        <div class="body">
+          <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px;">
+            <span class="name">${escapeHtml(p.name)}</span>
+            <span class="pct">${u}%</span>
+          </div>
+          <div class="role">${escapeHtml(p.role)}</div>
+          <div class="util-track"><div class="util-fill" style="width: ${u}%;"></div></div>
+        </div>
+      </div>`;
+    }).join('');
+  })();
+</script>
+</body>
+</html>

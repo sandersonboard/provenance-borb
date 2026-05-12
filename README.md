@@ -1,6 +1,6 @@
 # provenance-borb
 
-Audit-grade output layer for Optro — hedging **two** scenarios in the pre-IPO scenario plan from one codebase. A Big-4-style workpaper with live, hover-citable provenance on every value (Group A · System-of-Record Premium); plus an MCP server exposing the same data to a foundation-model agent so it can draft the workpaper for the Controller (Group B · Wrapper Era).
+Audit-grade output layer for Optro — hedging **three** scenarios in the pre-IPO scenario plan from one codebase. A Big-4-style workpaper with live, hover-citable provenance on every value (Group A · System-of-Record Premium); an MCP server exposing the same data to a foundation-model agent so it can draft the workpaper for the Controller (Group B · Wrapper Era); a Practice-arm production console where an FDE pod reviews agent drafts and ships customer-signed deliverables to external auditors without rework (Group C · Agent Commodity Hell).
 
 **Live demo:** [sandersonboard.github.io/provenance-borb](https://sandersonboard.github.io/provenance-borb/) (BORB-gated)
 
@@ -8,12 +8,12 @@ Audit-grade output layer for Optro — hedging **two** scenarios in the pre-IPO 
 
 ## What is in this repo
 
-Six demo formats — three per hedge — plus the runnable MCP server source:
+Nine demo formats — three per hedge — plus the runnable MCP server source:
 
-1. **Static frontend prototype** — six HTML demos, deployed as GitHub Pages. Plain HTML/CSS/JS, no build step. Pattern matches the rest of the Optro demo family.
+1. **Static frontend prototype** — nine HTML demos, deployed as GitHub Pages. Plain HTML/CSS/JS, no build step. Pattern matches the rest of the Optro demo family.
 2. **MCP server (`server.ts`, `provenance.ts`)** — real, runnable code behind Options D–F. Run `npm install && npm run smoke` to exercise the five tools, or wire into Claude Desktop locally.
 
-## The six demos
+## The nine demos
 
 **Group A — System-of-Record Premium hedge — the Controller sees the workpaper**
 
@@ -26,6 +26,12 @@ Six demo formats — three per hedge — plus the runnable MCP server source:
 - **Option D** (`option-4.html`) — Wire Provenance into Claude Desktop. Install walkthrough for the MCP server + five tools + smoke test.
 - **Option E** (`option-5.html`) — Watch Claude draft an assertion. Simulated transcript with collapsible tool calls and citations.
 - **Option F** (`option-6.html`) — See workpaper-grade output. The rendered artifact with tickmark annotations and REQUIRES HUMAN REVIEW markers.
+
+**Group C — Agent Commodity Hell hedge — the FDE pod runs the production line**
+
+- **Option G** (`option-7.html` → `option-7-editor.html` → `-scorer` → `-templates` → `-handoff`) — the production console. Engagement queue, split-pane workpaper editor with streaming agent drafts, defensibility scorer, Big-4 template library, customer handoff package with manifest + CSV export.
+- **Option H** (`option-8.html`) — Practice principal portfolio. Higher-altitude exec view: three engagements, pod utilization, rework rate (4% vs 18% baseline).
+- **Option I** (`option-9.html`) — Jamie's Tuesday. Day-in-the-life long-scroll: four workpapers shipped, one customer handoff, zero rework.
 
 The acceptance script is in `DEMO.md`.
 

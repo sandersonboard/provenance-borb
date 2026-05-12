@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Provenance Practice · Engagement queue</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav">
+  <div class="brand"><span class="pip"></span><strong>Optro Provenance · Practice</strong></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <span>Engagement queue</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab active" href="option-7.html">Queue</a>
+    <a class="wp-tab" href="option-7-editor.html">Editor</a>
+    <a class="wp-tab" href="option-7-scorer.html">Scorer</a>
+    <a class="wp-tab" href="option-7-templates.html">Templates</a>
+    <a class="wp-tab" href="option-7-handoff.html">Handoff</a>
+  </div>
+  <span class="as-of">As of 2026-05-12 09:08 PT</span>
+</nav>
+
+<div class="q-shell">
+
+  <div class="q-head">
+    <h1>Engagement queue</h1>
+    <p class="sub">28 workpapers in production across 3 active engagements · ordered by T-minus to deadline</p>
+  </div>
+
+  <div class="q-pod-bar" id="pod-bar"></div>
+
+  <div class="q-stats" id="q-stats"></div>
+
+  <div class="q-filters">
+    <span class="fl-label">State</span>
+    <span class="fl-chip active" data-state="all">All</span>
+    <span class="fl-chip" data-state="agent_drafted"><span class="fl-dot" style="background:#6d28d9"></span>Agent drafted</span>
+    <span class="fl-chip" data-state="fde_review"><span class="fl-dot" style="background:#f59e0b"></span>FDE review</span>
+    <span class="fl-chip" data-state="customer_review"><span class="fl-dot" style="background:#0e7490"></span>Customer review</span>
+    <span class="fl-chip" data-state="customer_signoff"><span class="fl-dot" style="background:#047857"></span>Customer sign-off</span>
+    <span class="fl-chip" data-state="auditor_handoff"><span class="fl-dot" style="background:#1B5E20"></span>Auditor handoff</span>
+    <span class="fl-spacer"></span>
+    <span class="fl-label">Engagement</span>
+    <span class="fl-chip active" data-eng="all">All</span>
+    <span class="fl-chip" data-eng="eng_helios_s1">Helios</span>
+    <span class="fl-chip" data-eng="eng_aperture_s1">Aperture</span>
+    <span class="fl-chip" data-eng="eng_pelagic_s1">Pelagic</span>
+  </div>
+
+  <div class="q-table">
+    <div class="q-th">
+      <div>Eng.</div>
+      <div>Control</div>
+      <div>Workpaper</div>
+      <div>State</div>
+      <div style="text-align:right;">T-minus</div>
+      <div style="text-align:right;">Defensibility</div>
+      <div>Audit</div>
+      <div>Assigned</div>
+    </div>
+    <div id="q-tbody"></div>
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    // ----- Pod bar
+    const pod = window.FDE_POD;
+    const util = window.PORTFOLIO_METRICS.pod_utilization;
+    document.getElementById('pod-bar').innerHTML = Object.keys(pod).map(k => {
+      const p = pod[k];
+      return `<div class="q-pod-chip">
+        <div class="av" style="background:${p.color}">${p.initials}</div>
+        <div><div class="name">${p.name}</div><div class="role">${p.role}</div></div>
+        <div class="util">${util[k]}% util</div>
+      </div>`;
+    }).join('');
+
+    // ----- Stats
+    const stateCounts = window.WP_QUEUE.reduce((a,w) => { a[w.state]=(a[w.state]||0)+1; return a; }, {});
+    const statHtml = [
+      ["agent_drafted", "#6d28d9", "Agent drafted"],
+      ["fde_review", "#f59e0b", "FDE review"],
+      ["customer_review", "#0e7490", "Customer review"],
+      ["customer_signoff", "#047857", "Customer sign-off"],
+      ["auditor_handoff", "#1B5E20", "Auditor handoff"],
+    ].map(([k, c, l]) => `<div class="q-stat-card">
+      <div class="top"><span class="dot" style="background:${c}"></span>${l}</div>
+      <div class="num">${stateCounts[k] || 0}</div>
+    </div>`).join('');
+    document.getElementById('q-stats').innerHTML = statHtml;
+
+    // ----- Queue rows
+    const tbody = document.getElementById('q-tbody');
+    // Sort by deadline ascending
+    const sorted = [...window.WP_QUEUE].sort((a,b) => a.deadline_days - b.deadline_days);
+    tbody.innerHTML = sorted.map(w => {
+      const p = pod[w.assigned];
+      const urgent = w.deadline_days <= 3;
+      const defens = w.defensibility >= 85 ? 'good' : w.defensibility >= 70 ? 'mid' : 'low';
+      const href = w.id === 'RC-047' ? 'option-7-editor.html' : 'option-7-editor.html?id=' + encodeURIComponent(w.id);
+      return `<a class="q-row" href="${href}" data-state="${w.state}" data-eng="${w.engagement_id}">
+        <div class="eng">${escapeHtml(w.engagement_short)}</div>
+        <div class="cid">${escapeHtml(w.id)}</div>
+        <div class="wpname">${escapeHtml(controlName(w.id))}</div>
+        <div><span class="state-pill ${w.state}"><span class="sp-dot"></span>${escapeHtml(window.WP_STATE_LABELS[w.state])}</span></div>
+        <div class="tminus${urgent ? ' urgent' : ''}" style="text-align:right;">T${w.deadline_days < 0 ? '+' : '-'}${Math.abs(w.deadline_days)}d</div>
+        <div class="defens ${defens}" style="text-align:right;">${w.defensibility}/100</div>
+        <div class="firm">${escapeHtml(w.audit_firm)}</div>
+        <div class="assigned"><div class="miniav" style="background:${p.color}">${p.initials}</div><span>${escapeHtml(p.name.split(' ')[0])}</span></div>
+      </a>`;
+    }).join('');
+
+    // ----- Filters
+    const stateChips = document.querySelectorAll('.fl-chip[data-state]');
+    const engChips = document.querySelectorAll('.fl-chip[data-eng]');
+    let activeState = 'all', activeEng = 'all';
+    function refresh() {
+      document.querySelectorAll('.q-row').forEach(r => {
+        const matchSt = activeState === 'all' || r.getAttribute('data-state') === activeState;
+        const matchEn = activeEng === 'all' || r.getAttribute('data-eng') === activeEng;
+        r.style.display = (matchSt && matchEn) ? '' : 'none';
+      });
+    }
+    stateChips.forEach(c => c.addEventListener('click', () => {
+      stateChips.forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      activeState = c.getAttribute('data-state');
+      refresh();
+    }));
+    engChips.forEach(c => c.addEventListener('click', () => {
+      engChips.forEach(x => x.classList.remove('active'));
+      c.classList.add('active');
+      activeEng = c.getAttribute('data-eng');
+      refresh();
+    }));
+  })();
+
+  // Look up a control name from window.CONTROLS, or generate a fallback for Aperture/Pelagic IDs.
+  function controlName(id) {
+    const c = window.CONTROLS.find(x => x.id === id);
+    if (c) return c.name;
+    // Aperture/Pelagic — synthesize a plausible name from prefix
+    if (id.startsWith('AP-')) return 'Aperture · ' + id.replace('AP-','') + ' control';
+    if (id.startsWith('PL-')) return 'Pelagic · ' + id.replace('PL-','') + ' control';
+    return id;
+  }
+</script>
+</body>
+</html>

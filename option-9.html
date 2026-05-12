@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Provenance Practice · Jamie's Tuesday</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+<style>
+  body { background: #fafaf5; }
+  .nav-back { max-width: 720px; margin: 0 auto; padding: 24px 24px 0; font-size: 12px; color: var(--muted); }
+  .nav-back a { color: var(--accent); text-decoration: none; }
+  .meta-tag { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+  .end {
+    max-width: 720px; margin: 60px auto;
+    padding: 32px;
+    background: var(--ink); color: white;
+    border-radius: 10px;
+  }
+  .end .lbl { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fca5a5; margin-bottom: 12px; }
+  .end h3 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.3; margin: 0 0 14px; }
+  .end p { font-size: 14.5px; line-height: 1.65; color: #cbd5e1; margin: 0 0 10px; }
+  .end p strong { color: white; }
+  .end .cta {
+    margin-top: 18px; display: inline-block;
+    padding: 9px 16px; background: var(--accent); color: white;
+    border-radius: 6px; text-decoration: none; font-size: 13px; font-weight: 600;
+  }
+  .end .cta:hover { background: #8e2734; text-decoration: none; }
+  .mini-state {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 9px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; font-family: var(--sans);
+    vertical-align: middle;
+  }
+  .mini-state .d { width: 7px; height: 7px; border-radius: 50%; }
+  .mini-state.agent { background: #f5f3ff; color: #6d28d9; } .mini-state.agent .d { background: #6d28d9; }
+  .mini-state.fde { background: #fffbeb; color: #b45309; } .mini-state.fde .d { background: #f59e0b; }
+  .mini-state.cust { background: #ecfeff; color: #0e7490; } .mini-state.cust .d { background: #0e7490; }
+  .mini-state.signed { background: #ecfdf5; color: #047857; } .mini-state.signed .d { background: #047857; }
+  .mini-state.audit { background: #f0fdf4; color: #1B5E20; } .mini-state.audit .d { background: #1B5E20; }
+</style>
+</head>
+<body>
+
+<div class="nav-back"><a href="index.html">← Back to demo home</a></div>
+
+<div class="story-shell">
+
+  <div class="meta-tag">Optro Practice · Tuesday, 12 May 2026 · 4 workpapers, 1 FDE, 1 customer handoff</div>
+  <h1>Jamie ships four workpapers in one day.</h1>
+  <p class="deck">A working scroll through Tuesday at Optro Practice. Jamie Okonkwo runs the FDE pod for the Helios Robotics S-1 engagement. The agent drafts; Jamie reviews; the customer signs; Deloitte accepts without rework. That sequence is the production line, and here is what one shift on it looks like.</p>
+
+  <div class="scene-tag">07:48 AM · Open laptop · 1 Powell Street</div>
+  <h2>Scene 1</h2>
+  <h3>The queue is the alarm clock.</h3>
+  <p>Jamie opens the engagement queue. Twenty-eight workpapers across the three active engagements, ordered by T-minus. Helios FR-021 sits at the top: T-1 day, defensibility 64/100, still in <span class="mini-state fde"><span class="d"></span>FDE review</span>. The amber state pill is doing its job — Marcus Chen drafted the procedures last night; the scorer flagged five review-note risks before Jamie poured a coffee.</p>
+  <p>Jamie clicks in.</p>
+
+  <div class="scene-tag">08:14 AM · Workpaper editor · FR-021</div>
+  <h2>Scene 2</h2>
+  <h3>The agent draft was good; the threshold was wrong.</h3>
+  <p>The narrative section is tagged AGENT_DRAFT. Marcus's <em>Ask agent</em> trigger from 21:14 last night returned 847 tokens of plausible-sounding procedures language. The audit trail captures every word of it. The problem is procedure 4: the agent assumed a $50,000 accruals threshold because the prior-period workpaper said so, but Pranav Iyer raised the threshold to $75,000 in January and the memo is in the Optro vault, not the agent's context window.</p>
+  <p>Jamie rewrites procedure 4 inline. The section flips from <code style="font-family: var(--mono); font-size: 11.5px; background: var(--bg); padding: 1px 6px; border-radius: 3px;">AGENT_DRAFT</code> to <code style="font-family: var(--mono); font-size: 11.5px; background: var(--bg); padding: 1px 6px; border-radius: 3px;">AGENT_DRAFT · EDITED</code> the moment the cursor leaves the textarea. Two audit trail rows appear in the right pane: one for the edit (before/after diff captured), one with Jamie's rationale (<em>"agent context did not include the Jan-2026 threshold memo; corrected to $75k"</em>).</p>
+
+  <div class="mini-paper">
+    <div class="mini-head">
+      <span class="mp-id">AUDIT TRAIL · FR-021 · 2026-05-12 08:14:32 PT</span>
+      <span class="mp-ts">+2 rows</span>
+    </div>
+    <strong>Jamie Okonkwo · FDE Pod Lead</strong><br>
+    Action: FDE edit — rewrote procedure 4 of testing section.<br>
+    Before: <em>"verify dual approval ≥ $50,000…"</em><br>
+    After: <em>"verify dual approval ≥ $75,000 per memo M-2026-Q1-ACCR…"</em><br>
+    Reason: agent context window predated the 2026-01-09 threshold revision; corrected.
+  </div>
+
+  <p>This is the move. The agent does the 90% — population queries, sample size methodology, evidence formatting, tickmark annotations — and gets the 90% right. The 10% that is wrong is judgment-shaped: thresholds, materiality, sign-off chains, override dispositions. The FDE pod owns that 10% and the audit trail captures the seam. Foundation models cannot replace that workflow without replacing the FDE pod, and the FDE pod is the moat.</p>
+
+  <div class="scene-tag">09:42 AM · Defensibility scorer · FR-021</div>
+  <h2>Scene 3</h2>
+  <h3>The scorer agrees with Jamie's gut.</h3>
+  <p>Jamie kicks off the defensibility scorer. The reviewer-persona prompt sends Claude across the whole workpaper, including the edit Jamie just made. 3.2 seconds, 1,850 completion tokens, three findings.</p>
+
+  <div class="mini-paper">
+    <div class="mini-head">
+      <span class="mp-id">SCORER · FR-021 · 86 → projected 96</span>
+      <span class="mp-ts">claude-sonnet-4-5 · 3.2 s · 6 min total fix</span>
+    </div>
+    <strong>HIGH</strong> · Sample selection rationale — methodology not referenced to walkthrough memo.<br>
+    <strong>MEDIUM</strong> · Tickmark coverage — ‡ and † not represented in evidence section.<br>
+    <strong>LOW</strong> · Reviewer comment specificity — comment rc_01 references "sample weighting" without naming the evidence consulted.<br>
+    Each finding ships with the exact text to add. Jamie applies all three in eleven minutes.
+  </div>
+
+  <p>The scorer is what shifted Optro Practice from "boutique audit advisory" to "production line." Before it, every workpaper was a one-off; the FDE who delivered it carried its defensibility in their head. After it, defensibility is a number measured against a Big-4-senior persona prompt — repeatable, comparable, improvable. A new FDE pod member onboarding can run the scorer on their own work and feel the heat before the partner does.</p>
+
+  <div class="scene-tag">10:48 AM · FR-021 advanced to customer review</div>
+  <h2>Scene 4</h2>
+  <h3>Helios's Controller signs in 36 minutes.</h3>
+  <p>FR-021 advances from <span class="mini-state fde"><span class="d"></span>FDE review</span> to <span class="mini-state cust"><span class="d"></span>Customer review</span>. The audit trail logs the transition with the timestamp and the FDE who advanced it. Pranav Iyer at Helios gets the email; he opens the workpaper from his Surface Pro in a Lyft on the way to the Helios board meeting; he hovers the $75,000 threshold, sees the memo it derives from, signs at 11:24 AM. The state flips to <span class="mini-state signed"><span class="d"></span>Customer sign-off</span>. Jamie sees the green pill appear in the queue.</p>
+
+  <p>This is the second move. In the old model, customer review took 3 to 7 business days — the Controller had to corroborate every number in the workpaper against their own source systems before signing. In the new model, the Controller hovers and verifies in 36 minutes, because the workpaper carries the provenance citations Pranav would otherwise have to assemble himself. The FDE doesn't save Pranav time. <strong>Provenance saves Pranav time.</strong> The FDE saves Helios the cost of getting it wrong.</p>
+
+  <div class="scene-tag">12:12 PM · Queue grooming · Helios</div>
+  <h2>Scene 5</h2>
+  <h3>Three more workpapers move through the chain over lunch.</h3>
+  <p>RC-047 sits in FDE review with a 92 defensibility score; Jamie cracks open Marcus's draft of the testing procedures section, clicks <em>Ask agent</em>, watches 167 tokens stream in tagged AGENT_DRAFT. The procedure-6 placeholder explicitly says <code style="font-family: var(--mono); font-size: 11.5px; background: #fef3c7; padding: 1px 6px; border-radius: 3px; color: #b45309; font-weight: 700;">REQUIRES HUMAN REVIEW</code>: <em>"threshold review involves management judgment on materiality and should be drafted by the FDE reviewer with reference to memo M-2026-Q1-MJE."</em></p>
+  <p>The agent knows what it doesn't know. That is the entire pitch.</p>
+  <p>Jamie writes procedure 6 from scratch, citing the memo. Tags the section REVIEWED. Section flips green in the right pane. The token-mix bar at the bottom of the attribution tab updates: 24% agent, 76% human. RC-047 advances to customer review at 13:08.</p>
+
+  <div class="scene-tag">14:30 PM · Handoff package generated · Helios Q1</div>
+  <h2>Scene 6</h2>
+  <h3>Four signed workpapers bundle into one package for Deloitte.</h3>
+  <p>Four workpapers have reached customer sign-off this week — RC-047, FR-018, PC-007, OP-005. Jamie clicks <em>Generate handoff package</em>. Optro Practice assembles the cover memo (3 pages, drafted from the engagement metadata, manually edited by Jamie in five minutes), the 4 signed workpapers, the manifest with sha256 hashes for each artifact, and the 184-row audit log CSV.</p>
+
+  <div class="mini-paper">
+    <div class="mini-head">
+      <span class="mp-id">PACKAGE · PKG-HELIOS-Q1-2026</span>
+      <span class="mp-ts">2026-05-12 14:30 PT · prepared by Jamie Okonkwo</span>
+    </div>
+    Recipient: Deloitte &amp; Touche LLP · Naomi Wilkes, Engagement Partner<br>
+    Contents: 4 workpapers signed · 23 evidence artifacts · 3-page cover memo · 184-row audit log<br>
+    Provenance: every value in every workpaper carries an Optro Provenance v1 signature with optro_record_id citation back to the system of record.<br>
+    <em>"Signed: Jamie Okonkwo, FDE Pod Lead · 2026-05-12 14:30 PT · rec_optro_pkg_helios_q1"</em>
+  </div>
+
+  <p>The Phase-0 implementation ships a JSON manifest. Phase 1 wraps that manifest into a real ZIP and pushes it to the Deloitte secure-transfer portal. The work is the same; the bundler is one engineering ticket.</p>
+
+  <div class="scene-tag">16:47 PM · Email from Deloitte · subject "Q1 testing handoff — no rework"</div>
+  <h2>Scene 7</h2>
+  <h3>The note that proves the production line works.</h3>
+  <p>Naomi Wilkes reads the package in two and a half hours. Her reply lands at 16:47:</p>
+
+  <div class="pull">"Jamie — package received. Reviewed all four workpapers and the cover memo. No rework requested. Provenance citations are clean; audit log captures the agent/human seam clearly enough that we can short-circuit our usual sufficiency-of-procedures workpaper at sign-off. Will need similar for the IT-001 deficiency package in three weeks. — N.W."</div>
+
+  <p>Four workpapers; zero rework. That number is the Practice arm's KPI and it is what scales. Industry baseline for boutique advisory firms is 15–22% rework on first auditor review. Optro Practice runs at 4% over the trailing quarter, and the audit trail is what makes the difference visible.</p>
+
+  <div class="scene-tag">17:30 PM · Portfolio view · 5-minute end-of-day skim</div>
+  <h2>Scene 8</h2>
+  <h3>The principal's view, at altitude.</h3>
+  <p>Jamie clicks over to the portfolio. Three engagements, one pod, the same data shape. Helios is on track at 88 defensibility average; Aperture is on track at 79; Pelagic is at risk at 71 — Marcus Chen needs help and the portfolio view is the first surface where that becomes visible without anyone telling anyone. The pod-utilization panel says Priya is capacity-bound. Jamie writes "Marcus +1 from Priya for two weeks, Pelagic" in the Slack channel and closes the laptop.</p>
+  <p>The principal's view is the part of the product that an MLP-only AI competitor cannot ship. An LLM wrapper draws a beautiful workpaper; it does not run an FDE pod across three engagements with a customer-handoff cadence and a 4% rework rate. <strong>The pod is the product.</strong> The tool is what makes the pod scale beyond three people.</p>
+
+</div>
+
+<div class="end">
+  <div class="lbl">What the prototype demonstrates</div>
+  <h3>This is what audit-grade output looks like when the FDE team is the moat and the workpaper production line is the product.</h3>
+  <p>Foundation models draft; Optro experts review and attach provenance; external auditors sign without rework. That's the Practice value chain in tool form. The agent saves 1,840 hours per quarter on the routine 76%; the FDE pod owns the judgment-shaped 24%; the audit trail captures the seam so the partner across the table can verify both halves on demand.</p>
+  <p>The hedge: <strong>if foundation models commoditize the reasoning layer and software ARR economics break, Optro pivots margin to the FDE service line.</strong> The Practice arm is what we sell on the way down — and the production tool above is what lets three people deliver what used to take a 12-person Big-4 senior team.</p>
+  <a class="cta" href="option-7.html">Open the production tool →</a>
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+</script>
+</body>
+</html>
