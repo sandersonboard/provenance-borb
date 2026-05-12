@@ -9,6 +9,48 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="shared.css" />
+  <style>
+    /* Strategic analysis block */
+    .scenario-block { margin: 14px 0 16px; padding: 12px 14px; background: #fafafa; border: 1px solid var(--border); border-radius: 6px; }
+    .scenario-block-label { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+    .scenario-map { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 0; }
+    .sm-cell { padding: 6px 8px; background: white; border: 1px solid var(--border); border-radius: 3px; font-size: 10px; line-height: 1.3; min-height: 38px; display: flex; flex-direction: column; gap: 1px; }
+    .sm-cell .sm-tag { font-family: ui-monospace, monospace; font-size: 9px; font-weight: 700; color: var(--muted); }
+    .sm-cell .sm-name { font-weight: 500; color: var(--ink); }
+    .sm-cell.active { background: var(--accent); border-color: var(--accent); }
+    .sm-cell.active .sm-tag, .sm-cell.active .sm-name { color: white; }
+    .sm-cell.cross { background: #fef2f2; border-color: #fecaca; }
+    .sm-cell.cross .sm-tag, .sm-cell.cross .sm-name { color: var(--accent); }
+    .sm-cell.vuln { opacity: 0.5; }
+    .sm-cell.vuln .sm-name { text-decoration: line-through; }
+    .scenario-axis { font-size: 8px; color: var(--muted); font-family: ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.08em; display: flex; justify-content: space-between; padding: 4px 2px 0; }
+    .scenario-analysis { font-size: 12px; line-height: 1.55; color: var(--ink); margin: 10px 0 0; }
+    .scenario-analysis strong { color: var(--accent); font-weight: 600; }
+    /* Progressive disclosure */
+    .scenario-deep { margin-top: 10px; }
+    .scenario-deep summary { cursor: pointer; font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.03em; padding: 6px 8px; margin: 0 -8px; border-radius: 4px; list-style: none; user-select: none; display: flex; align-items: center; gap: 6px; }
+    .scenario-deep summary::-webkit-details-marker { display: none; }
+    .scenario-deep summary::before { content: '▸'; font-size: 10px; transition: transform 0.15s; }
+    .scenario-deep[open] summary::before { transform: rotate(90deg); }
+    .scenario-deep summary:hover { background: rgba(168, 49, 63, 0.06); }
+    .scenario-deep-body { margin-top: 10px; padding: 12px 14px; background: white; border: 1px solid var(--border); border-radius: 5px; }
+    .sd-section { margin-bottom: 14px; }
+    .sd-section:last-child { margin-bottom: 0; }
+    .sd-label { font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .sd-text { font-size: 11.5px; line-height: 1.55; color: var(--ink); }
+    .sd-text code { font-family: ui-monospace, monospace; font-size: 11px; background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
+    .sd-list { font-size: 11.5px; line-height: 1.55; color: var(--ink); margin: 0; padding-left: 16px; }
+    .sd-list li { margin-bottom: 3px; }
+    .sd-list li:last-child { margin-bottom: 0; }
+    .sd-cost { display: inline-block; font-family: ui-monospace, monospace; font-size: 10px; background: #fef2f2; color: var(--accent); padding: 1px 6px; border-radius: 3px; }
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.querySelectorAll('.scenario-block').forEach(function(el) {
+        el.addEventListener('click', function(e) { e.stopPropagation(); });
+      });
+    });
+  </script>
 </head>
 <body>
   <header style="border-bottom: 1px solid var(--border); background: white;">
@@ -72,8 +114,56 @@
             <div style="font-size: 11px; color: var(--muted);">Setup walkthrough</div>
           </div>
           <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">Wire Provenance into Claude Desktop</h2>
-          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; flex: 1;">Three steps to get the MCP server running locally and registered with Claude Desktop. Includes the full schema for all 5 tools and the citation model.</p>
-          <div style="font-size: 13px; color: var(--accent); font-weight: 600;">Walk me through it →</div>
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px;">Three steps to get the MCP server running locally and registered with Claude Desktop. Includes the full schema for all 5 tools and the citation model.</p>
+
+          <div class="scenario-block">
+            <div class="scenario-block-label">Scenario hedge</div>
+            <div class="scenario-map">
+              <div class="sm-cell active"><span class="sm-tag">S1</span><span class="sm-name">Wrapper Era</span></div>
+              <div class="sm-cell"><span class="sm-tag">S2</span><span class="sm-name">SoR Premium</span></div>
+              <div class="sm-cell"><span class="sm-tag">S3</span><span class="sm-name">Commodity Hell</span></div>
+              <div class="sm-cell"><span class="sm-tag">S4</span><span class="sm-name">AI-Native Newcomers</span></div>
+            </div>
+            <div class="scenario-axis"><span>← platforms</span><span>applications →</span></div>
+            <p class="scenario-analysis"><strong>Hedges Scenario 1 — Wrapper Era.</strong> An installable MCP server that emits <em>audit-grade</em> output is the Phase-0 plant for partner positioning with foundation-model providers. Ship the proof layer before Anthropic ships a SOX agent, not after.</p>
+            <details class="scenario-deep">
+              <summary>Full strategic analysis</summary>
+              <div class="scenario-deep-body">
+                <div class="sd-section">
+                  <div class="sd-label">Scenario story</div>
+                  <div class="sd-text">By 2027 Anthropic and OpenAI ship SOX-aware agents directly with audit reasoning and compliance memory. The agents will draft management assertions and workpapers — but only as well as the structured evidence they can call. Vertical players who survive are the ones whose data <em>and</em> output discipline are wired in as MCP first, before the model vendors pick a default backend.</div>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">What this prototype proves</div>
+                  <ul class="sd-list">
+                    <li>Installable, runnable MCP server — <code>npx tsx server.ts</code> boots cleanly on stdio.</li>
+                    <li>5 tools registered: <code>get_evidence_chain</code>, <code>get_tickmark_legend</code>, <code>draft_workpaper_section</code>, <code>list_management_assertion_inputs</code>, <code>validate_audit_trail</code>.</li>
+                    <li>Provenance envelope on every response — <code>schema_version</code>, <code>optro_record_id</code>, <code>generated_at</code> — so the agent can't claim what Optro didn't return.</li>
+                    <li>One engineer can ship this in &lt;1 day from scenario plan to functional artifact.</li>
+                  </ul>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">What it does not address</div>
+                  <ul class="sd-list">
+                    <li>Real Optro tenant authentication — Phase 0 trusts local client.</li>
+                    <li>HTTP transport for remote-tenant access.</li>
+                    <li>ChatGPT plugin / OpenAI compatibility.</li>
+                    <li>Multi-tenant routing and per-customer evidence stores.</li>
+                  </ul>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">Trigger conditions</div>
+                  <div class="sd-text">Anthropic ships a SOX-aware agent <strong>AND</strong> 2+ funded wrappers raise $20M+ rounds aimed at audit-draft workflows → double down on data-first + output-discipline architecture; ship Provenance immediately alongside Context.</div>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">Cost · win condition</div>
+                  <div class="sd-text"><span class="sd-cost">2 engineers · 1 quarter</span> for the production version. Win = when Anthropic/OpenAI ship a SOX agent, Optro's MCP is the preferred backend because the audit-grade output layer is already wired in and nothing else returns citations Big 4 reviewers will accept.</div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div style="margin-top: auto; font-size: 13px; color: var(--accent); font-weight: 600;">Walk me through it →</div>
         </div>
       </a>
 
@@ -98,8 +188,55 @@
             <div style="font-size: 11px; color: var(--muted);">Conversation transcript</div>
           </div>
           <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">Watch Claude draft an assertion</h2>
-          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; flex: 1;">A full Claude Desktop transcript: the Controller asks for the management assertion, Provenance returns structured inputs, Claude drafts prose with citations and the three SDs disclosed.</p>
-          <div style="font-size: 13px; color: var(--accent); font-weight: 600;">Show me the transcript →</div>
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px;">A full Claude Desktop transcript: the Controller asks for the management assertion, Provenance returns structured inputs, Claude drafts prose with citations and the three SDs disclosed.</p>
+
+          <div class="scenario-block">
+            <div class="scenario-block-label">Scenario hedge · primary + cross-hedge</div>
+            <div class="scenario-map">
+              <div class="sm-cell active"><span class="sm-tag">S1</span><span class="sm-name">Wrapper Era</span></div>
+              <div class="sm-cell cross"><span class="sm-tag">S2</span><span class="sm-name">SoR Premium</span></div>
+              <div class="sm-cell"><span class="sm-tag">S3</span><span class="sm-name">Commodity Hell</span></div>
+              <div class="sm-cell"><span class="sm-tag">S4</span><span class="sm-name">AI-Native Newcomers</span></div>
+            </div>
+            <div class="scenario-axis"><span>← platforms</span><span>applications →</span></div>
+            <p class="scenario-analysis"><strong>Hedges S1; cross-hedges S2.</strong> The drafted assertion <em>only works</em> because every claim cites an <code style="font-family: ui-monospace, monospace;">optro_record_id</code>. Foundation models can write fluent prose; only the system-of-record can supply citations a Big 4 reviewer accepts. This converts the wrapper relationship into a partner relationship and preserves pricing power.</p>
+            <details class="scenario-deep">
+              <summary>Full strategic analysis</summary>
+              <div class="scenario-deep-body">
+                <div class="sd-section">
+                  <div class="sd-label">Scenario story</div>
+                  <div class="sd-text">Same S1 (Wrapper Era) as Option 1. The Claude transcript additionally proves the S2 (System-of-Record Premium) thesis: foundation models commoditize reasoning, but the evidence chain — captured as <code>optro_record_id</code> citations + tickmark vocabulary + reviewer attestations + override semantics — is the value layer that does not commoditize. When the agent says "F-002 has 3 missing months of evidence," it can only say that because Provenance returned it; the model can't fabricate it.</div>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">What this prototype proves</div>
+                  <ul class="sd-list">
+                    <li>The agent's draft assertion discloses all three open SDs by name (F-001, F-002, F-003) with target close dates — output a Controller would actually sign.</li>
+                    <li><code>REQUIRES HUMAN REVIEW</code> markers appear exactly where judgment was applied, not elsewhere — model can't sneak past them.</li>
+                    <li><code>defensibility_score</code> is a first-class concept the agent acts on, not a vibe.</li>
+                    <li>The defensibility sweep across the 3 SDs is the demo that converts skeptical Controllers — they see the model do the actual job in front of them.</li>
+                  </ul>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">What it does not address</div>
+                  <ul class="sd-list">
+                    <li>Multi-turn citation compounding (what happens when the agent caches results across a 20-turn conversation).</li>
+                    <li>SLA / uptime characteristics for a "system of record" data layer.</li>
+                    <li>How citation discipline holds when the model is asked to <em>summarize</em> rather than enumerate.</li>
+                  </ul>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">Trigger conditions</div>
+                  <div class="sd-text">S1 trigger (Anthropic SOX agent + funded wrappers). Plus: Anthropic Citations API ships and becomes the default UX expectation. Plus: a competitor publishes an AI-drafted workpaper that contains hallucinated evidence and gets publicly burned by a Big 4 firm.</div>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">Cost · win condition</div>
+                  <div class="sd-text"><span class="sd-cost">2 engineers · 1 quarter</span>. Win = Optro becomes the <em>only</em> backend a foundation-model agent can call to produce audit-grade output, and Big 4 firms reference the Provenance citation pattern in their AI-readiness guidance.</div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div style="margin-top: auto; font-size: 13px; color: var(--accent); font-weight: 600;">Show me the transcript →</div>
         </div>
       </a>
 
@@ -119,8 +256,56 @@
             <div style="font-size: 11px; color: var(--muted);">Workpaper output</div>
           </div>
           <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">See workpaper-grade output</h2>
-          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; flex: 1;">A side-by-side: the raw structured response from <code class="inline">draft_workpaper_section</code>, and what an agent renders from it — tickmarks, citations, <code class="inline">REQUIRES HUMAN REVIEW</code> markers, defensibility score.</p>
-          <div style="font-size: 13px; color: var(--accent); font-weight: 600;">Show the output →</div>
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px;">A side-by-side: the raw structured response from <code class="inline">draft_workpaper_section</code>, and what an agent renders from it — tickmarks, citations, <code class="inline">REQUIRES HUMAN REVIEW</code> markers, defensibility score.</p>
+
+          <div class="scenario-block">
+            <div class="scenario-block-label">Scenario hedge · S1 + cross-hedges S2 and S4</div>
+            <div class="scenario-map">
+              <div class="sm-cell active"><span class="sm-tag">S1</span><span class="sm-name">Wrapper Era</span></div>
+              <div class="sm-cell cross"><span class="sm-tag">S2</span><span class="sm-name">SoR Premium</span></div>
+              <div class="sm-cell"><span class="sm-tag">S3</span><span class="sm-name">Commodity Hell</span></div>
+              <div class="sm-cell cross"><span class="sm-tag">S4</span><span class="sm-name">AI-Native Newcomers</span></div>
+            </div>
+            <div class="scenario-axis"><span>← platforms</span><span>applications →</span></div>
+            <p class="scenario-analysis"><strong>Hedges S1; cross-hedges S2 and S4.</strong> The rendered workpaper is the differentiator vs AI-native newcomers. Tickmark vocabulary, Deloitte conventions, structured-slot output, override semantics — these aren't things a 6-month-old startup can fake. They're the domain moat. This is also the artifact the Optro CEO walks into a Big 4 partnership conversation with.</p>
+            <details class="scenario-deep">
+              <summary>Full strategic analysis</summary>
+              <div class="scenario-deep-body">
+                <div class="sd-section">
+                  <div class="sd-label">Scenario story</div>
+                  <div class="sd-text">Same S1 as Options 1 + 2. The workpaper-grade rendering format is the asset the Optro CEO needs for the Big-4-partnership conversation — converts "we ship an MCP server" into "Optro is the audit-grade output layer the Big 4 already recognizes." Simultaneously cross-hedges S4 (AI-native newcomers) by showing depth that requires audit-domain expertise to produce.</div>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">What this prototype proves</div>
+                  <ul class="sd-list">
+                    <li>The structured-slot pattern stops hallucinated evidence at the API boundary — the model literally can't reference an artifact Optro didn't return.</li>
+                    <li>Deloitte tickmark vocabulary (§, b, c, ¶, ‡, †, ◊, ▲, X, ©) is rendered correctly with per-control subsets — Big 4 reviewers will recognize their own conventions.</li>
+                    <li>The contrast view (clean RC-047 chain vs failing FR-007 chain) demonstrates how <code>REQUIRES HUMAN REVIEW</code> surfaces gaps without forcing the model to drop the work.</li>
+                    <li>Defensibility scoring (100 vs 75) gives the agent and the user a shared shorthand for "is this ready to sign."</li>
+                  </ul>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">What it does not address</div>
+                  <ul class="sd-list">
+                    <li>How this generalizes to PwC, EY, KPMG conventions (they differ in tickmark vocabulary and review templates).</li>
+                    <li>Whether Big 4 firms formally accept model-drafted workpapers — partnership conversation still needed.</li>
+                    <li>Long-tail Controller workflows beyond assertion drafting (controls testing assistance, walkthrough prep, exception triage).</li>
+                    <li>Resilience of "evidence-of-truth backend" framing across multiple Anthropic release cycles.</li>
+                  </ul>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">Trigger conditions</div>
+                  <div class="sd-text">S1 trigger. Plus: Big 4 strategic conversation surfaces (firm wants AI-readiness blessing or sample integration). Plus: AI-native newcomer raises a competing seed round on "we'll draft your workpapers with an LLM." Plus: Optro CEO needs a shareable artifact for the Anthropic / Deloitte partnership 1-pager.</div>
+                </div>
+                <div class="sd-section">
+                  <div class="sd-label">Cost · win condition</div>
+                  <div class="sd-text"><span class="sd-cost">2 engineers · 1 quarter</span>. Win = a Big 4 firm references the Provenance output format publicly, Optro becomes the partner Anthropic picks (not the wrapper they squeeze), and AI-native newcomers can't replicate the domain depth without years of audit-firm relationships.</div>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div style="margin-top: auto; font-size: 13px; color: var(--accent); font-weight: 600;">Show the output →</div>
         </div>
       </a>
 
