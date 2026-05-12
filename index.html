@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Provenance — Audit-grade output for the Wrapper Era</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+  <header style="border-bottom: 1px solid var(--border); background: white;">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;">
+      <div>
+        <span class="brand">Provenance</span>
+        <span class="beta-pill proto-pill">PROTOTYPE</span>
+      </div>
+      <div style="font-size: 12px; color: var(--muted);">
+        Internal preview — <span class="accent">do not share</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container" style="padding: 64px 24px;">
+    <div style="max-width: 760px;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Wrapper Era · Phase 0</div>
+      <h1 style="font-size: 44px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px;">
+        Audit-grade output for the Wrapper Era.
+      </h1>
+      <p style="font-size: 18px; color: var(--muted); line-height: 1.5; margin: 0 0 12px;">
+        Provenance is the MCP server that surfaces SOX evidence chains, tickmark conventions, workpaper section scaffolds, management-assertion inputs, and a defensibility validator — all consumed by a foundation-model agent like Claude Desktop.
+      </p>
+      <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin: 0 0 0;">
+        Companion to <a href="https://sandersonboard.github.io/context-borb/" style="color: var(--accent); text-decoration: none;">Context</a>: where Context answers <em>"where are we"</em>, Provenance answers <em>"prove it."</em> The Controller never opens the Optro UI — they ask Claude and get back something a Big 4 reviewer will accept, with every claim cited back to an <code class="inline">optro_record_id</code>.
+      </p>
+    </div>
+
+    <!-- Framing card -->
+    <div style="margin-top: 40px; max-width: 920px; padding: 20px 24px; background: white; border: 1px solid var(--border); border-radius: 8px;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">THE FRAMING</div>
+      <p style="font-size: 14px; color: var(--ink); line-height: 1.65; margin: 0 0 8px;">
+        In the Wrapper Era, the foundation model <em>is</em> the workpaper-drafting interface. A pre-IPO Controller doesn't open Optro — they ask Claude Desktop questions like <em>"draft the management assertion section for our S-1"</em> or <em>"show me the evidence chain for control RC-047."</em>
+      </p>
+      <p style="font-size: 14px; color: var(--ink); line-height: 1.65; margin: 0;">
+        Provenance is the evidence-of-truth backend that makes the agent's output defensible. Structured responses with explicit citations, tickmark vocabulary, and <code class="inline">REQUIRES HUMAN REVIEW</code> markers wherever judgment was applied — so the model can't fabricate evidence and the customer can always trace a claim back to source.
+      </p>
+    </div>
+
+    <section style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+
+      <!-- Option 1 -->
+      <a href="option-1.html" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px -8px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="aspect-ratio: 16/10; background: linear-gradient(135deg, #f3f4f6 0%, #fef2f2 100%); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); position: relative;">
+          <div style="position: absolute; inset: 24px; background: var(--code-bg); color: var(--code-fg); border-radius: 6px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.6;">
+            <div style="color: #64748b;">// claude_desktop_config.json</div>
+            <div><span style="color: #94a3b8;">{</span></div>
+            <div style="padding-left: 10px;"><span style="color: #fbbf24;">"mcpServers"</span>: <span style="color: #94a3b8;">{</span></div>
+            <div style="padding-left: 20px;"><span style="color: #fbbf24;">"optro-provenance-preipo"</span>: <span style="color: #94a3b8;">{</span></div>
+            <div style="padding-left: 30px;"><span style="color: #fbbf24;">"command"</span>: <span style="color: #86efac;">"npx"</span>,</div>
+            <div style="padding-left: 30px;"><span style="color: #fbbf24;">"args"</span>: <span style="color: #94a3b8;">[</span><span style="color: #86efac;">"tsx"</span>, <span style="color: #86efac;">"./server.ts"</span><span style="color: #94a3b8;">]</span></div>
+            <div style="padding-left: 20px;"><span style="color: #94a3b8;">}</span></div>
+            <div style="padding-left: 10px;"><span style="color: #94a3b8;">}</span></div>
+            <div><span style="color: #94a3b8;">}</span></div>
+          </div>
+        </div>
+        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Option 1</div>
+            <div style="font-size: 11px; color: var(--muted);">·</div>
+            <div style="font-size: 11px; color: var(--muted);">Setup walkthrough</div>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">Wire Provenance into Claude Desktop</h2>
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; flex: 1;">Three steps to get the MCP server running locally and registered with Claude Desktop. Includes the full schema for all 5 tools and the citation model.</p>
+          <div style="font-size: 13px; color: var(--accent); font-weight: 600;">Walk me through it →</div>
+        </div>
+      </a>
+
+      <!-- Option 2 -->
+      <a href="option-2.html" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px -8px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="aspect-ratio: 16/10; background: linear-gradient(135deg, #fef2f2 0%, #f3f4f6 100%); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); position: relative; padding: 24px;">
+          <div style="background: white; border-radius: 6px; padding: 14px; box-shadow: 0 4px 12px -4px rgba(0,0,0,0.08); width: 100%; max-width: 320px;">
+            <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
+              <div style="width: 18px; height: 18px; border-radius: 50%; background: var(--accent); flex-shrink: 0;"></div>
+              <div style="font-size: 10px; color: var(--ink); line-height: 1.4;">"Draft the management assertion section for our S-1."</div>
+            </div>
+            <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
+              <div style="width: 18px; height: 18px; border-radius: 50%; background: var(--ink); flex-shrink: 0;"></div>
+              <div style="font-size: 9px; color: var(--muted); font-family: monospace; line-height: 1.4;">→ list_management_assertion_inputs()<br/>→ validate_audit_trail(FR-007)<br/>→ validate_audit_trail(FR-002)<br/>→ validate_audit_trail(IT-001)</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Option 2</div>
+            <div style="font-size: 11px; color: var(--muted);">·</div>
+            <div style="font-size: 11px; color: var(--muted);">Conversation transcript</div>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">Watch Claude draft an assertion</h2>
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; flex: 1;">A full Claude Desktop transcript: the Controller asks for the management assertion, Provenance returns structured inputs, Claude drafts prose with citations and the three SDs disclosed.</p>
+          <div style="font-size: 13px; color: var(--accent); font-weight: 600;">Show me the transcript →</div>
+        </div>
+      </a>
+
+      <!-- Option 3 -->
+      <a href="option-3.html" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px -8px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+        <div style="aspect-ratio: 16/10; background: linear-gradient(135deg, #f3f4f6 0%, #fef2f2 100%); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); position: relative; padding: 24px;">
+          <div style="background: white; border: 1px solid var(--border); border-radius: 6px; padding: 12px; width: 100%; max-width: 300px; font-family: 'Source Serif 4', serif; font-size: 11px; line-height: 1.5; color: var(--ink);">
+            <div style="font-family: var(--sans); font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">Helios Robotics · WP-RC-047-Q12026</div>
+            <div style="font-style: italic; color: var(--ink-light);">Performed: identify population of contract modifications with ARR delta > $100K from CRM export <span style="color: var(--accent); font-weight: 700;">§</span> <span style="color: var(--accent); font-weight: 700;">b</span>. Evidence: <code class="inline" style="font-size: 9px;">art_rc047_q1</code>.</div>
+            <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); font-family: var(--sans); font-size: 9px; color: var(--muted);">Reviewer: Anton Dam · 2026-04-16 · score 100/100</div>
+          </div>
+        </div>
+        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <div style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Option 3</div>
+            <div style="font-size: 11px; color: var(--muted);">·</div>
+            <div style="font-size: 11px; color: var(--muted);">Workpaper output</div>
+          </div>
+          <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">See workpaper-grade output</h2>
+          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px; flex: 1;">A side-by-side: the raw structured response from <code class="inline">draft_workpaper_section</code>, and what an agent renders from it — tickmarks, citations, <code class="inline">REQUIRES HUMAN REVIEW</code> markers, defensibility score.</p>
+          <div style="font-size: 13px; color: var(--accent); font-weight: 600;">Show the output →</div>
+        </div>
+      </a>
+
+    </section>
+
+    <!-- Family -->
+    <section style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);">
+      <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;">Family</div>
+      <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px;">
+        <a href="https://sandersonboard.github.io/velocity-borb/" style="color: var(--muted); text-decoration: none;">Velocity</a>
+        <span style="color: var(--border);">·</span>
+        <a href="https://sandersonboard.github.io/benchmark-borb/" style="color: var(--muted); text-decoration: none;">Benchmark</a>
+        <span style="color: var(--border);">·</span>
+        <a href="https://sandersonboard.github.io/practice-borb/" style="color: var(--muted); text-decoration: none;">Practice</a>
+        <span style="color: var(--border);">·</span>
+        <a href="https://sandersonboard.github.io/context-borb/" style="color: var(--muted); text-decoration: none;">Context</a>
+        <span style="color: var(--border);">·</span>
+        <span style="color: var(--accent); font-weight: 600;">Provenance</span>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="shared.js"></script>
+  <script>injectGate();</script>
+</body>
+</html>

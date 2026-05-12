@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Provenance — Setup walkthrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+</head>
+<body>
+  <div class="demo-nav">
+    <div>
+      <a href="index.html">← All options</a>
+      <span style="color: var(--border); margin: 0 8px;">·</span>
+      <span class="brand">Provenance</span>
+      <span class="beta-pill proto-pill">PROTOTYPE</span>
+    </div>
+    <div style="font-size: 12px; color: var(--muted);">Option 1 · Setup walkthrough</div>
+  </div>
+
+  <main class="container" style="padding: 40px 24px 80px; max-width: 920px;">
+    <header style="margin-bottom: 40px;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Setup walkthrough</div>
+      <h1 style="font-size: 36px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px;">Wire Provenance into Claude Desktop.</h1>
+      <p style="font-size: 15px; color: var(--muted); line-height: 1.5; margin: 0;">Three steps. Two minutes. Then ask Claude to draft a workpaper.</p>
+    </header>
+
+    <h2 style="font-size: 14px; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 16px;">Install</h2>
+
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Clone and install</div>
+        <div class="step-desc">Pulls the MCP server and the <code class="inline">@modelcontextprotocol/sdk</code> dependency.</div>
+        <pre class="code"><code><span class="c"># clone the repo</span>
+git clone git@github.com:sandersonboard/provenance-borb.git
+cd provenance-borb
+
+<span class="c"># install dependencies</span>
+npm install
+
+<span class="c"># verify every handler returns clean shapes (40+ assertions)</span>
+npm run smoke</code></pre>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Add Provenance to your <code class="inline">claude_desktop_config.json</code></div>
+        <div class="step-desc">Replace <code class="inline">/absolute/path/to/provenance-borb</code> with where you cloned the repo. Config locations:<br/>· <strong>macOS:</strong> <code class="inline">~/Library/Application Support/Claude/claude_desktop_config.json</code><br/>· <strong>Windows:</strong> <code class="inline">%APPDATA%\Claude\claude_desktop_config.json</code></div>
+        <pre class="code"><code><span class="p">{</span>
+  <span class="n">"mcpServers"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="n">"optro-provenance-preipo"</span><span class="p">:</span> <span class="p">{</span>
+      <span class="n">"command"</span><span class="p">:</span> <span class="s">"npx"</span><span class="p">,</span>
+      <span class="n">"args"</span><span class="p">:</span> <span class="p">[</span><span class="s">"tsx"</span><span class="p">,</span> <span class="s">"/absolute/path/to/provenance-borb/server.ts"</span><span class="p">]</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+        <div style="margin-top: 10px; font-size: 12px; color: var(--muted); line-height: 1.5;">
+          Provenance pairs naturally with <a href="https://sandersonboard.github.io/context-borb/" style="color: var(--accent); text-decoration: none;">Context</a>. Add both <code class="inline">mcpServers</code> entries and Claude will pick the right tool depending on whether the user is asking <em>"where are we"</em> (Context) or <em>"prove it"</em> (Provenance).
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Restart Claude Desktop and ask a question</div>
+        <div class="step-desc">Quit and re-open Claude Desktop. The server registers as <code class="inline">optro-provenance-preipo</code> and you'll see "5 tools available" in the MCP indicator. Then try one of:</div>
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <div style="padding: 10px 14px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; font-family: var(--serif); font-size: 14px; color: var(--ink);">"Draft the management assertion section for Helios's S-1 based on current testing status."</div>
+          <div style="padding: 10px 14px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; font-family: var(--serif); font-size: 14px; color: var(--ink);">"Show me the evidence chain for control RC-047 in workpaper form."</div>
+          <div style="padding: 10px 14px; background: #fef2f2; border: 1px solid #fecaca; border-radius: 6px; font-family: var(--serif); font-size: 14px; color: var(--ink);">"Run a defensibility check across our three open significant deficiencies."</div>
+        </div>
+        <div style="margin-top: 12px;">
+          <a href="option-2.html" style="font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 600;">See what each prompt returns →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tool schemas -->
+    <h2 style="font-size: 14px; font-weight: 700; color: var(--ink); text-transform: uppercase; letter-spacing: 0.08em; margin: 48px 0 16px;">The 5 tools</h2>
+
+    <div class="tool-schema-card">
+      <div class="tool-schema-name">get_evidence_chain(control_id)</div>
+      <div class="tool-schema-desc">Full audit-grade chain for one control: definition, owner, frequency, test procedures, evidence artifacts (with ids and types — screenshot, query_output, attestation, sample, reconciliation, log_export), reviewer attestation, overrides applied, final disposition, defensibility_score, issues.</div>
+      <div class="tool-schema-params">→ control_id: string (e.g., "RC-047", "FR-007", "IT-001")</div>
+    </div>
+
+    <div class="tool-schema-card">
+      <div class="tool-schema-name">get_tickmark_legend(control_id)</div>
+      <div class="tool-schema-desc">Deloitte-standard tickmark conventions. Each symbol → definition + procedure. Response distinguishes symbols actually used in this control's workpapers from the full legend, so the agent annotates procedure language correctly.</div>
+      <div class="tool-schema-params">→ control_id: string</div>
+    </div>
+
+    <div class="tool-schema-card">
+      <div class="tool-schema-name">draft_workpaper_section(control_id, section)</div>
+      <div class="tool-schema-desc">Structured slots — not prose — for one workpaper section. Header, slots[], citations, and explicit <code class="inline">REQUIRES HUMAN REVIEW</code> markers wherever judgment was applied. The agent renders prose downstream using slot values verbatim; structure prevents hallucinated evidence.</div>
+      <div class="tool-schema-params">→ control_id: string<br/>→ section: "narrative" | "testing" | "exception" | "remediation"</div>
+    </div>
+
+    <div class="tool-schema-card">
+      <div class="tool-schema-name">list_management_assertion_inputs()</div>
+      <div class="tool-schema-desc">Inputs for the S-1 management assertion: scope of program (consolidation + exclusions), must-have universe counts, testing completeness, open findings by severity (material weakness / significant deficiency / deficiency), remediation status, disclosure recommendation with proposed caveat language.</div>
+      <div class="tool-schema-params">→ no parameters</div>
+    </div>
+
+    <div class="tool-schema-card">
+      <div class="tool-schema-name">validate_audit_trail(control_id)</div>
+      <div class="tool-schema-desc">Defensibility check on one control's chain. Returns defensibility_score (0-100) and issues[] — each with severity (blocking/high/medium/low), category (missing_evidence / missing_reviewer / missing_override_reason / missed_cycle / stale_attestation), and remediation_suggestion. Call on every must-have control before signing the management assertion.</div>
+      <div class="tool-schema-params">→ control_id: string</div>
+    </div>
+
+    <!-- Provenance signature note -->
+    <div style="margin-top: 32px; padding: 16px 20px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px;">
+      <div style="font-size: 11px; font-weight: 700; color: #92400e; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">PROVENANCE SIGNATURE</div>
+      <div style="font-size: 13px; color: var(--ink); line-height: 1.6;">
+        Every tool response is wrapped in a provenance envelope: <code class="inline">generated_at</code>, <code class="inline">source_system</code>, <code class="inline">schema_version</code>, <code class="inline">optro_record_id</code>. Plus every artifact, procedure, reviewer, and override carries its own <code class="inline">optro_record_id</code>. When Claude says <em>"4 orphaned accounts were identified"</em>, the user can trace it back to <code class="inline">rec_art_it001_l1</code> in Optro.
+      </div>
+    </div>
+
+    <!-- What's NOT here -->
+    <div style="margin-top: 16px; padding: 16px 20px; background: #fafafa; border: 1px solid var(--border); border-radius: 8px;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">PHASE 0 SCOPE</div>
+      <div style="font-size: 13px; color: var(--ink-light); line-height: 1.6;">
+        Trusts local client (no auth). Mock data only — single fictional customer (Helios Robotics). Stdio transport only (no HTTP). No tests beyond the smoke script. Phase 1 wires the same tool shapes to the real Optro evidence database.
+      </div>
+    </div>
+
+    <div style="margin-top: 40px;">
+      <a class="btn btn-primary" href="option-2.html">See it in a Claude conversation →</a>
+    </div>
+
+  </main>
+
+  <script src="shared.js"></script>
+  <script>injectGate();</script>
+</body>
+</html>
