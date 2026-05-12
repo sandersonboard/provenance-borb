@@ -1,8 +1,12 @@
-# Provenance — Demo (System-of-Record Premium frontend)
+# Provenance — Demo
 
-**This is what audit-grade output looks like when Optro's data lineage IS the product. Every hover reveals provenance no other vendor can produce. The peer-defensibility benchmark is the System-of-Record-Premium moat made visible.**
+**Two scenario hedges, one data backbone, six demos.**
 
-A Big-4-style workpaper viewer for the System-of-Record Premium scenario in the four-scenario plan. The Controller uses the surface to prepare for the Deloitte walkthrough; the engagement partner uses it during the walkthrough to verify defensibility. The thing every other vendor renders as a flat document, Provenance renders as a live read against the source system — every value hover-citable, every sign-off time-stamped, every override carrying a documented reason.
+**Group A (Options 1–3) — System-of-Record Premium.** *This is what audit-grade output looks like when Optro's data lineage IS the product. Every hover reveals provenance no other vendor can produce. The peer-defensibility benchmark is the moat made visible.* The Controller and Big-4 partner read the workpaper directly; every value is hover-citable to its source record.
+
+**Group B (Options 4–6) — Wrapper Era.** *Optro is the evidence-of-truth backend; the foundation-model agent is the workpaper-drafting interface.* An MCP server exposes five tools; the agent calls them and gets back audit-grade structured responses with optro_record_id citations and explicit REQUIRES HUMAN REVIEW markers where judgment was applied.
+
+Same Helios Robotics fixture. Same Optro Provenance v1 signature. Different consumer.
 
 ## The single demo claim
 
@@ -24,11 +28,19 @@ That's the bet, in one sentence. Provenance is the proof artifact.
 
 (Smoke-and-mirrors HTML — no Next.js, no router. The PRD's `/workpapers/[id]/chain` becomes `option-1-chain.html`.)
 
-## The three demo formats
+## The six demo formats
 
-- **Option A — the click-through.** Acceptance-path. A Controller walking the workpaper end-to-end. Hover any value to see provenance.
-- **Option B — the Big-4 one-pager.** Three frames stacked vertically for screensharing during the walkthrough.
-- **Option C — the long-scroll.** Eight scenes of a Tuesday morning at Helios when the workpaper stopped being a document.
+**System-of-Record Premium hedge — the Controller sees the workpaper**
+
+- **Option A** (`option-1.html`) — the click-through. Acceptance path. A Controller walking the workpaper end-to-end. Hover any value to see provenance.
+- **Option B** (`option-2.html`) — the Big-4 one-pager. Three frames stacked vertically for screensharing during the walkthrough.
+- **Option C** (`option-3.html`) — the long-scroll. Eight scenes of a Tuesday morning at Helios when the workpaper stopped being a document.
+
+**Wrapper-Era hedge — the agent sees the workpaper**
+
+- **Option D** (`option-4.html`) — Wire Provenance into Claude Desktop. Install walkthrough + five MCP tools + npm run smoke.
+- **Option E** (`option-5.html`) — Watch Claude draft an assertion. Simulated three-prompt transcript with collapsible tool calls and optro_record_id citations.
+- **Option F** (`option-6.html`) — See workpaper-grade output. The rendered artifact with tickmark annotations and REQUIRES HUMAN REVIEW callouts.
 
 ---
 
@@ -49,14 +61,17 @@ That's the acceptance loop. Everything else is supporting cast.
 - Not a real Next.js app. It is the smoke-and-mirrors version of the PRD, optimized for fast positioning conversations with AuditBoard leadership.
 - Not authenticated. The BORB gate protects the static demo from casual sharing only.
 - Not editable. Phase-0 is read-only.
-- Not the Wrapper-Era version. That hedge is the MCP server preserved in this same repo (`server.ts`, `provenance.ts`, `npm run smoke`) and is what's deployed at [sandersonboard.github.io/context-borb](https://sandersonboard.github.io/context-borb/). Provenance hedges the **System-of-Record Premium** scenario specifically.
+- Not deployed as live infrastructure. The MCP server behind Options D–F runs locally via `npm install && npm run smoke`. The static demos above are the smoke-and-mirrors surface of both hedges.
 
 ---
 
 ## Why this prototype matters (the strategic frame)
 
-This is the **System-of-Record Premium bet** in the four-scenario plan. If reasoning commoditizes and the moat shifts from "best chat UX" to "only one who can produce the underlying record," Optro wins by being the only vendor whose workpapers ship with verifiable provenance. The peer-defensibility benchmark — a number Helios can compute only because Optro sits on the actual data of 47 consented pre-IPO peers — is the moat made visible.
+This is **no-regret move #2 (audit-grade output layer)** from the four-scenario plan — and it pays out across two scenarios, not one.
 
-This is also **no-regret move #2 (audit-grade output layer)** from the same scenario plan. Defensibility holds across all four scenarios; the audit firm cares about the chain whether the agent drafts the workpaper or the Controller does. Build it once, ship it under whatever GTM motion wins.
+- In **System-of-Record Premium** (Options A–C), the moat is the live citation chain on every value in the workpaper. The peer-defensibility benchmark — a number Helios can compute only because Optro sits on the actual data of 47 consented pre-IPO peers — is the moat made visible.
+- In the **Wrapper Era** (Options D–F), the moat is the structured citation envelope around every tool response the agent receives. The MCP server is the proof that the underlying data shape works for either consumer.
 
-The note Naomi Wilkes writes in her engagement file at the end of Option C is the goal: *"Defensibility evidence is rendered live against the underlying source-of-record systems at the point of review. Reduces substantive testing requirement on selected revenue-cycle controls."* That is what we are selling.
+Defensibility holds across all four scenarios; the audit firm cares about the chain whether the agent drafts the workpaper or the Controller does. Build the audit-grade output layer once; ship it under whatever GTM motion wins.
+
+The note Naomi Wilkes writes in her engagement file at the end of Option C is the goal: *"Defensibility evidence is rendered live against the underlying source-of-record systems at the point of review. Reduces substantive testing requirement on selected revenue-cycle controls."* That note becomes the management-letter line either way — whether the workpaper was rendered by Optro's UI or drafted by Claude calling Optro's MCP. That is what we are selling.

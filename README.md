@@ -1,6 +1,6 @@
 # provenance-borb
 
-Audit-grade workpaper viewer for the **System-of-Record Premium** scenario in the Optro pre-IPO scenario plan. A Big-4-style workpaper with live, hover-citable provenance on every value — and a peer-defensibility benchmark that only the system of record can produce.
+Audit-grade output layer for Optro — hedging **two** scenarios in the pre-IPO scenario plan from one codebase. A Big-4-style workpaper with live, hover-citable provenance on every value (Group A · System-of-Record Premium); plus an MCP server exposing the same data to a foundation-model agent so it can draft the workpaper for the Controller (Group B · Wrapper Era).
 
 **Live demo:** [sandersonboard.github.io/provenance-borb](https://sandersonboard.github.io/provenance-borb/) (BORB-gated)
 
@@ -8,20 +8,24 @@ Audit-grade workpaper viewer for the **System-of-Record Premium** scenario in th
 
 ## What is in this repo
 
-Two products hedging two different scenarios, sharing one data model:
+Six demo formats — three per hedge — plus the runnable MCP server source:
 
-1. **Static frontend prototype** — the System-of-Record Premium hedge — deployed as GitHub Pages and visible above. Plain HTML/CSS/JS, no build step. Pattern matches the rest of the Optro demo family.
-2. **MCP server (`server.ts`, `provenance.ts`)** — the Wrapper-Era hedge — preserved from an earlier session. Run `npm install && npm run smoke` to exercise the five tools.
+1. **Static frontend prototype** — six HTML demos, deployed as GitHub Pages. Plain HTML/CSS/JS, no build step. Pattern matches the rest of the Optro demo family.
+2. **MCP server (`server.ts`, `provenance.ts`)** — real, runnable code behind Options D–F. Run `npm install && npm run smoke` to exercise the five tools, or wire into Claude Desktop locally.
 
-The GitHub Pages site serves the frontend prototype. The MCP server is not deployed; it ships as source for anyone who wants to wire it into Claude Desktop locally.
+## The six demos
 
-## The frontend prototype (what the live demo shows)
-
-A workpaper-centric application built around one hero control (RC-047 — manual journal entry approval, revenue recognition) plus an index of 175 mock controls for Helios Robotics. Three demo formats, every one starting from `index.html`:
+**Group A — System-of-Record Premium hedge — the Controller sees the workpaper**
 
 - **Option A** (`option-1.html` → `option-1-viewer.html` → `-chain` → `-peers` → `-walkthrough`) — the click-through. The product as a Controller would actually use it before a Big-4 walkthrough.
 - **Option B** (`option-2.html`) — the condensed Big-4 pitch. Three frames stacked vertically for screensharing during the walkthrough.
 - **Option C** (`option-3.html`) — the long-scroll. Eight scenes of the Tuesday morning that Helios's Q1 walkthrough stopped being a document.
+
+**Group B — Wrapper-Era hedge — the agent sees the workpaper**
+
+- **Option D** (`option-4.html`) — Wire Provenance into Claude Desktop. Install walkthrough for the MCP server + five tools + smoke test.
+- **Option E** (`option-5.html`) — Watch Claude draft an assertion. Simulated transcript with collapsible tool calls and citations.
+- **Option F** (`option-6.html`) — See workpaper-grade output. The rendered artifact with tickmark annotations and REQUIRES HUMAN REVIEW markers.
 
 The acceptance script is in `DEMO.md`.
 

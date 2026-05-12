@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Provenance — Claude Desktop transcript</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <style>
+    .transcript {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+    .qa-block { margin-bottom: 56px; }
+    .qa-block:not(:last-child) { padding-bottom: 56px; border-bottom: 1px solid var(--border); }
+    .answer-prose { font-size: 14px; line-height: 1.6; }
+    .answer-prose strong { color: var(--ink); font-weight: 600; }
+    .answer-prose code {
+      font-family: var(--mono);
+      font-size: 12px;
+      background: #fef2f2;
+      color: var(--accent);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .citation {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      background: #f3f4f6;
+      padding: 1px 5px;
+      border-radius: 3px;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+    .assertion-draft {
+      font-family: var(--serif);
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--ink);
+      background: #fffaf0;
+      border-left: 3px solid var(--accent);
+      padding: 18px 22px;
+      margin: 14px 0;
+      border-radius: 0 6px 6px 0;
+    }
+    .assertion-draft p { margin: 0 0 12px; }
+    .assertion-draft p:last-child { margin-bottom: 0; }
+    .review-flag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      background: #fef3c7;
+      color: #92400e;
+      padding: 1px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-nav">
+    <div>
+      <a href="index.html">← All options</a>
+      <span style="color: var(--border); margin: 0 8px;">·</span>
+      <span class="brand">Provenance</span>
+      <span class="beta-pill proto-pill">PROTOTYPE</span>
+    </div>
+    <div style="font-size: 12px; color: var(--muted);">Option E · Claude transcript</div>
+  </div>
+
+  <main class="transcript">
+    <header style="margin-bottom: 32px; text-align: center;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Simulated Claude Desktop session</div>
+      <h1 style="font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px;">What it looks like with Provenance installed.</h1>
+      <p style="font-size: 14px; color: var(--muted); margin: 0 auto; max-width: 600px;">
+        Two prompts from a pre-IPO Controller. Tool calls are visible inline — click to expand. The synthesized output includes a full draft assertion and a defensibility sweep with every claim cited to an <code class="inline">optro_record_id</code>.
+      </p>
+    </header>
+
+    <!-- ===== Q1: Draft management assertion ===== -->
+    <div class="qa-block">
+      <div class="chat-msg">
+        <div class="chat-avatar user">AD</div>
+        <div class="chat-body">
+          <div class="chat-author">Anton Dam · Controller, Helios Robotics</div>
+          <div class="chat-bubble user-bubble">Draft the management assertion section for Helios's S-1 based on current testing status. Disclose anything that needs disclosure, and cite every fact.</div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        <div class="chat-avatar claude">C</div>
+        <div class="chat-body">
+          <div class="chat-author">Claude · with Provenance MCP server connected</div>
+          <div class="chat-bubble">
+            <div style="font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 12px;">I'll pull the assertion inputs first, then validate each significant-deficiency control to make sure the disclosure language is accurate.</div>
+
+            <div class="tool-call" onclick="toggleTool(this)">
+              <div class="tool-call-header">
+                <span class="label">TOOL CALL</span>
+                <span class="name">list_management_assertion_inputs()</span>
+                <span class="chev">▾</span>
+              </div>
+              <div class="tool-call-body"><pre style="margin: 0; white-space: pre-wrap;"><span class="n">"company_name"</span>: <span class="s">"Helios Robotics, Inc."</span>
+<span class="n">"target_filing"</span>: <span class="s">"2027-01-15"</span>
+<span class="n">"framework"</span>: <span class="s">"COSO 2013 Internal Control — Integrated Framework"</span>
+<span class="n">"scope_of_program"</span>: {
+  <span class="n">"consolidation_scope"</span>: <span class="s">"Helios Robotics, Inc. and wholly-owned operating subsidiaries..."</span>,
+  <span class="n">"exclusions"</span>: [
+    <span class="s">"Helios Robotics Singapore Pte. Ltd. — entity dissolved Q1 2026 (memo M-2026-04)"</span>,
+    <span class="s">"Equity-method investment in Aurora Optics Inc."</span>
+  ]
+}
+<span class="n">"controls_in_scope"</span>: { <span class="n">"universe_total"</span>: <span class="s">175</span>, <span class="n">"must_have_total"</span>: <span class="s">96</span>, <span class="n">"must_have_tested"</span>: <span class="s">58</span> }
+<span class="n">"open_findings"</span>: {
+  <span class="n">"by_severity"</span>: { <span class="n">"material_weakness"</span>: <span class="s">0</span>, <span class="n">"significant_deficiency"</span>: <span class="s">3</span>, <span class="n">"deficiency"</span>: <span class="s">9</span> },
+  <span class="n">"significant_deficiencies"</span>: [
+    { <span class="n">"id"</span>: <span class="s">"F-001"</span>, <span class="n">"control_id"</span>: <span class="s">"FR-007"</span>, <span class="n">"description"</span>: <span class="s">"JE approval threshold not enforced..."</span>, <span class="n">"remediation_target"</span>: <span class="s">"2026-07-15"</span> },
+    { <span class="n">"id"</span>: <span class="s">"F-002"</span>, <span class="n">"control_id"</span>: <span class="s">"FR-002"</span>, <span class="n">"description"</span>: <span class="s">"Deferred revenue rollforward evidence not retained for 3 of last 12 months"</span>, <span class="n">"remediation_target"</span>: <span class="s">"2026-08-30"</span> },
+    { <span class="n">"id"</span>: <span class="s">"F-003"</span>, <span class="n">"control_id"</span>: <span class="s">"IT-001"</span>, <span class="n">"description"</span>: <span class="s">"Production access review missed Q4 2025 cycle; 4 orphaned accounts"</span>, <span class="n">"remediation_target"</span>: <span class="s">"2026-06-30"</span> }
+  ]
+}
+<span class="n">"disclosure_recommendation"</span>: { <span class="n">"severity_to_disclose"</span>: <span class="s">"significant_deficiency"</span>, ... }
+<span class="n">"optro_record_id"</span>: <span class="s">"rec_mgmt_assertion_inputs_helios_2026_05"</span></pre></div>
+            </div>
+
+            <div class="tool-call" onclick="toggleTool(this)">
+              <div class="tool-call-header">
+                <span class="label">TOOL CALL</span>
+                <span class="name">validate_audit_trail(control_id="FR-007")</span>
+                <span class="chev">▾</span>
+              </div>
+              <div class="tool-call-body"><pre style="margin: 0; white-space: pre-wrap;"><span class="n">"defensibility_score"</span>: <span class="s">75</span>
+<span class="n">"pass"</span>: <span class="k">false</span>
+<span class="n">"issues_summary"</span>: { <span class="n">"blocking"</span>: <span class="s">1</span>, <span class="n">"high"</span>: <span class="s">0</span> }
+<span class="n">"issues"</span>: [
+  { <span class="n">"severity"</span>: <span class="s">"blocking"</span>, <span class="n">"category"</span>: <span class="s">"missing_evidence"</span>, <span class="n">"step"</span>: <span class="s">4</span>,
+    <span class="n">"description"</span>: <span class="s">"Test step 4 has no evidence artifact. Expected: attestation. Procedure: 'Investigate any entries lacking approval evidence'."</span>,
+    <span class="n">"remediation_suggestion"</span>: <span class="s">"Capture attestation evidence per the testing plan and link via artifact_id."</span> }
+]
+<span class="n">"citation_chain_record"</span>: <span class="s">"rec_chain_fr_007"</span></pre></div>
+            </div>
+
+            <div class="tool-call" onclick="toggleTool(this)">
+              <div class="tool-call-header">
+                <span class="label">TOOL CALL</span>
+                <span class="name">validate_audit_trail(control_id="FR-002")</span>
+                <span class="chev">▾</span>
+              </div>
+              <div class="tool-call-body"><pre style="margin: 0; white-space: pre-wrap;"><span class="n">"defensibility_score"</span>: <span class="s">60</span>
+<span class="n">"issues"</span>: [
+  { <span class="n">"severity"</span>: <span class="s">"blocking"</span>, <span class="n">"category"</span>: <span class="s">"missing_evidence"</span>, <span class="n">"step"</span>: <span class="s">4</span>,
+    <span class="n">"description"</span>: <span class="s">"Test step 4 has no evidence artifact. Expected: attestation."</span> },
+  { <span class="n">"severity"</span>: <span class="s">"high"</span>, <span class="n">"category"</span>: <span class="s">"missed_cycle"</span>,
+    <span class="n">"description"</span>: <span class="s">"Reviewer comments indicate non-retained evidence — operating effectiveness not demonstrable for affected periods (Sep 2025, Nov 2025, Feb 2026)."</span> }
+]
+<span class="n">"citation_chain_record"</span>: <span class="s">"rec_chain_fr_002"</span></pre></div>
+            </div>
+
+            <div class="tool-call" onclick="toggleTool(this)">
+              <div class="tool-call-header">
+                <span class="label">TOOL CALL</span>
+                <span class="name">validate_audit_trail(control_id="IT-001")</span>
+                <span class="chev">▾</span>
+              </div>
+              <div class="tool-call-body"><pre style="margin: 0; white-space: pre-wrap;"><span class="n">"defensibility_score"</span>: <span class="s">60</span>
+<span class="n">"issues"</span>: [
+  { <span class="n">"severity"</span>: <span class="s">"blocking"</span>, <span class="n">"category"</span>: <span class="s">"missing_evidence"</span>, <span class="n">"step"</span>: <span class="s">4</span> },
+  { <span class="n">"severity"</span>: <span class="s">"high"</span>, <span class="n">"category"</span>: <span class="s">"missed_cycle"</span>,
+    <span class="n">"description"</span>: <span class="s">"Q4 2025 cycle missed entirely; 4 orphaned production accounts identified."</span> }
+]
+<span class="n">"citation_chain_record"</span>: <span class="s">"rec_chain_it_001"</span></pre></div>
+            </div>
+
+            <div class="answer-prose" style="margin-top: 18px;">
+              <p>Here's the draft management assertion section. Three significant deficiencies need to be disclosed — none rise to material weakness. I've flagged the two spots where the inputs require Controller judgment before sign-off.</p>
+            </div>
+
+            <div class="assertion-draft">
+              <p style="font-family: var(--sans); font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 12px;">DRAFT — Management's Report on Internal Control Over Financial Reporting</p>
+
+              <p>Management of <strong>Helios Robotics, Inc.</strong> is responsible for establishing and maintaining adequate internal control over financial reporting, as defined in Rule 13a-15(f) under the Securities Exchange Act of 1934. Helios's ICFR program is designed to provide reasonable assurance regarding the reliability of financial reporting and the preparation of financial statements for external purposes in accordance with U.S. generally accepted accounting principles. <span class="citation">rec_mgmt_assertion_inputs_helios_2026_05</span></p>
+
+              <p><strong>Scope.</strong> Management's assessment covers Helios Robotics, Inc. and its wholly-owned operating subsidiaries (Helios Robotics International Holdings B.V. and Helios Robotics Manufacturing LLC). The assessment excludes Helios Robotics Singapore Pte. Ltd., which was dissolved during the first quarter of 2026 (see scope memo M-2026-04), and the company's equity-method investment in Aurora Optics Inc., consistent with SEC guidance. <span class="citation">rec_mgmt_assertion_inputs_helios_2026_05</span></p>
+
+              <p>Management conducted its assessment using the criteria set forth by the Committee of Sponsoring Organizations of the Treadway Commission in <em>Internal Control — Integrated Framework (2013)</em>. The program comprises 175 controls across financial reporting, IT general controls, and entity-level controls. As of the assessment date, <strong>60% of must-have controls have been tested</strong> in the current cycle, with the year-one testing cycle scheduled to complete on October 31, 2026. <span class="citation">rec_mgmt_assertion_inputs_helios_2026_05</span></p>
+
+              <p><strong>Material weaknesses identified: none.</strong></p>
+
+              <p><strong>Significant deficiencies identified: three.</strong> Management discloses the following matters, each of which is in active remediation:</p>
+
+              <ol style="padding-left: 22px; margin: 8px 0;">
+                <li style="margin-bottom: 10px;"><strong>F-001 — Journal entry approval threshold (FR-007).</strong> During the Q1 2026 testing cycle, two manual journal entries within the $25,000-$50,000 range were posted without documented Controller approval as required by company policy. No financial misstatement was identified. Remediation, including a NetSuite workflow tightening to enforce mandatory pre-post approval at the $25,000 threshold, is in progress with a target close date of July 15, 2026. <span class="citation">rec_finding_001</span> <span class="citation">rec_chain_fr_007</span></li>
+
+                <li style="margin-bottom: 10px;"><strong>F-002 — Deferred revenue evidence retention (FR-002).</strong> Supporting workpapers for the monthly deferred revenue rollforward were not retained for three of the trailing twelve months (September 2025, November 2025, February 2026), reflecting a personnel transition during the period. The rollforward calculations for the nine retained months reconcile to the general ledger without exception. Management is reconstructing the three missing months from CRM contract data and the invoice ledger; target close August 30, 2026. <span class="citation">rec_finding_002</span> <span class="citation">rec_chain_fr_002</span></li>
+
+                <li style="margin-bottom: 10px;"><strong>F-003 — Production access review (IT-001).</strong> The quarterly production access review for the fourth quarter of 2025 was not performed, reflecting a scheduling oversight during an IT Director transition. Upon performance of the first quarter 2026 review cycle, four orphaned accounts were identified, including one with active production database credentials retained for four months following the employee's departure. Forensic review of access logs identified no evidence of misuse. Quarterly cadence has been reinstated; remediation target close June 30, 2026. <span class="citation">rec_finding_003</span> <span class="citation">rec_chain_it_001</span></li>
+              </ol>
+
+              <div class="review-required" style="font-family: var(--sans);">
+                <div class="review-required-icon">!</div>
+                <div>
+                  <div class="review-required-label">Required caveat · testing duration · awaiting Controller sign-off</div>
+                  <div class="review-required-body">The compressed Year-1 testing schedule means certain controls will have less than six months of demonstrated operating effectiveness at the time of filing. Disclosure should describe the testing cadence and the expected coverage as of the comfort-letter response date.</div>
+                  <div class="review-required-prompt">Controller must finalize the caveat language with Internal Audit and the Deloitte engagement team before this goes into the S-1. Cited from <code style="font-family: var(--mono); font-size: 11px;">rec_mgmt_assertion_inputs_helios_2026_05</code>.</div>
+                </div>
+              </div>
+
+              <div class="review-required" style="font-family: var(--sans);">
+                <div class="review-required-icon">!</div>
+                <div>
+                  <div class="review-required-label">Required caveat · evidence-retention gap · awaiting Controller sign-off</div>
+                  <div class="review-required-body">Management is unable to attest to operating effectiveness for the full trailing-twelve-month testing window for control FR-002 due to the non-retention of three months of supporting evidence. The control's operating effectiveness is demonstrable for the nine months for which evidence is retained, and reconstruction is in progress.</div>
+                  <div class="review-required-prompt">Controller must confirm caveat language with General Counsel. Cited from <code style="font-family: var(--mono); font-size: 11px;">rec_chain_fr_002</code>.</div>
+                </div>
+              </div>
+
+              <p>Based on this assessment, and except for the three significant deficiencies described above, management has concluded that Helios Robotics, Inc.'s internal control over financial reporting was effective as of [filing reference date].</p>
+            </div>
+
+            <!-- Sign-off ribbon for the assertion -->
+            <div class="signoff-ribbon" style="margin-top: 20px;">
+              <div class="signoff-ribbon-head">
+                <span>Required sign-offs before this draft can go into the S-1</span>
+                <span class="meta">2 caveats awaiting · 0 of 3 signed</span>
+              </div>
+              <div class="signoff-grid">
+                <div class="signoff-card awaiting">
+                  <div class="signoff-role">Preparer · Controller</div>
+                  <span class="signoff-status-pill awaiting">⚠ Awaiting</span>
+                  <div class="signoff-name">Anton Dam</div>
+                  <div class="signoff-role-name">Controller, Helios Robotics</div>
+                  <div class="signoff-action">Resolve the 2 REQUIRES HUMAN REVIEW caveats above; then sign here.</div>
+                </div>
+                <div class="signoff-card awaiting">
+                  <div class="signoff-role">Reviewer · CFO</div>
+                  <span class="signoff-status-pill awaiting">⚠ Awaiting</span>
+                  <div class="signoff-name">David Cho</div>
+                  <div class="signoff-role-name">Chief Financial Officer</div>
+                  <div class="signoff-action">Reviews disclosure language after Controller signs. Cross-reference SD remediation status.</div>
+                </div>
+                <div class="signoff-card awaiting">
+                  <div class="signoff-role">Audit Committee chair</div>
+                  <span class="signoff-status-pill awaiting">⚠ Awaiting</span>
+                  <div class="signoff-name">[Pending appointment]</div>
+                  <div class="signoff-role-name">Audit Committee, Board of Directors</div>
+                  <div class="signoff-action">Final approval at the 2026-12-15 audit committee readiness review before management assertion goes to Deloitte.</div>
+                </div>
+              </div>
+              <div class="signoff-footer">
+                <span>Workflow gate: <strong style="color: var(--awaiting);">HUMAN-IN-THE-LOOP REQUIRED</strong> — Claude produced this draft; three humans must attest before it ships.</span>
+                <code>signed_count: 0 / 3 · open_caveats: 2</code>
+              </div>
+            </div>
+
+            <div class="answer-prose" style="margin-top: 14px;">
+              <p style="color: var(--muted); font-size: 13px;">The model produced the assertion language. Three humans have to sign it before it ships, and two specific caveats need Controller judgment first. Every other factual claim above is pulled directly from Optro with citation pills — the model literally cannot fabricate the numbers because it didn't have access to anything except what <code class="inline">list_management_assertion_inputs()</code> returned.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Q2: Defensibility sweep ===== -->
+    <div class="qa-block">
+      <div class="chat-msg">
+        <div class="chat-avatar user">AD</div>
+        <div class="chat-body">
+          <div class="chat-author">Anton Dam</div>
+          <div class="chat-bubble user-bubble">Defensibility check on the three SDs — tell me exactly what I need to fix before the assertion package is due to Deloitte on Nov 30.</div>
+        </div>
+      </div>
+
+      <div class="chat-msg">
+        <div class="chat-avatar claude">C</div>
+        <div class="chat-body">
+          <div class="chat-author">Claude</div>
+          <div class="chat-bubble">
+            <div style="font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 12px;">I have the validation results from the previous turn. Pulling the underlying chains for the remediation owners and target dates.</div>
+
+            <div class="tool-call" onclick="toggleTool(this)">
+              <div class="tool-call-header">
+                <span class="label">TOOL CALL</span>
+                <span class="name">get_evidence_chain(control_id="FR-007")</span>
+                <span class="chev">▾</span>
+              </div>
+              <div class="tool-call-body"><pre style="margin: 0; white-space: pre-wrap;"><span class="n">"disposition"</span>: <span class="s">"exception"</span>
+<span class="n">"defensibility_score"</span>: <span class="s">75</span>
+<span class="n">"reviewer"</span>: { <span class="n">"reviewer_key"</span>: <span class="s">"anton_dam"</span>,
+  <span class="n">"comments"</span>: <span class="s">"Exception: 2 entries between $25K-$50K (JE-2026-0188 and JE-2026-0214, Mar 2026) posted without Controller approval. Remediation: NetSuite workflow tightening; target close 2026-07-15."</span> }
+<span class="n">"finding_refs"</span>: [<span class="s">"F-001"</span>]</pre></div>
+            </div>
+
+            <div class="tool-call" onclick="toggleTool(this)">
+              <div class="tool-call-header">
+                <span class="label">TOOL CALL</span>
+                <span class="name">get_evidence_chain(control_id="FR-002")</span>
+                <span class="chev">▾</span>
+              </div>
+              <div class="tool-call-body"><pre style="margin: 0; white-space: pre-wrap;"><span class="n">"disposition"</span>: <span class="s">"exception"</span>
+<span class="n">"defensibility_score"</span>: <span class="s">60</span>
+<span class="n">"reviewer"</span>: { <span class="n">"reviewer_key"</span>: <span class="s">"anton_dam"</span>,
+  <span class="n">"comments"</span>: <span class="s">"3 months missing: Sep 2025, Nov 2025, Feb 2026. Backfill by Pranav Iyer in progress. Target close 2026-08-30."</span> }</pre></div>
+            </div>
+
+            <div class="tool-call" onclick="toggleTool(this)">
+              <div class="tool-call-header">
+                <span class="label">TOOL CALL</span>
+                <span class="name">get_evidence_chain(control_id="IT-001")</span>
+                <span class="chev">▾</span>
+              </div>
+              <div class="tool-call-body"><pre style="margin: 0; white-space: pre-wrap;"><span class="n">"disposition"</span>: <span class="s">"exception"</span>
+<span class="n">"defensibility_score"</span>: <span class="s">60</span>
+<span class="n">"overrides"</span>: [{ <span class="n">"override_id"</span>: <span class="s">"ovr_it001_q4_2025"</span>,
+  <span class="n">"applied_by"</span>: <span class="s">"yusuf_olamide"</span>,
+  <span class="n">"reason"</span>: <span class="s">"Q4 2025 review cycle was not performed. No retrospective evidence can be reconstructed — control did not operate. Disclosed as significant deficiency F-003."</span> }]
+<span class="n">"reviewer"</span>: { <span class="n">"comments"</span>: <span class="s">"Q4 2025 missed entirely. 4 orphaned accounts, 1 with active prod DB credentials (revoked 2026-02-22). Target close 2026-06-30."</span> }</pre></div>
+            </div>
+
+            <div class="answer-prose" style="margin-top: 16px;">
+              <p>Here's the defensibility sweep — all three on track for close before the Nov 30 assertion deadline, but each needs a specific action.</p>
+
+              <table style="width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 13px;">
+                <thead>
+                  <tr style="border-bottom: 1px solid var(--border); text-align: left;">
+                    <th style="padding: 8px 10px; font-weight: 600; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">Control</th>
+                    <th style="padding: 8px 10px; font-weight: 600; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">Score</th>
+                    <th style="padding: 8px 10px; font-weight: 600; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">What to fix</th>
+                    <th style="padding: 8px 10px; font-weight: 600; color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em;">Target close</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px;"><strong>FR-007</strong> <span class="citation">rec_chain_fr_007</span></td>
+                    <td style="padding: 10px;"><strong style="color: var(--warn);">75</strong></td>
+                    <td style="padding: 10px;">Capture retro-approval attestation for JE-2026-0188 and JE-2026-0214; deploy NetSuite workflow that enforces $25K threshold.</td>
+                    <td style="padding: 10px;"><span style="color: var(--good); font-weight: 600;">2026-07-15</span></td>
+                  </tr>
+                  <tr style="border-bottom: 1px solid var(--border);">
+                    <td style="padding: 10px;"><strong>FR-002</strong> <span class="citation">rec_chain_fr_002</span></td>
+                    <td style="padding: 10px;"><strong style="color: var(--accent);">60</strong></td>
+                    <td style="padding: 10px;">Pranav Iyer to complete backfill of Sep 2025, Nov 2025, Feb 2026 rollforwards from CRM + invoice ledger. Have Controller sign each on completion.</td>
+                    <td style="padding: 10px;"><span style="color: var(--good); font-weight: 600;">2026-08-30</span></td>
+                  </tr>
+                  <tr>
+                    <td style="padding: 10px;"><strong>IT-001</strong> <span class="citation">rec_chain_it_001</span></td>
+                    <td style="padding: 10px;"><strong style="color: var(--accent);">60</strong></td>
+                    <td style="padding: 10px;">Q4 2025 cannot be reconstructed — disclose the gap per F-003 (override <code>ovr_it001_q4_2025</code> already documented). Demonstrate Q1-Q3 2026 cycles operate.</td>
+                    <td style="padding: 10px;"><span style="color: var(--good); font-weight: 600;">2026-06-30</span></td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <p><strong>Bottom line:</strong> all three SDs are on schedule. Disclose all three in the assertion regardless of close status — Deloitte will expect to see them. IT-001 is the only one where you can't fully remediate (Q4 2025 is gone); the override is correctly documented and the disclosure language above is defensible. If FR-002 backfill slips past Aug 30, escalate immediately — that's the only thing that could push the assertion deadline.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Closer -->
+    <div style="text-align: center; padding: 32px 0; border-top: 1px solid var(--border);">
+      <div style="font-size: 12px; color: var(--muted); margin-bottom: 16px;">Two prompts. Seven tool calls. Every claim cited to an <code class="inline">optro_record_id</code>.</div>
+      <a class="btn btn-primary" href="option-6.html">See workpaper-grade output →</a>
+      <a class="btn" href="option-4.html" style="margin-left: 8px;">Install it yourself →</a>
+    </div>
+
+  </main>
+
+  <script src="shared.js"></script>
+  <script>injectGate();</script>
+  <script>
+    function toggleTool(headerOrCard) {
+      const card = headerOrCard.closest ? headerOrCard.closest('.tool-call') : headerOrCard;
+      const body = card.querySelector('.tool-call-body');
+      const chev = card.querySelector('.chev');
+      body.classList.toggle('hidden');
+      if (chev) chev.textContent = body.classList.contains('hidden') ? '▸' : '▾';
+    }
+    document.querySelectorAll('.tool-call-body').forEach(b => b.classList.add('hidden'));
+    document.querySelectorAll('.chev').forEach(c => c.textContent = '▸');
+  </script>
+</body>
+</html>
