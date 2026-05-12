@@ -90,7 +90,90 @@
       </p>
     </div>
 
-    <section style="margin-top: 48px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
+    <!-- ===== AUDIT-GRADE BY CONSTRUCTION ===== -->
+    <section style="margin-top: 56px; max-width: 1180px;">
+      <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px;">
+        <h2 style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0; color: var(--ink);">Audit-grade by construction</h2>
+        <span style="font-size: 12px; color: var(--muted);">— five primitives keep the foundation model honest and the human in the loop.</span>
+      </div>
+      <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin: 4px 0 0; max-width: 920px;">
+        Drafting workpapers with an LLM is the easy part. Making the output <em>defensible</em> — traceable, attested, and reviewed — is what separates a Wrapper Era prototype from something a pre-IPO Controller can hand to Deloitte. Provenance enforces the five primitives below at the API boundary, so the agent <em>cannot</em> ship audit output without them.
+      </p>
+
+      <div class="audit-primitives" style="margin-top: 22px;">
+
+        <!-- 1. Provenance envelope -->
+        <div class="primitive-card">
+          <div class="num">01 · WATERMARK</div>
+          <div class="title">Provenance signature on every response</div>
+          <div class="body">Every tool response is wrapped in a tamper-evident envelope: <code class="inline">schema_version</code>, <code class="inline">source_system</code>, <code class="inline">generated_at</code>, <code class="inline">optro_record_id</code>. If a fact in the agent's output doesn't trace to a record_id, it didn't come from Optro — and a reviewer can tell at a glance.</div>
+          <div class="example">
+            "provenance": {<br/>
+            &nbsp;&nbsp;"source_system": <span class="hl">"optro-provenance-preipo"</span>,<br/>
+            &nbsp;&nbsp;"schema_version": <span class="hl">"0.1.0"</span>,<br/>
+            &nbsp;&nbsp;"optro_record_id": <span class="hl">"rec_chain_rc_047"</span><br/>
+            }
+          </div>
+        </div>
+
+        <!-- 2. Inline citations -->
+        <div class="primitive-card">
+          <div class="num">02 · TRACEABILITY</div>
+          <div class="title">Every claim cites an <code class="inline">optro_record_id</code></div>
+          <div class="body">When the agent says <em>"4 orphaned production accounts were identified"</em>, that fact is bound to a specific Optro record. The agent renders the citation pill inline so a Big 4 reviewer can drill from prose back to evidence — no hallucinated numbers, no fabricated artifact ids.</div>
+          <div class="example">
+            <span class="cite-pill">rec_art_it001_l1</span>&nbsp;&nbsp;<span class="cite-pill">rec_chain_fr_002</span>
+          </div>
+        </div>
+
+        <!-- 3. REQUIRES HUMAN REVIEW -->
+        <div class="primitive-card">
+          <div class="num">03 · SAFETY BOUNDARY</div>
+          <div class="title"><span class="review-marker">REQUIRES HUMAN REVIEW</span> markers stay verbatim</div>
+          <div class="body">Wherever judgment was applied — severity classification, scope caveats, missing-evidence remediation — Provenance returns an explicit review marker that the agent must preserve. The model literally cannot draft past these points without flagging them to the Controller.</div>
+          <div class="example">
+            slot["step_4"]: <span class="hl">"⚠ REQUIRES HUMAN REVIEW:</span><br/>
+            &nbsp;&nbsp;step 4 has no evidence artifact captured.<br/>
+            &nbsp;&nbsp;Document the outcome before workpaper sign-off."
+          </div>
+        </div>
+
+        <!-- 4. Defensibility score -->
+        <div class="primitive-card">
+          <div class="num">04 · READINESS GAUGE</div>
+          <div class="title">Defensibility score (0&nbsp;–&nbsp;100)</div>
+          <div class="body">A numerical readout of chain completeness with severity-banded issues. Controllers see immediately whether a workpaper would survive a Big 4 review — and what specifically would fail it. Below 80 = remediation needed; below 50 = blocking.</div>
+          <div class="example" style="font-family: var(--sans); font-size: 11px;">
+            <div style="height: 8px; background: linear-gradient(to right, #fee2e2 0%, #fee2e2 35%, #fef3c7 35%, #fef3c7 80%, #d1fae5 80%, #d1fae5 100%); border-radius: 4px; position: relative;">
+              <div style="position: absolute; top: -3px; left: 75%; transform: translateX(-50%); width: 3px; height: 14px; background: var(--ink); border-radius: 1px;"></div>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-top: 4px; color: var(--muted); font-family: var(--mono);"><span>0</span><span style="color: var(--awaiting); font-weight: 700;">75</span><span>100</span></div>
+          </div>
+        </div>
+
+        <!-- 5. Sign-off ribbon -->
+        <div class="primitive-card">
+          <div class="num">05 · WORKFLOW GATE</div>
+          <div class="title">Required human sign-offs before filing</div>
+          <div class="body">Three signatures required on every workpaper: <strong>Preparer</strong>, <strong>Independent Reviewer</strong>, <strong>External Auditor</strong>. The agent renders the ribbon with status pills (<span style="background: var(--signed); color: white; padding: 0 4px; border-radius: 2px; font-size: 9px; font-weight: 700;">SIGNED</span> / <span style="background: var(--awaiting); color: white; padding: 0 4px; border-radius: 2px; font-size: 9px; font-weight: 700;">AWAITING</span> / <span style="background: var(--blocked); color: white; padding: 0 4px; border-radius: 2px; font-size: 9px; font-weight: 700;">BLOCKED</span>) and cannot mark the workpaper complete until all three are captured.</div>
+          <div class="example" style="font-family: var(--sans); font-size: 10px;">
+            <div style="display: flex; gap: 4px;">
+              <div style="flex: 1; padding: 4px 6px; background: var(--signed-bg); border-top: 2px solid var(--signed); border-radius: 0 0 3px 3px; color: var(--signed); font-weight: 700;">✓ PREPARER</div>
+              <div style="flex: 1; padding: 4px 6px; background: var(--awaiting-bg); border-top: 2px solid var(--awaiting); border-radius: 0 0 3px 3px; color: var(--awaiting); font-weight: 700;">⚠ REVIEWER</div>
+              <div style="flex: 1; padding: 4px 6px; background: var(--signed-bg); border-top: 2px solid var(--signed); border-radius: 0 0 3px 3px; color: var(--signed); font-weight: 700;">✓ AUDITOR</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- HCAI footing note -->
+      <div style="margin-top: 18px; padding: 14px 18px; background: white; border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.65; color: var(--ink-light);">
+        <strong style="color: var(--ink);">Why this matters.</strong> Shneiderman's HCAI framework calls this the "Reliable, Safe, Trustworthy" zone — high automation paired with high human control. The primitives above are how Provenance gets there: <em>visibility of state</em> (provenance strip), <em>recognition over recall</em> (inline citation pills), <em>error prevention</em> (REQUIRES HUMAN REVIEW gates), <em>match to the real world</em> (Deloitte tickmarks + workpaper conventions), and <em>explicit human checkpoints</em> (sign-off ribbon). The model assists. The Controller decides. The Auditor verifies. None of those handoffs happen by accident.
+      </div>
+    </section>
+
+    <section style="margin-top: 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
 
       <!-- Option 1 -->
       <a href="option-1.html" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px -8px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">

@@ -303,6 +303,521 @@ code.inline {
   height: 16px;
 }
 
+/* ==============================================================
+   AUDIT-GRADE PROVENANCE COMPONENTS
+   ============================================================== */
+
+/* Status colors used throughout the provenance UI */
+:root {
+  --signed: #047857;       /* green — attested */
+  --signed-bg: #ecfdf5;
+  --signed-border: #a7f3d0;
+  --awaiting: #b45309;     /* amber — needs human */
+  --awaiting-bg: #fffbeb;
+  --awaiting-border: #fde68a;
+  --blocked: #b91c1c;      /* red — exception */
+  --blocked-bg: #fef2f2;
+  --blocked-border: #fecaca;
+  --optro: #0e7490;        /* teal — system-of-record */
+  --optro-bg: #ecfeff;
+  --optro-border: #a5f3fc;
+  --ai: #6d28d9;           /* violet — synthesized */
+  --ai-bg: #f5f3ff;
+  --ai-border: #ddd6fe;
+}
+
+/* --- Provenance strip ------------------------------------- */
+/* C2PA-style watermark visible on any page that renders model output */
+.prov-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin: 0 0 24px;
+  overflow: hidden;
+}
+.prov-strip-cell {
+  padding: 10px 14px;
+  border-right: 1px solid var(--border);
+  min-width: 0;
+}
+.prov-strip-cell:last-child { border-right: none; }
+.prov-strip-label {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.prov-strip-value {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.prov-strip-value.muted { color: var(--muted); font-weight: 500; }
+.prov-strip-value.warn  { color: var(--awaiting); }
+.prov-strip-value.good  { color: var(--signed); }
+.prov-icon {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+.prov-icon.lock { background: var(--optro); }
+.prov-icon.clock { background: var(--muted); }
+.prov-icon.hash { background: var(--ink); }
+.prov-icon.cites { background: var(--accent); }
+.prov-icon.warn { background: var(--awaiting); }
+
+/* --- Defensibility gauge ----------------------------------- */
+/* Visual score with severity bands, replacing "100/100" text */
+.def-gauge {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.def-gauge-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.def-gauge-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.def-gauge-score {
+  font-family: var(--mono);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.def-gauge-score.good { color: var(--signed); }
+.def-gauge-score.warn { color: var(--awaiting); }
+.def-gauge-score.bad  { color: var(--blocked); }
+.def-gauge-track {
+  position: relative;
+  height: 10px;
+  background: linear-gradient(to right, #fee2e2 0%, #fee2e2 35%, #fef3c7 35%, #fef3c7 80%, #d1fae5 80%, #d1fae5 100%);
+  border-radius: 5px;
+  overflow: visible;
+}
+.def-gauge-ind {
+  position: absolute;
+  top: -5px;
+  width: 4px;
+  height: 20px;
+  background: var(--ink);
+  border-radius: 2px;
+  transform: translateX(-50%);
+}
+.def-gauge-scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.def-gauge-bands {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.def-gauge-bands .band-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  vertical-align: middle;
+  margin-right: 4px;
+}
+.def-gauge-bands .b-bad  { background: #fca5a5; }
+.def-gauge-bands .b-warn { background: #fcd34d; }
+.def-gauge-bands .b-good { background: #6ee7b7; }
+
+/* --- Sign-off ribbon --------------------------------------- */
+/* The human-in-the-loop control panel */
+.signoff-ribbon {
+  margin: 18px 0 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+}
+.signoff-ribbon-head {
+  padding: 10px 16px;
+  background: var(--ink);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.signoff-ribbon-head .meta {
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  color: #cbd5e1;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+.signoff-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.signoff-card {
+  padding: 14px 16px;
+  border-right: 1px solid var(--border);
+  border-top: 3px solid transparent;
+  min-width: 0;
+}
+.signoff-card:last-child { border-right: none; }
+.signoff-card.signed   { border-top-color: var(--signed); background: var(--signed-bg); }
+.signoff-card.awaiting { border-top-color: var(--awaiting); background: var(--awaiting-bg); }
+.signoff-card.blocked  { border-top-color: var(--blocked); background: var(--blocked-bg); }
+.signoff-role {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.signoff-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: var(--mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.signoff-status-pill.signed   { background: var(--signed); color: white; }
+.signoff-status-pill.awaiting { background: var(--awaiting); color: white; }
+.signoff-status-pill.blocked  { background: var(--blocked); color: white; }
+.signoff-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.3;
+}
+.signoff-role-name {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.signoff-ts {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+.signoff-action {
+  font-size: 11px;
+  color: var(--ink-light);
+  margin-top: 8px;
+  line-height: 1.4;
+  font-style: italic;
+}
+.signoff-footer {
+  padding: 8px 16px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--muted);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.signoff-footer code {
+  font-family: var(--mono);
+  font-size: 10px;
+  background: white;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+/* --- Provenance trail (chain of custody stepper) ---------- */
+.prov-trail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0;
+  margin: 16px 0;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: white;
+  overflow: hidden;
+}
+.trail-step {
+  padding: 12px 14px;
+  border-right: 1px solid var(--border);
+  position: relative;
+  min-width: 0;
+}
+.trail-step:last-child { border-right: none; }
+.trail-step::after {
+  content: '→';
+  position: absolute;
+  right: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  color: var(--muted);
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  z-index: 1;
+}
+.trail-step:last-child::after { display: none; }
+.trail-step-actor {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.trail-step-action {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: 4px;
+  line-height: 1.3;
+}
+.trail-step-state {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  margin-top: 6px;
+}
+.trail-step-state.optro { background: var(--optro-bg); color: var(--optro); border: 1px solid var(--optro-border); }
+.trail-step-state.ai    { background: var(--ai-bg); color: var(--ai); border: 1px solid var(--ai-border); }
+.trail-step-state.review{ background: var(--awaiting-bg); color: var(--awaiting); border: 1px solid var(--awaiting-border); }
+.trail-step-state.signed{ background: var(--signed-bg); color: var(--signed); border: 1px solid var(--signed-border); }
+
+/* --- Source-marker blocks (Optro / AI / Human) ----------- */
+/* Visually distinguish what came from where */
+.src-block {
+  padding: 12px 14px;
+  border-left: 3px solid var(--border);
+  margin: 10px 0;
+  border-radius: 0 6px 6px 0;
+  position: relative;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.src-block-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+.src-optro {
+  background: var(--optro-bg);
+  border-left-color: var(--optro);
+}
+.src-optro .src-block-label {
+  background: var(--optro);
+  color: white;
+}
+.src-ai {
+  background: var(--ai-bg);
+  border-left-color: var(--ai);
+}
+.src-ai .src-block-label {
+  background: var(--ai);
+  color: white;
+}
+.src-human {
+  background: var(--signed-bg);
+  border-left-color: var(--signed);
+}
+.src-human .src-block-label {
+  background: var(--signed);
+  color: white;
+}
+
+/* --- REQUIRES HUMAN REVIEW (prominent block-level) ------- */
+.review-required {
+  border: 2px dashed var(--awaiting);
+  background: var(--awaiting-bg);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin: 12px 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.review-required-icon {
+  width: 28px;
+  height: 28px;
+  background: var(--awaiting);
+  color: white;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: var(--mono);
+}
+.review-required-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--awaiting);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.review-required-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+.review-required-prompt {
+  font-size: 11px;
+  color: var(--ink-light);
+  margin-top: 6px;
+  font-style: italic;
+  padding-top: 6px;
+  border-top: 1px dashed var(--awaiting-border);
+}
+
+/* Inline (single-word) version for use inside prose */
+.review-marker {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--awaiting);
+  color: white;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+}
+.review-marker::before {
+  content: '⚠';
+  font-size: 11px;
+}
+
+/* --- Citation pill (replaces plain code cite) ----------- */
+.cite-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  background: var(--optro-bg);
+  color: var(--optro);
+  border: 1px solid var(--optro-border);
+  padding: 1px 7px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+.cite-pill::before {
+  content: '🔒';
+  font-size: 9px;
+  filter: grayscale(1);
+}
+
+/* --- Audit-grade primitives grid (landing page) -------- */
+.audit-primitives {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.primitive-card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 18px 18px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.primitive-card .num {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+.primitive-card .title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.primitive-card .body {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--ink-light);
+}
+.primitive-card .example {
+  margin-top: 8px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.primitive-card .example .hl {
+  color: var(--ink);
+  font-weight: 600;
+}
+
 /* Print */
 @media print {
   body { background: white; }

@@ -186,13 +186,65 @@
 
   <main class="container" style="padding: 40px 24px 80px; max-width: 1180px;">
 
-    <header style="margin-bottom: 32px; text-align: center;">
+    <header style="margin-bottom: 28px; text-align: center;">
       <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 8px;">Workpaper output · side-by-side</div>
       <h1 style="font-size: 32px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 8px;">What "audit-grade" looks like rendered.</h1>
       <p style="font-size: 14px; color: var(--muted); margin: 0 auto; max-width: 680px;">
-        Left: the structured response from <code class="inline">draft_workpaper_section(control_id="RC-047", section="testing")</code>. Right: what an agent renders from it — tickmark-annotated procedures, citations, defensibility score, and the audit-grade footer a Big 4 reviewer expects.
+        Left: the structured response from <code class="inline">draft_workpaper_section(control_id="RC-047", section="testing")</code>. Right: what an agent renders from it — tickmark-annotated procedures, citation pills, a defensibility gauge, and a sign-off ribbon a Big 4 reviewer expects.
       </p>
     </header>
+
+    <!-- ===== Chain of custody (provenance trail) ===== -->
+    <div style="margin: 0 0 12px; display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+      <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em;">Chain of custody · who did what</div>
+      <div style="font-size: 11px; color: var(--muted);">Each step is the boundary the next actor cannot cross uninvited.</div>
+    </div>
+    <div class="prov-trail">
+      <div class="trail-step">
+        <div class="trail-step-actor">Optro backend</div>
+        <div class="trail-step-action">Returns evidence chain with provenance signature + citations</div>
+        <span class="trail-step-state optro">AUTHENTICATED SOURCE</span>
+      </div>
+      <div class="trail-step">
+        <div class="trail-step-actor">Claude (foundation model)</div>
+        <div class="trail-step-action">Renders structured slots into workpaper prose with tickmarks</div>
+        <span class="trail-step-state ai">AI SYNTHESIZED</span>
+      </div>
+      <div class="trail-step">
+        <div class="trail-step-actor">Controller / preparer</div>
+        <div class="trail-step-action">Reviews, captures missing evidence, signs the testing memo</div>
+        <span class="trail-step-state review">REQUIRES HUMAN REVIEW</span>
+      </div>
+      <div class="trail-step">
+        <div class="trail-step-actor">External auditor (Deloitte)</div>
+        <div class="trail-step-action">Walks through, concurs severity, signs the walkthrough log</div>
+        <span class="trail-step-state signed">EXTERNAL ATTESTATION</span>
+      </div>
+    </div>
+
+    <!-- ===== Provenance strip — what Optro returned ===== -->
+    <div class="prov-strip">
+      <div class="prov-strip-cell">
+        <div class="prov-strip-label"><span class="prov-icon lock"></span>Source system</div>
+        <div class="prov-strip-value">optro-provenance-preipo</div>
+      </div>
+      <div class="prov-strip-cell">
+        <div class="prov-strip-label"><span class="prov-icon hash"></span>Schema</div>
+        <div class="prov-strip-value">v0.1.0</div>
+      </div>
+      <div class="prov-strip-cell">
+        <div class="prov-strip-label"><span class="prov-icon clock"></span>Generated</div>
+        <div class="prov-strip-value">2026-05-12 · 20:22 UTC</div>
+      </div>
+      <div class="prov-strip-cell">
+        <div class="prov-strip-label"><span class="prov-icon cites"></span>Citations</div>
+        <div class="prov-strip-value good">11 records</div>
+      </div>
+      <div class="prov-strip-cell">
+        <div class="prov-strip-label"><span class="prov-icon warn"></span>Requires sign-off</div>
+        <div class="prov-strip-value warn">1 of 3</div>
+      </div>
+    </div>
 
     <div class="side-by-side">
       <div>
@@ -295,13 +347,65 @@
 
           <div class="wp-section-label">Conclusion</div>
           <div>Control operated effectively for Q1 2026 cycle. Big 4 walkthrough complete; no findings.</div>
+        </div>
 
-          <div class="wp-footer">
-            <span>Defensibility score: <strong style="color: var(--good);">100 / 100</strong></span>
-            <span>Issues: <strong>0</strong> · No items require human review</span>
-            <span>Citations: <strong>11</strong> Optro records</span>
+        <!-- Defensibility gauge -->
+        <div class="def-gauge" style="margin-top: 12px;">
+          <div class="def-gauge-head">
+            <span class="def-gauge-label">Defensibility · how ready is this to file?</span>
+            <span class="def-gauge-score good">100 <span style="font-size: 13px; color: var(--muted); font-weight: 500;">/ 100</span></span>
+          </div>
+          <div class="def-gauge-track">
+            <div class="def-gauge-ind" style="left: 100%;"></div>
+          </div>
+          <div class="def-gauge-scale">
+            <span>0 · blocked</span>
+            <span>50</span>
+            <span>80 · review needed</span>
+            <span>100 · ready</span>
+          </div>
+          <div class="def-gauge-bands">
+            <span><span class="band-dot b-bad"></span>Below 35 — blocking issues</span>
+            <span><span class="band-dot b-warn"></span>35–80 — remediation needed</span>
+            <span><span class="band-dot b-good"></span>80–100 — defensible</span>
           </div>
         </div>
+
+        <!-- Sign-off ribbon -->
+        <div class="signoff-ribbon">
+          <div class="signoff-ribbon-head">
+            <span>Required human sign-offs · 2 of 3 captured</span>
+            <span class="meta">WP-RC-047-Q12026 · cannot file until all three signed</span>
+          </div>
+          <div class="signoff-grid">
+            <div class="signoff-card signed">
+              <div class="signoff-role">Preparer · control owner</div>
+              <span class="signoff-status-pill signed">✓ Signed</span>
+              <div class="signoff-name">Anton Dam</div>
+              <div class="signoff-role-name">Controller, Helios Robotics</div>
+              <div class="signoff-ts">2026-04-16 · 17:20 UTC · rec_attest_rc047</div>
+            </div>
+            <div class="signoff-card awaiting">
+              <div class="signoff-role">Independent reviewer</div>
+              <span class="signoff-status-pill awaiting">⚠ Awaiting</span>
+              <div class="signoff-name">Tom Akiyama</div>
+              <div class="signoff-role-name">Internal Audit Manager, Helios</div>
+              <div class="signoff-action">Walk this control before Q2 close; confirm sample selection methodology matches testing plan.</div>
+            </div>
+            <div class="signoff-card signed">
+              <div class="signoff-role">External auditor walkthrough</div>
+              <span class="signoff-status-pill signed">✓ Walkthrough complete</span>
+              <div class="signoff-name">Naomi Wilkes</div>
+              <div class="signoff-role-name">Senior, Deloitte &amp; Touche LLP</div>
+              <div class="signoff-ts">2026-04-22 · concurred, no follow-up</div>
+            </div>
+          </div>
+          <div class="signoff-footer">
+            <span>Workflow gate: <strong style="color: var(--awaiting);">PENDING REVIEWER</strong> — cannot mark workpaper complete until Internal Audit signs.</span>
+            <code>signed_count: 2 / 3</code>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -356,9 +460,15 @@
           <div class="num">3.</div>
           <div>Confirmed approval timestamps preceded posting dates for all 132 approved entries. <span class="tick">▲</span> &nbsp;<code class="cite">art_fr007_l1</code></div>
         </div>
-        <div class="step-line">
-          <div class="num">4.</div>
-          <div><span class="review-marker">REQUIRES HUMAN REVIEW</span> Step 4 has no evidence artifact captured. Document the procedure outcome and link supporting evidence before workpaper sign-off. Procedure: "Investigate any entries lacking approval evidence."</div>
+        <div style="margin: 14px 0 8px;">
+          <div class="review-required">
+            <div class="review-required-icon">!</div>
+            <div>
+              <div class="review-required-label">Step 4 · requires human review · blocking</div>
+              <div class="review-required-body">No evidence artifact captured for: <em>"Investigate any entries lacking approval evidence."</em> Expected evidence type: <strong>attestation</strong>. Controller must document the procedure outcome and link supporting evidence before workpaper sign-off can be captured.</div>
+              <div class="review-required-prompt">Remediation: capture attestation per the testing plan and link via <code style="font-family: var(--mono); font-size: 11px;">artifact_id</code>, or document a justified override with a written reason. Issue: <code style="font-family: var(--mono); font-size: 11px;">rec_issue_fr-007_step4</code>.</div>
+            </div>
+          </div>
         </div>
 
         <div class="wp-section-label">Preparer attestation</div>
@@ -369,13 +479,63 @@
 
         <div class="wp-section-label">Conclusion</div>
         <div>Control failed during Q1 2026 — JE approval threshold not consistently enforced in the $25K-$50K range. Significant deficiency F-001. Remediation in progress; will re-test post-fix in Q3 2026 cycle.</div>
+      </div>
 
-        <div class="wp-footer">
-          <span>Defensibility score: <strong style="color: var(--warn);">75 / 100</strong></span>
-          <span>Issues: <strong>1 blocking</strong> · 1 item requires human review</span>
-          <span>Citations: <strong>9</strong> Optro records</span>
+      <!-- Defensibility gauge — failing -->
+      <div class="def-gauge" style="margin-top: 12px;">
+        <div class="def-gauge-head">
+          <span class="def-gauge-label">Defensibility · how ready is this to file?</span>
+          <span class="def-gauge-score warn">75 <span style="font-size: 13px; color: var(--muted); font-weight: 500;">/ 100</span></span>
+        </div>
+        <div class="def-gauge-track">
+          <div class="def-gauge-ind" style="left: 75%;"></div>
+        </div>
+        <div class="def-gauge-scale">
+          <span>0 · blocked</span>
+          <span>50</span>
+          <span>80 · review needed</span>
+          <span>100 · ready</span>
+        </div>
+        <div class="def-gauge-bands">
+          <span><span class="band-dot b-warn"></span>1 blocking issue (missing step-4 evidence) — score drops 25 pts until resolved.</span>
         </div>
       </div>
+
+      <!-- Sign-off ribbon — blocked path -->
+      <div class="signoff-ribbon">
+        <div class="signoff-ribbon-head" style="background: var(--blocked);">
+          <span>Sign-off blocked · 1 of 3 captured + 1 blocking issue</span>
+          <span class="meta">WP-FR-007-Q12026 · cannot proceed until blocking issue closes</span>
+        </div>
+        <div class="signoff-grid">
+          <div class="signoff-card signed">
+            <div class="signoff-role">Preparer · control owner</div>
+            <span class="signoff-status-pill signed">✓ Signed with exception</span>
+            <div class="signoff-name">Anton Dam</div>
+            <div class="signoff-role-name">Controller, Helios Robotics</div>
+            <div class="signoff-ts">2026-04-11 · 16:00 UTC · rec_attest_fr007</div>
+          </div>
+          <div class="signoff-card blocked">
+            <div class="signoff-role">Independent reviewer</div>
+            <span class="signoff-status-pill blocked">⛔ Blocked</span>
+            <div class="signoff-name">Tom Akiyama</div>
+            <div class="signoff-role-name">Internal Audit Manager, Helios</div>
+            <div class="signoff-action">Cannot sign — step 4 has no evidence artifact. Capture retro-attestation for JE-2026-0188 and JE-2026-0214 first.</div>
+          </div>
+          <div class="signoff-card signed">
+            <div class="signoff-role">External auditor walkthrough</div>
+            <span class="signoff-status-pill signed">✓ Severity concurred</span>
+            <div class="signoff-name">Priya Ramanathan</div>
+            <div class="signoff-role-name">Senior Manager, Deloitte &amp; Touche LLP</div>
+            <div class="signoff-ts">2026-04-22 · F-001 confirmed as significant deficiency</div>
+          </div>
+        </div>
+        <div class="signoff-footer">
+          <span>Workflow gate: <strong style="color: var(--blocked);">BLOCKED · STEP 4 EVIDENCE MISSING</strong> — agent cannot mark workpaper complete; remediation target close 2026-07-15.</span>
+          <code>signed_count: 1 / 3 · blocking_issues: 1</code>
+        </div>
+      </div>
+
     </section>
 
     <!-- The framing -->

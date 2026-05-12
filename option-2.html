@@ -202,15 +202,64 @@
                 <li style="margin-bottom: 10px;"><strong>F-003 — Production access review (IT-001).</strong> The quarterly production access review for the fourth quarter of 2025 was not performed, reflecting a scheduling oversight during an IT Director transition. Upon performance of the first quarter 2026 review cycle, four orphaned accounts were identified, including one with active production database credentials retained for four months following the employee's departure. Forensic review of access logs identified no evidence of misuse. Quarterly cadence has been reinstated; remediation target close June 30, 2026. <span class="citation">rec_finding_003</span> <span class="citation">rec_chain_it_001</span></li>
               </ol>
 
-              <p><strong>Required caveat — testing duration.</strong> The compressed Year-1 testing schedule means certain controls will have less than six months of demonstrated operating effectiveness at the time of filing. Disclosure should describe the testing cadence and the expected coverage as of the comfort-letter response date. <span class="review-flag">REQUIRES HUMAN REVIEW</span> <span class="citation">rec_mgmt_assertion_inputs_helios_2026_05</span></p>
+              <div class="review-required" style="font-family: var(--sans);">
+                <div class="review-required-icon">!</div>
+                <div>
+                  <div class="review-required-label">Required caveat · testing duration · awaiting Controller sign-off</div>
+                  <div class="review-required-body">The compressed Year-1 testing schedule means certain controls will have less than six months of demonstrated operating effectiveness at the time of filing. Disclosure should describe the testing cadence and the expected coverage as of the comfort-letter response date.</div>
+                  <div class="review-required-prompt">Controller must finalize the caveat language with Internal Audit and the Deloitte engagement team before this goes into the S-1. Cited from <code style="font-family: var(--mono); font-size: 11px;">rec_mgmt_assertion_inputs_helios_2026_05</code>.</div>
+                </div>
+              </div>
 
-              <p><strong>Required caveat — evidence retention gap.</strong> Management is unable to attest to operating effectiveness for the full trailing-twelve-month testing window for control FR-002 due to the non-retention of three months of supporting evidence. The control's operating effectiveness is demonstrable for the nine months for which evidence is retained, and reconstruction is in progress. <span class="review-flag">REQUIRES HUMAN REVIEW</span> <span class="citation">rec_chain_fr_002</span></p>
+              <div class="review-required" style="font-family: var(--sans);">
+                <div class="review-required-icon">!</div>
+                <div>
+                  <div class="review-required-label">Required caveat · evidence-retention gap · awaiting Controller sign-off</div>
+                  <div class="review-required-body">Management is unable to attest to operating effectiveness for the full trailing-twelve-month testing window for control FR-002 due to the non-retention of three months of supporting evidence. The control's operating effectiveness is demonstrable for the nine months for which evidence is retained, and reconstruction is in progress.</div>
+                  <div class="review-required-prompt">Controller must confirm caveat language with General Counsel. Cited from <code style="font-family: var(--mono); font-size: 11px;">rec_chain_fr_002</code>.</div>
+                </div>
+              </div>
 
               <p>Based on this assessment, and except for the three significant deficiencies described above, management has concluded that Helios Robotics, Inc.'s internal control over financial reporting was effective as of [filing reference date].</p>
             </div>
 
+            <!-- Sign-off ribbon for the assertion -->
+            <div class="signoff-ribbon" style="margin-top: 20px;">
+              <div class="signoff-ribbon-head">
+                <span>Required sign-offs before this draft can go into the S-1</span>
+                <span class="meta">2 caveats awaiting · 0 of 3 signed</span>
+              </div>
+              <div class="signoff-grid">
+                <div class="signoff-card awaiting">
+                  <div class="signoff-role">Preparer · Controller</div>
+                  <span class="signoff-status-pill awaiting">⚠ Awaiting</span>
+                  <div class="signoff-name">Anton Dam</div>
+                  <div class="signoff-role-name">Controller, Helios Robotics</div>
+                  <div class="signoff-action">Resolve the 2 REQUIRES HUMAN REVIEW caveats above; then sign here.</div>
+                </div>
+                <div class="signoff-card awaiting">
+                  <div class="signoff-role">Reviewer · CFO</div>
+                  <span class="signoff-status-pill awaiting">⚠ Awaiting</span>
+                  <div class="signoff-name">David Cho</div>
+                  <div class="signoff-role-name">Chief Financial Officer</div>
+                  <div class="signoff-action">Reviews disclosure language after Controller signs. Cross-reference SD remediation status.</div>
+                </div>
+                <div class="signoff-card awaiting">
+                  <div class="signoff-role">Audit Committee chair</div>
+                  <span class="signoff-status-pill awaiting">⚠ Awaiting</span>
+                  <div class="signoff-name">[Pending appointment]</div>
+                  <div class="signoff-role-name">Audit Committee, Board of Directors</div>
+                  <div class="signoff-action">Final approval at the 2026-12-15 audit committee readiness review before management assertion goes to Deloitte.</div>
+                </div>
+              </div>
+              <div class="signoff-footer">
+                <span>Workflow gate: <strong style="color: var(--awaiting);">HUMAN-IN-THE-LOOP REQUIRED</strong> — Claude produced this draft; three humans must attest before it ships.</span>
+                <code>signed_count: 0 / 3 · open_caveats: 2</code>
+              </div>
+            </div>
+
             <div class="answer-prose" style="margin-top: 14px;">
-              <p style="color: var(--muted); font-size: 13px;">Two spots need your sign-off before this goes to Deloitte — the testing-duration caveat language and the FR-002 evidence-retention caveat. Every other claim above is pulled directly from Optro and cited.</p>
+              <p style="color: var(--muted); font-size: 13px;">The model produced the assertion language. Three humans have to sign it before it ships, and two specific caveats need Controller judgment first. Every other factual claim above is pulled directly from Optro with citation pills — the model literally cannot fabricate the numbers because it didn't have access to anything except what <code class="inline">list_management_assertion_inputs()</code> returned.</p>
             </div>
           </div>
         </div>
