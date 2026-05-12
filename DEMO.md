@@ -1,74 +1,62 @@
-# Provenance — Demo
+# Provenance — Demo (System-of-Record Premium frontend)
 
-**This is what audit-grade output looks like in a Wrapper Era world where the foundation model is the workpaper drafting interface and Optro is the evidence-of-truth backend.**
+**This is what audit-grade output looks like when Optro's data lineage IS the product. Every hover reveals provenance no other vendor can produce. The peer-defensibility benchmark is the System-of-Record-Premium moat made visible.**
 
-The Controller never opens an app. They ask Claude Desktop questions and expect SOX-defensible artifacts back — every claim traceable to an `optro_record_id`, every gap surfaced explicitly, every spot where the agent applied judgment flagged with `REQUIRES HUMAN REVIEW`.
+A Big-4-style workpaper viewer for the System-of-Record Premium scenario in the four-scenario plan. The Controller uses the surface to prepare for the Deloitte walkthrough; the engagement partner uses it during the walkthrough to verify defensibility. The thing every other vendor renders as a flat document, Provenance renders as a live read against the source system — every value hover-citable, every sign-off time-stamped, every override carrying a documented reason.
 
-The three prompts below exercise the full chain. Each shows what a pre-IPO Controller would actually type and what the Provenance MCP layer hands back to the model.
+## The single demo claim
 
----
+> A flat document is a finding waiting to happen. A live workpaper is a defense already mounted.
 
-## Prompt 1 — Drafting the management assertion
-
-> **Controller (Anton Dam):** "Draft the management assertion section for Helios's S-1 based on current testing status. Make sure anything that needs disclosure is called out explicitly with a citation."
-
-**What Claude should do:**
-
-1. Call `list_management_assertion_inputs()` to retrieve scope, must-have universe, testing completeness, open findings (by severity), remediation status, disclosure recommendation.
-2. For each significant deficiency in the response (F-001 / FR-007, F-002 / FR-002, F-003 / IT-001), call `validate_audit_trail(control_id)` to surface the specific blocking issues.
-3. Optionally call `get_evidence_chain(control_id)` to retrieve the full chain for any SD the user asks Claude to elaborate on.
-4. Draft the assertion in prose, **disclosing the 3 significant deficiencies explicitly**, citing each fact back to its `optro_record_id`, and preserving the proposed caveats verbatim.
-
-**What "audit-grade" looks like in the output:**
-- Scope language matches the consolidation scope returned by Optro (including the Helios Robotics Singapore exclusion with reference to memo M-2026-04).
-- Every numeric claim — *"60% of must-have controls have been tested"* — points to `rec_mgmt_assertion_inputs_helios_2026_05`.
-- Each significant deficiency disclosure cites its finding record (`rec_finding_001/002/003`) and the underlying control chain (`rec_chain_fr_007/fr_002/it_001`).
-- The compressed-testing-window risk is disclosed with the caveat language Provenance returned, not paraphrased.
+That's the bet, in one sentence. Provenance is the proof artifact.
 
 ---
 
-## Prompt 2 — Drilling into one control
+## The four routes (Option A · the click-through)
 
-> **Controller:** "Show me the evidence chain for control RC-047 in workpaper form. I want to send a summary to the audit committee chair tomorrow."
+| Route | Page | What it proves |
+|---|---|---|
+| `/workpapers` | `option-1.html` | 175-control universe, status badges, Big-4 filter — the inventory of provenance Optro owns |
+| `/workpapers/RC-047` | `option-1-viewer.html` | Hero workpaper · **every value is hover-citable** |
+| `/workpapers/RC-047/chain` | `option-1-chain.html` | SVG graph · 7 procedures × 7 artifacts × 3 sign-offs, all linked |
+| `/workpapers/RC-047/peers` | `option-1-peers.html` | Helios vs 47 pre-IPO peers · the SoR Premium moat made visible |
+| `/workpapers/RC-047/walkthrough` | `option-1-walkthrough.html` | Large-type, screenshare-ready, print to PDF for the Deloitte handout |
 
-**What Claude should do:**
+(Smoke-and-mirrors HTML — no Next.js, no router. The PRD's `/workpapers/[id]/chain` becomes `option-1-chain.html`.)
 
-1. Call `get_evidence_chain(control_id="RC-047")` for the full chain.
-2. Call `get_tickmark_legend(control_id="RC-047")` for the symbols actually used in this control's workpapers.
-3. Call `draft_workpaper_section(control_id="RC-047", section="narrative")` and `section="testing"` to get structured slots.
-4. Render the slots as prose, annotating procedures with the right tickmark symbols (§, b, c, ¶, ‡ — Deloitte standard).
+## The three demo formats
 
-**What "audit-grade" looks like in the output:**
-- A workpaper header showing company, period (Q1 2026), framework (COSO 2013 / AS 2201), control id, preparer (Controller), reviewer, and a `WP-RC-047-Q12026` reference.
-- Test procedures listed with tickmark annotations matching the legend.
-- Each artifact (`art_rc047_q1`, `art_rc047_s1`, `art_rc047_a1`, `art_rc047_r1`, `art_rc047_q2`) cited with its `optro_record_id`.
-- Reviewer attestation (Anton Dam, 2026-04-16, signed; Deloitte walkthrough by Naomi Wilkes on 2026-04-22) rendered verbatim.
-- `defensibility_score: 100` quoted as the assurance level.
-- No invented evidence. If the agent wants to say something Optro didn't return, it has to flag `REQUIRES HUMAN REVIEW`.
-
----
-
-## Prompt 3 — Defensibility sweep before the deadline
-
-> **Controller:** "The management assertion package is due to Deloitte 2026-11-30. Run a defensibility check across our three open significant deficiencies and tell me what specifically I need to fix before I can sign the assertion."
-
-**What Claude should do:**
-
-1. Call `validate_audit_trail(control_id)` for each of FR-007, FR-002, IT-001.
-2. For each, surface the `issues` array — every blocking issue maps to a concrete remediation step (capture missing evidence, document override reason, refresh attestation, etc.).
-3. Tie each issue to its `target_close_date` from `list_management_assertion_inputs()` and flag any that won't make 2026-11-30.
-
-**What "audit-grade" looks like in the output:**
-- A table with one row per control: `defensibility_score`, blocking-issue count, the specific missing-evidence steps, target close, on-track/off-track.
-- For FR-002 (deferred revenue): explicitly names the 3 missing months (Sep 2025, Nov 2025, Feb 2026) and the remediation owner (Pranav Iyer, backfill in progress, target close 2026-08-30 — green).
-- For IT-001 (production access): names the missed Q4 2025 cycle and the 4 orphaned accounts, with the override (`ovr_it001_q4_2025`) and reason quoted from Optro.
-- For FR-007 (JE approval): names entries JE-2026-0188 and JE-2026-0214, target close 2026-07-15.
-- A bottom line: *"All three SDs are on-track for close before the assertion package deadline. Disclose all three in the assertion regardless of close status, per the proposed caveat language."*
+- **Option A — the click-through.** Acceptance-path. A Controller walking the workpaper end-to-end. Hover any value to see provenance.
+- **Option B — the Big-4 one-pager.** Three frames stacked vertically for screensharing during the walkthrough.
+- **Option C — the long-scroll.** Eight scenes of a Tuesday morning at Helios when the workpaper stopped being a document.
 
 ---
 
-## Why this matters
+## The acceptance script (per PRD)
 
-A foundation-model agent that drafts an S-1 management assertion from chat alone is a liability. A foundation-model agent that calls Provenance and stitches together a defensible output — with citations, with explicit `REQUIRES HUMAN REVIEW` where judgment was applied, with the right tickmark vocabulary — is the workpaper-drafting interface of the Wrapper Era.
+1. Open `option-1.html` — see 175 controls, filter to `chain_broken` and `Big-4 visible`.
+2. Click into RC-047 — `option-1-viewer.html` — hover the **$250,000 threshold**, the **218 population count**, the **JE-2026-0214 override**, and the **defensibility 100/100** signature. Each one returns the source system, the capture timestamp, the captor, and the override history.
+3. Switch to the chain — `option-1-chain.html` — see the control at the center, 7 procedures around it, 7 artifacts on the outer ring, sign-off edges connecting back to the center.
+4. Switch to peers — `option-1-peers.html` — see Helios at P22 on reviewer sign-off depth (the remediation priority that just surfaced inside the walkthrough), P8 on override-reason capture, P30 on evidence depth.
+5. Switch to walkthrough mode — `option-1-walkthrough.html` — larger type, hover provenance still live. Click **Print to PDF** for the audit-ready handout (the print stylesheet strips the demo chrome).
 
-The structured response shape is the moat. Anyone can wrap an LLM around a chat box; what stops the assertion from being fabricated is the evidence-of-truth backend returning *exactly the citations the agent is allowed to use*. That's Optro.
+That's the acceptance loop. Everything else is supporting cast.
+
+---
+
+## What this prototype is NOT
+
+- Not a real Next.js app. It is the smoke-and-mirrors version of the PRD, optimized for fast positioning conversations with AuditBoard leadership.
+- Not authenticated. The BORB gate protects the static demo from casual sharing only.
+- Not editable. Phase-0 is read-only.
+- Not the Wrapper-Era version. That hedge is the MCP server preserved in this same repo (`server.ts`, `provenance.ts`, `npm run smoke`) and is what's deployed at [sandersonboard.github.io/context-borb](https://sandersonboard.github.io/context-borb/). Provenance hedges the **System-of-Record Premium** scenario specifically.
+
+---
+
+## Why this prototype matters (the strategic frame)
+
+This is the **System-of-Record Premium bet** in the four-scenario plan. If reasoning commoditizes and the moat shifts from "best chat UX" to "only one who can produce the underlying record," Optro wins by being the only vendor whose workpapers ship with verifiable provenance. The peer-defensibility benchmark — a number Helios can compute only because Optro sits on the actual data of 47 consented pre-IPO peers — is the moat made visible.
+
+This is also **no-regret move #2 (audit-grade output layer)** from the same scenario plan. Defensibility holds across all four scenarios; the audit firm cares about the chain whether the agent drafts the workpaper or the Controller does. Build it once, ship it under whatever GTM motion wins.
+
+The note Naomi Wilkes writes in her engagement file at the end of Option C is the goal: *"Defensibility evidence is rendered live against the underlying source-of-record systems at the point of review. Reduces substantive testing requirement on selected revenue-cycle controls."* That is what we are selling.

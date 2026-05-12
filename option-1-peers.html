@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RC-047 · Peer defensibility benchmark — Provenance</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav">
+  <div class="brand"><span class="pip"></span><strong>Optro Provenance</strong></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-1.html">Workpapers</a>
+    <span class="sep">/</span>
+    <a href="option-1-viewer.html">RC-047</a>
+    <span class="sep">/</span>
+    <span>Peers</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab" href="option-1-viewer.html">Workpaper</a>
+    <a class="wp-tab" href="option-1-chain.html">Evidence chain</a>
+    <a class="wp-tab active" href="option-1-peers.html">Peer benchmark</a>
+    <a class="wp-tab" href="option-1-walkthrough.html">Walkthrough mode</a>
+  </div>
+  <span class="as-of">As of 2026-05-12</span>
+</nav>
+
+<div class="peer-shell">
+
+  <div class="peer-intro">
+    <h1>Peer defensibility benchmark · RC-047</h1>
+    <p>Helios Robotics — manual journal entry approval — compared against an anonymized cohort of pre-IPO peers that filed Forms S-1 between January 2024 and April 2025. Three metrics specific to defensibility: how much evidence is captured, how many sign-off layers are in place, and how often override reasons are recorded.</p>
+    <p style="margin: 0; color: var(--accent); font-weight: 500;">This view is the System-of-Record-Premium moat made visible. We can show this because we are the only vendor sitting on the data.</p>
+    <div class="cohort">
+      <div>
+        <div class="c-num">47</div>
+        <div class="c-label">Pre-IPO peers</div>
+      </div>
+      <div>
+        <div class="c-num">Tech</div>
+        <div class="c-label">Vertical</div>
+      </div>
+      <div>
+        <div class="c-num">Series D+</div>
+        <div class="c-label">Stage</div>
+      </div>
+      <div>
+        <div class="c-num">Jan '24 — Apr '25</div>
+        <div class="c-label">S-1 window</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="peer-cards"></div>
+
+  <div class="peer-intro" style="margin-top: 16px;">
+    <h1 style="font-size: 16px;">What Helios should do before the management assertion package</h1>
+    <p style="margin: 0; line-height: 1.65;">
+      <strong style="color: var(--accent);">Priority 1 (P25 or worse) —</strong> Adopt mandatory two-layer sign-off on all 132 Big-4-visible controls before the management assertion package is due to Deloitte (2026-11-30). The current 1.4-layer average is the single largest gap to peer median and is the kind of finding that lands in management letters.<br><br>
+      <strong style="color: var(--accent);">Priority 2 (P25 or worse) —</strong> Make the override-reason field non-skippable in the NetSuite override workflow and the Optro disposition form. Backfill the 22% of overrides without rationale before the next quarterly retest.<br><br>
+      <strong>Priority 3 (P30 — moderate gap) —</strong> Augment the standard RC evidence chain with an independent recomputation export (peers tag this as <code style="font-family: var(--mono); background: var(--bg); padding: 1px 5px; border-radius: 3px;">art_*_recomp</code>). Add to chain template before period close 2026-09-30.
+    </p>
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    const wrap = document.getElementById('peer-cards');
+    const order = ['reviewer_signoff_layers', 'override_reasons_captured', 'evidence_artifacts'];
+    order.forEach((key, i) => {
+      const m = window.PEER_BENCHMARKS[key];
+      const priority = m.helios_percentile <= 25;
+      const pctClass = priority ? '' : (m.helios_percentile > 50 ? 'good' : '');
+      const card = document.createElement('div');
+      card.className = 'peer-card' + (priority ? ' priority' : '');
+      card.innerHTML = `
+        <div class="pc-head">
+          <span class="pc-label">${escapeHtml(m.label)}</span>
+          <span class="pc-pct ${pctClass}">P${m.helios_percentile} of ${window.PEER_COHORT.size}</span>
+        </div>
+        <div class="pc-numbers">
+          <div class="pc-num-cell helios">
+            <div class="pc-num-val helios">${m.helios}</div>
+            <div class="pc-num-lbl">Helios</div>
+          </div>
+          <div class="pc-num-cell">
+            <div class="pc-num-val">${m.peer_median}</div>
+            <div class="pc-num-lbl">Peer median (P50)</div>
+          </div>
+          <div class="pc-num-cell">
+            <div class="pc-num-val">${m.peer_p10}–${m.peer_p90}</div>
+            <div class="pc-num-lbl">Peer P10–P90</div>
+          </div>
+        </div>
+        <div id="chart-${key}"></div>
+        <div class="pc-interp"><strong>What it means.</strong> ${escapeHtml(m.interpretation)}</div>
+        ${priority ? `<div class="pc-remed"><div class="pc-remed-label">Remediation priority</div>${escapeHtml(m.remediation_hint)}</div>` : ''}
+      `;
+      wrap.appendChild(card);
+      renderPeerChart('chart-' + key, m);
+    });
+  })();
+</script>
+</body>
+</html>

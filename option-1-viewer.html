@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>RC-047 · Manual journal entry approval · Workpaper</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+<style>
+  .viewer-cue { /* small inline hint that points at provenance for first-time viewers */
+    max-width: 900px; margin: 16px auto 0;
+    padding: 10px 14px; background: white;
+    border: 1px solid var(--border); border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    font-family: var(--sans); font-size: 12px; color: var(--ink-light);
+    display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  }
+  .viewer-cue .accent { color: var(--accent); font-weight: 600; }
+  .viewer-cue .x { color: var(--muted); cursor: pointer; padding: 0 6px; font-size: 18px; line-height: 1; }
+  .viewer-cue .x:hover { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<nav class="wp-topnav">
+  <div class="brand"><span class="pip"></span><strong>Optro Provenance</strong></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-1.html">Workpapers</a>
+    <span class="sep">/</span>
+    <span>RC-047</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab active" href="option-1-viewer.html">Workpaper</a>
+    <a class="wp-tab" href="option-1-chain.html">Evidence chain</a>
+    <a class="wp-tab" href="option-1-peers.html">Peer benchmark</a>
+    <a class="wp-tab" href="option-1-walkthrough.html">Walkthrough mode</a>
+  </div>
+  <span class="as-of">As of 2026-05-12</span>
+</nav>
+
+<div class="viewer-cue">
+  <span><span class="accent">▼ The demo moment:</span> hover any value with a faint underline — sample sizes, thresholds, sign-off names, defensibility scores — to see the Optro Provenance popover with source, capture time, captor, and override history.</span>
+  <span class="x" onclick="this.parentNode.remove()">×</span>
+</div>
+
+<div class="paper" id="wp-paper">
+  <!-- Header -->
+  <div class="paper-header">
+    <div class="h-row">
+      <span class="wp-firm-tag">Big-4 visible · Deloitte engagement</span>
+      <span class="wp-ref" data-prov="rc047.framework">WP-RC-047-Q12026 · COSO 2013 / AS 2201</span>
+    </div>
+    <h1><span class="control-id">RC-047</span>Manual journal entry approval — revenue recognition</h1>
+    <div class="paper-meta">
+      <div>
+        <div class="m-label">Period covered</div>
+        <div class="m-value" data-prov="rc047.period">Q1 2026 (Jan 1 — Mar 31, 2026)</div>
+      </div>
+      <div>
+        <div class="m-label">Prepared by</div>
+        <div class="m-value" data-prov="rc047.prepared_by">Anton Dam · 2026-04-12</div>
+      </div>
+      <div>
+        <div class="m-label">Reviewed by</div>
+        <div class="m-value" data-prov="rc047.reviewed_by">Pranav Iyer · 2026-04-16</div>
+      </div>
+      <div>
+        <div class="m-label">Big-4 walkthrough</div>
+        <div class="m-value" data-prov="rc047.walkthrough">Naomi Wilkes (Deloitte) · 2026-04-22</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Control narrative -->
+  <h2>Control narrative</h2>
+  <div class="narrative" id="narr"></div>
+
+  <!-- Testing procedures -->
+  <h2>Testing procedures <span class="sub">7 procedures · tickmark annotations per Deloitte standard</span></h2>
+  <ol class="proc-list" id="procs"></ol>
+
+  <!-- Tickmark legend -->
+  <h2>Tickmark legend <span class="sub">Subset used in this workpaper</span></h2>
+  <div class="tm-legend" id="tm-leg"></div>
+
+  <!-- Sample selection -->
+  <h2>Sample selection</h2>
+  <div class="sample-block">
+    <div class="sb-cell">
+      <div class="sb-num" data-prov="rc047.population_count">218</div>
+      <div class="sb-label">Population (Q1 manual entries)</div>
+    </div>
+    <div class="sb-cell">
+      <div class="sb-num" data-prov="rc047.sample_size">25</div>
+      <div class="sb-label">Sample selected</div>
+    </div>
+    <div class="sb-cell">
+      <div class="sb-num" data-prov="rc047.threshold">$250,000</div>
+      <div class="sb-label">Dual-approval threshold</div>
+    </div>
+  </div>
+  <p class="sample-rationale"><strong>Methodology &amp; rationale.</strong> <span id="srm"></span></p>
+
+  <!-- Evidence attachments -->
+  <h2>Evidence attachments <span class="sub">5 artifacts · source-of-record verified</span></h2>
+  <div class="evidence-list" id="ev-list"></div>
+
+  <!-- Exceptions -->
+  <h2>Exceptions &amp; dispositions <span class="sub">2 exceptions · both dispositioned</span></h2>
+  <div id="exc-list"></div>
+
+  <!-- Reviewer comments -->
+  <h2>Reviewer comments &amp; override log</h2>
+  <div class="review-thread" id="review-list"></div>
+
+  <!-- Defensibility signature -->
+  <div class="def-sig">
+    <div class="seal">v1</div>
+    <div class="sig-text">
+      <strong>Optro Provenance v1</strong> — chain verified · <span data-prov="rc047.defensibility">5 evidence artifacts</span> · 2 reviewer sign-offs · 1 walkthrough completed · defensibility score 100/100.
+    </div>
+    <div class="sig-rec">rec_optro_defens_047<br>2026-04-22 11:35 PT</div>
+  </div>
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    const C = window.RC_047;
+
+    // ----- Narrative — make the $250k threshold and 47 accounts hover-citable
+    const narr = document.getElementById('narr');
+    const para1 = C.narrative[0].replace('$250,000 single-entry threshold',
+                                          '<span data-prov="rc047.threshold">$250,000 single-entry threshold</span>');
+    const html = [para1, ...C.narrative.slice(1)].map(p => `<p>${p}</p>`).join('');
+    narr.innerHTML = html;
+
+    // ----- Procedures
+    document.getElementById('procs').innerHTML = C.testing_procedures.map(p => {
+      const tms = p.tickmarks.map(t => `<span class="tm">${escapeHtml(t)}</span>`).join('');
+      return `<li data-prov="rc047.proc_${p.n}">${escapeHtml(p.text)} ${tms}</li>`;
+    }).join('');
+
+    // ----- Tickmark legend (subset actually used)
+    const used = new Set();
+    C.testing_procedures.forEach(p => p.tickmarks.forEach(t => used.add(t)));
+    C.evidence.forEach(e => used.add(e.tickmark));
+    const usedLegend = window.TICKMARKS.filter(t => used.has(t.mark));
+    document.getElementById('tm-leg').innerHTML = usedLegend.map(t =>
+      `<div class="tm-row"><span class="mark">${escapeHtml(t.mark)}</span><span class="meaning">${escapeHtml(t.meaning)}</span></div>`
+    ).join('');
+
+    // ----- Sample rationale
+    document.getElementById('srm').innerHTML =
+      escapeHtml(C.sample_selection.methodology) + ' ' + escapeHtml(C.sample_selection.rationale);
+
+    // ----- Evidence rows
+    document.getElementById('ev-list').innerHTML = C.evidence.map(a => {
+      const ext = a.filename.split('.').pop().toLowerCase();
+      const thumbClass = ['xlsx','pdf','csv','png'].includes(ext) ? ext : '';
+      return `<div class="evidence-row" data-prov="rc047.${a.id}">
+        <div class="thumb ${thumbClass}">${escapeHtml(ext.toUpperCase())}</div>
+        <div>
+          <div class="file-name">${escapeHtml(a.filename)}</div>
+          <div class="file-meta">${escapeHtml(a.size)} · captured ${escapeHtml(a.captured_at.slice(0,10))} by ${escapeHtml(a.captured_by)}</div>
+        </div>
+        <div class="e-type">${escapeHtml(a.type)}</div>
+        <div class="e-src">${escapeHtml(a.source_system)}</div>
+        <div class="e-tm">${escapeHtml(a.tickmark)}</div>
+      </div>`;
+    }).join('');
+
+    // ----- Exceptions
+    document.getElementById('exc-list').innerHTML = C.exceptions.map(e => {
+      const provKey = e.id === 'exc_rc047_01' ? 'rc047.exc_01.disposition' : 'rc047.exc_02.override';
+      return `<div class="exception-row">
+        <div class="ex-head">
+          <span class="ex-ref">${escapeHtml(e.entry_ref)}</span>
+          <span class="ex-sev">${escapeHtml(e.severity)}</span>
+        </div>
+        <div class="ex-desc">${escapeHtml(e.description)}</div>
+        <div class="ex-disp" data-prov="${provKey}"><strong>Disposition.</strong> ${escapeHtml(e.disposition)}</div>
+        <div class="ex-disp-by">Dispositioned by ${escapeHtml(e.dispositioned_by)} · ${escapeHtml(e.dispositioned_at.slice(0,16).replace('T',' '))} PT</div>
+      </div>`;
+    }).join('');
+
+    // ----- Reviewer comments
+    document.getElementById('review-list').innerHTML = C.reviewer_comments.map(r => {
+      const initials = r.from.split(' ').map(p => p[0]).join('').slice(0,2);
+      const dlClass = r.from.includes('Wilkes') ? ' deloitte' : '';
+      return `<div class="review-row">
+        <div class="av${dlClass}">${escapeHtml(initials)}</div>
+        <div>
+          <div class="rc-head">
+            <span class="rc-name">${escapeHtml(r.from)}</span>
+            <span class="rc-ts">${escapeHtml(r.at.slice(0,16).replace('T',' '))} PT</span>
+            ${r.resolved ? '<span class="rc-resolved">resolved</span>' : ''}
+          </div>
+          <div class="rc-text">${escapeHtml(r.text)}</div>
+        </div>
+      </div>`;
+    }).join('') + C.override_log.map(o =>
+      `<div class="review-row">
+        <div class="av" style="background: var(--accent);">OV</div>
+        <div>
+          <div class="rc-head">
+            <span class="rc-name">Override · ${escapeHtml(o.id)}</span>
+            <span class="rc-ts">${escapeHtml(o.at.slice(0,16).replace('T',' '))} PT</span>
+            <span class="rc-resolved">reviewed ${escapeHtml(o.reviewed_at.slice(0,10))}</span>
+          </div>
+          <div class="rc-text">By ${escapeHtml(o.by)} · reviewed by ${escapeHtml(o.reviewed_by)}<br><em>"${escapeHtml(o.reason)}"</em></div>
+        </div>
+      </div>`).join('');
+
+    setupProvenance();
+  })();
+</script>
+</body>
+</html>

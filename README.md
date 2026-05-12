@@ -1,39 +1,62 @@
-# optro-provenance-preipo
+# provenance-borb
 
-MCP server that surfaces audit-grade SOX testing evidence chains, tickmark conventions, workpaper section scaffolds, management-assertion inputs, and a defensibility validator — for consumption by a foundation-model agent.
+Audit-grade workpaper viewer for the **System-of-Record Premium** scenario in the Optro pre-IPO scenario plan. A Big-4-style workpaper with live, hover-citable provenance on every value — and a peer-defensibility benchmark that only the system of record can produce.
 
-**The framing:** in the Wrapper Era, the agent (Claude Desktop, etc.) is the workpaper drafting interface. Optro is the evidence-of-truth backend. The Controller never opens the Optro UI — they ask Claude questions and expect audit-ready output with traceable citations.
-
-This is a **prototype**. Trusts the local client, no auth, single fictional customer (Helios Robotics, Inc.).
+**Live demo:** [sandersonboard.github.io/provenance-borb](https://sandersonboard.github.io/provenance-borb/) (BORB-gated)
 
 **Family:** [Velocity](https://sandersonboard.github.io/velocity-borb/) · [Benchmark](https://sandersonboard.github.io/benchmark-borb/) · [Practice](https://sandersonboard.github.io/practice-borb/) · [Context](https://sandersonboard.github.io/context-borb/) · **Provenance**
 
-## Tools
+## What is in this repo
 
-| Tool | Purpose |
-|---|---|
-| `get_evidence_chain` | Full evidence chain for one control · procedures, artifacts, reviewer, overrides, disposition, defensibility_score, issues |
-| `get_tickmark_legend` | Tickmarks used in a control's workpapers (Deloitte standard) — both the subset used and the full legend |
-| `draft_workpaper_section` | Structured slots (not prose) for narrative / testing / exception / remediation sections, with explicit `REQUIRES HUMAN REVIEW` markers |
-| `list_management_assertion_inputs` | Inputs for the S-1 management assertion: scope, must-have universe, testing completeness, open findings by severity, remediation status, disclosure recommendation |
-| `validate_audit_trail` | Defensibility check on one control · returns score 0-100 + issues array (severity, category, remediation_suggestion) |
+Two products hedging two different scenarios, sharing one data model:
 
-Every response includes:
-- A **provenance signature** (`generated_at`, `source_system`, `schema_version`, `optro_record_id`)
-- Explicit **`optro_record_id`** citations the agent can surface back to the user
-- A **`defensibility_score`** (0-100) wherever a chain is being assessed
+1. **Static frontend prototype** — the System-of-Record Premium hedge — deployed as GitHub Pages and visible above. Plain HTML/CSS/JS, no build step. Pattern matches the rest of the Optro demo family.
+2. **MCP server (`server.ts`, `provenance.ts`)** — the Wrapper-Era hedge — preserved from an earlier session. Run `npm install && npm run smoke` to exercise the five tools.
 
-## Install + run
+The GitHub Pages site serves the frontend prototype. The MCP server is not deployed; it ships as source for anyone who wants to wire it into Claude Desktop locally.
+
+## The frontend prototype (what the live demo shows)
+
+A workpaper-centric application built around one hero control (RC-047 — manual journal entry approval, revenue recognition) plus an index of 175 mock controls for Helios Robotics. Three demo formats, every one starting from `index.html`:
+
+- **Option A** (`option-1.html` → `option-1-viewer.html` → `-chain` → `-peers` → `-walkthrough`) — the click-through. The product as a Controller would actually use it before a Big-4 walkthrough.
+- **Option B** (`option-2.html`) — the condensed Big-4 pitch. Three frames stacked vertically for screensharing during the walkthrough.
+- **Option C** (`option-3.html`) — the long-scroll. Eight scenes of the Tuesday morning that Helios's Q1 walkthrough stopped being a document.
+
+The acceptance script is in `DEMO.md`.
+
+## Mock data
+
+Single fictional company: **Helios Robotics, Inc.** Same Helios as the rest of the family. Engineered to tell one coherent audit-grade story:
+
+- 175-control universe · 60% chain_complete · 30% chain_partial · 10% chain_broken (per PRD)
+- RC-047 is the hero workpaper: 7 testing procedures, 5 evidence artifacts, 2 reviewer sign-offs, 1 Deloitte walkthrough, defensibility 100/100
+- Reviewer roster: Anton Dam (Senior Accountant, Helios), Pranav Iyer (Controller, Helios), Tara Okoye (CAE, Helios), Naomi Wilkes (Engagement Partner, Deloitte)
+- Tickmark conventions follow Deloitte standard (13 symbols)
+- Peer cohort: 47 anonymized pre-IPO companies that filed S-1 between Jan 2024 and Apr 2025, technology vertical, Series D+
+- All timestamps fall within the trailing 6 months of the 2026-05-12 as-of date
+
+## Run locally
+
+This is a static site with no build step. From the repo root:
 
 ```bash
-cd provenance-borb
-npm install
-npm run smoke    # exercises every handler; should print all ✓
+# Any static server works. Examples:
+python3 -m http.server 8000
+# or
+npx serve .
 ```
 
-## Wire into Claude Desktop
+Open <http://localhost:8000> and enter the BORB code to unlock.
 
-Add this to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+## MCP server (Wrapper-Era hedge — separate scope)
+
+```bash
+npm install
+npm run smoke   # exercises every handler; should print all ✓
+```
+
+Wire into Claude Desktop by adding to `~/Library/Application Support/Claude/claude_desktop_config.json`:
 
 ```json
 {
@@ -46,38 +69,15 @@ Add this to `~/Library/Application Support/Claude/claude_desktop_config.json` (m
 }
 ```
 
-Replace `/absolute/path/to/provenance-borb` with the full path. Restart Claude Desktop. The server registers as `optro-provenance-preipo` and exposes the 5 tools.
-
-Both `optro-context-preipo` (sibling project) and `optro-provenance-preipo` can run side-by-side. Context answers "where are we"; Provenance answers "prove it."
-
-## Try it
-
-Three prompts that exercise the chain end-to-end (see `DEMO.md` for the framing):
-
-1. *"Draft the management assertion section for our S-1 based on current testing status."*
-2. *"Show me the evidence chain for control RC-047."*
-3. *"Run a defensibility check across our three open significant deficiencies and tell me what to fix before the management assertion package is due to Deloitte."*
-
-## Mock data
-
-Single fictional company: **Helios Robotics, Inc.** Same Helios as the rest of the family. Engineered to tell one coherent audit-grade story:
-
-- 175-control universe · 60% with complete chains · 40% with one or more gaps
-- 12 hand-crafted high-fidelity chains (RC-047, the 3 SDs, plus other controls referenced by findings)
-- Tickmark conventions follow Deloitte standard (13 symbols)
-- 17 named reviewers · 4 Deloitte + 13 Helios
-- Override reasons reflect realistic pre-IPO judgment calls
-- 3 significant deficiencies (FR-007, FR-002, IT-001) surface via `validate_audit_trail`
-- All timestamps fall within the trailing 6 months from the 2026-05-12 as-of date
+The MCP server exposes five tools — `get_evidence_chain`, `get_tickmark_legend`, `draft_workpaper_section`, `list_management_assertion_inputs`, `validate_audit_trail` — and is documented separately in code comments.
 
 ## Out of scope (Phase 0)
 
-- Web UI — the foundation-model client is the UI
-- Auth — trusts local client
-- HTTP transport — stdio only
-- Real Optro integration — fixture only
-- Multi-tenancy
-- Tests beyond `npm run smoke`
+- Authentication beyond the BORB soft gate
+- Real backend or persistence
+- Admin console / editing workpapers
+- Real Big-4 firm style guides beyond Deloitte conventions
+- Other peer comparison categories (defensibility metrics only)
 
 ## License
 

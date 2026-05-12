@@ -1,418 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="robots" content="noindex,nofollow" />
-  <title>Provenance — Audit-grade output for the Wrapper Era</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="shared.css" />
-  <style>
-    /* Strategic analysis block */
-    .scenario-block { margin: 14px 0 16px; padding: 12px 14px; background: #fafafa; border: 1px solid var(--border); border-radius: 6px; }
-    .scenario-block-label { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
-    .scenario-map { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 0; }
-    .sm-cell { padding: 6px 8px; background: white; border: 1px solid var(--border); border-radius: 3px; font-size: 10px; line-height: 1.3; min-height: 38px; display: flex; flex-direction: column; gap: 1px; }
-    .sm-cell .sm-tag { font-family: ui-monospace, monospace; font-size: 9px; font-weight: 700; color: var(--muted); }
-    .sm-cell .sm-name { font-weight: 500; color: var(--ink); }
-    .sm-cell.active { background: var(--accent); border-color: var(--accent); }
-    .sm-cell.active .sm-tag, .sm-cell.active .sm-name { color: white; }
-    .sm-cell.cross { background: #fef2f2; border-color: #fecaca; }
-    .sm-cell.cross .sm-tag, .sm-cell.cross .sm-name { color: var(--accent); }
-    .sm-cell.vuln { opacity: 0.5; }
-    .sm-cell.vuln .sm-name { text-decoration: line-through; }
-    .scenario-axis { font-size: 8px; color: var(--muted); font-family: ui-monospace, monospace; text-transform: uppercase; letter-spacing: 0.08em; display: flex; justify-content: space-between; padding: 4px 2px 0; }
-    .scenario-analysis { font-size: 12px; line-height: 1.55; color: var(--ink); margin: 10px 0 0; }
-    .scenario-analysis strong { color: var(--accent); font-weight: 600; }
-    /* Progressive disclosure */
-    .scenario-deep { margin-top: 10px; }
-    .scenario-deep summary { cursor: pointer; font-size: 11px; font-weight: 600; color: var(--accent); letter-spacing: 0.03em; padding: 6px 8px; margin: 0 -8px; border-radius: 4px; list-style: none; user-select: none; display: flex; align-items: center; gap: 6px; }
-    .scenario-deep summary::-webkit-details-marker { display: none; }
-    .scenario-deep summary::before { content: '▸'; font-size: 10px; transition: transform 0.15s; }
-    .scenario-deep[open] summary::before { transform: rotate(90deg); }
-    .scenario-deep summary:hover { background: rgba(168, 49, 63, 0.06); }
-    .scenario-deep-body { margin-top: 10px; padding: 12px 14px; background: white; border: 1px solid var(--border); border-radius: 5px; }
-    .sd-section { margin-bottom: 14px; }
-    .sd-section:last-child { margin-bottom: 0; }
-    .sd-label { font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
-    .sd-text { font-size: 11.5px; line-height: 1.55; color: var(--ink); }
-    .sd-text code { font-family: ui-monospace, monospace; font-size: 11px; background: #f3f4f6; padding: 1px 5px; border-radius: 3px; }
-    .sd-list { font-size: 11.5px; line-height: 1.55; color: var(--ink); margin: 0; padding-left: 16px; }
-    .sd-list li { margin-bottom: 3px; }
-    .sd-list li:last-child { margin-bottom: 0; }
-    .sd-cost { display: inline-block; font-family: ui-monospace, monospace; font-size: 10px; background: #fef2f2; color: var(--accent); padding: 1px 6px; border-radius: 3px; }
-  </style>
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      document.querySelectorAll('.scenario-block').forEach(function(el) {
-        el.addEventListener('click', function(e) { e.stopPropagation(); });
-      });
-    });
-  </script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Provenance — Audit-grade workpapers for the System-of-Record Premium scenario</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+<style>
+  body { background: #fafaf5; }
+  .hero { max-width: 1100px; margin: 0 auto; padding: 88px 32px 40px; }
+  .hero .eyebrow {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: 56px; font-weight: 700; letter-spacing: -0.025em;
+    line-height: 1.05; margin: 0 0 18px;
+    max-width: 820px;
+  }
+  .hero h1 .accent-word { color: var(--accent); }
+  .hero .deck {
+    font-size: 18px; line-height: 1.55; color: var(--ink-light);
+    max-width: 720px;
+  }
+  .hero .deck strong { color: var(--ink); font-weight: 600; }
+  .scenario-strip {
+    margin: 32px 0 48px; padding: 14px 18px;
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    font-size: 12.5px; color: var(--ink-light);
+  }
+  .scenario-strip .ss-tag {
+    font-family: var(--mono); font-size: 11px; font-weight: 700;
+    color: var(--accent); padding: 3px 8px; border: 1px solid var(--accent); border-radius: 4px;
+    text-transform: uppercase; letter-spacing: 0.06em;
+  }
+  .grid { max-width: 1100px; margin: 0 auto; padding: 0 32px 32px;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  @media (max-width: 940px) { .grid { grid-template-columns: 1fr; } }
+  .opt-card {
+    background: white; border: 1px solid var(--border); border-radius: 10px;
+    padding: 24px 26px; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .opt-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(15,23,42,0.08); text-decoration: none; }
+  .opt-card .letter {
+    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--accent); text-transform: uppercase;
+  }
+  .opt-card .recommend {
+    display: inline-block; margin-left: 8px;
+    background: var(--accent); color: white;
+    font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 999px;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .opt-card h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 8px; line-height: 1.2; }
+  .opt-card .tag { color: var(--muted); font-size: 13px; line-height: 1.55; margin-bottom: 16px; }
+  .opt-card .audience {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 4px;
+  }
+  .opt-card .aud-name {
+    font-family: var(--serif); font-size: 14px; color: var(--ink); font-style: italic;
+    margin-bottom: 16px;
+  }
+  .opt-card .steps {
+    background: var(--bg); border-radius: 6px; padding: 12px 14px;
+    margin: 0 0 16px;
+  }
+  .opt-card .steps .step {
+    display: flex; align-items: flex-start; gap: 8px; padding: 4px 0;
+    font-size: 12.5px; line-height: 1.4; color: var(--ink-light);
+    border: none; background: transparent; margin: 0;
+  }
+  .opt-card .steps .step .num {
+    flex-shrink: 0; width: 16px; height: 16px; border-radius: 50%;
+    background: var(--ink); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 9px; font-weight: 700;
+    margin-top: 1px;
+  }
+  .opt-card .moment {
+    margin-top: auto;
+    padding: 10px 12px;
+    background: #fffafa; border: 1px solid #fed7d7;
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    font-size: 12px; line-height: 1.5; color: var(--ink);
+  }
+  .opt-card .moment-label {
+    font-size: 9px; font-weight: 700; color: var(--accent);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px;
+  }
+  .opt-card .arrow {
+    margin-top: 14px; color: var(--accent); font-weight: 600; font-size: 13px;
+  }
+  .scenario-block {
+    max-width: 1100px; margin: 32px auto 0; padding: 18px 22px;
+    background: white; border: 1px solid var(--border); border-radius: 8px;
+  }
+  .scenario-block-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
+  .scenario-block .map {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+  }
+  .sm-cell {
+    padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+    font-size: 11.5px; line-height: 1.35;
+  }
+  .sm-cell .sm-tag { font-family: var(--mono); font-size: 9.5px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; }
+  .sm-cell .sm-name { font-weight: 600; color: var(--ink); margin-top: 2px; }
+  .sm-cell.active { background: var(--accent); border-color: var(--accent); }
+  .sm-cell.active .sm-tag, .sm-cell.active .sm-name { color: white; }
+  .scenario-block .ana { font-size: 12.5px; line-height: 1.6; color: var(--ink-light); margin-top: 10px; }
+  .scenario-block .ana strong { color: var(--accent); }
+  .family-strip {
+    max-width: 1100px; margin: 56px auto 0; padding: 18px 32px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    font-size: 11.5px; color: var(--muted);
+  }
+  .family-strip .label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+  .family-strip .links { display: flex; gap: 18px; flex-wrap: wrap; }
+  .family-strip .links a { color: var(--ink-light); text-decoration: none; }
+  .family-strip .links a:hover { color: var(--ink); }
+  .family-strip .self { color: var(--accent); font-weight: 700; }
+  .repo-note {
+    max-width: 1100px; margin: 24px auto 0; padding: 0 32px 60px;
+    font-size: 11.5px; color: var(--muted); line-height: 1.6;
+  }
+  .repo-note code { background: var(--bg); padding: 1px 6px; border-radius: 3px; font-family: var(--mono); }
+</style>
 </head>
 <body>
-  <header style="border-bottom: 1px solid var(--border); background: white;">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; padding: 16px 24px;">
-      <div>
-        <span class="brand">Provenance</span>
-        <span class="beta-pill proto-pill">PROTOTYPE</span>
-      </div>
-      <div style="font-size: 12px; color: var(--muted);">
-        Internal preview — <span class="accent">do not share</span>
-      </div>
+
+<div class="hero">
+  <div class="eyebrow">Optro · Provenance · Phase-0 prototype</div>
+  <h1>The workpaper itself is the moat — every claim, <span class="accent-word">live-cited</span> to its source.</h1>
+  <p class="deck">A Big-4-style workpaper viewer that <strong>renders the chain of custody, not a snapshot</strong>. Hover any value — sample size, approval threshold, exception disposition, defensibility score — and Provenance shows you where it came from, who captured it, when, and whether anyone overrode it along the way. The peer benchmark proves it: only the system of record can produce this artifact.</p>
+
+  <div class="scenario-strip">
+    <span><span class="ss-tag">Scenario · System-of-Record Premium</span> <span style="margin-left:10px;">If reasoning commoditizes and data + workflow ownership becomes the moat, the audit-grade output layer is what we sell. This prototype shows what the moat looks like rendered.</span></span>
+    <span style="font-family: var(--mono); font-size: 11px;">No-regret move · #2 Audit-grade output</span>
+  </div>
+</div>
+
+<div class="grid">
+
+  <a class="opt-card" href="option-1.html">
+    <span class="letter">Option A <span class="recommend">Acceptance path</span></span>
+    <h2>Walk the workpaper end-to-end</h2>
+    <div class="tag">The product as a Controller would actually use it before the Deloitte walkthrough. Workpaper viewer → evidence chain graph → peer benchmark → walkthrough mode → print to PDF.</div>
+    <div class="audience">Audience</div>
+    <div class="aud-name">Controller (Anton Dam, Helios) preparing for the Q1 walkthrough</div>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><div>Workpaper index — 175 controls, status badges, Big 4 filter</div></div>
+      <div class="step"><span class="num">2</span><div>RC-047 workpaper — hover any value for provenance</div></div>
+      <div class="step"><span class="num">3</span><div>Evidence chain — graph view, every artifact linked</div></div>
+      <div class="step"><span class="num">4</span><div>Peer benchmark — Helios vs 47 pre-IPO peers</div></div>
+      <div class="step"><span class="num">5</span><div>Walkthrough mode — print-clean PDF for Deloitte</div></div>
     </div>
-  </header>
-
-  <main class="container" style="padding: 64px 24px;">
-    <div style="max-width: 760px;">
-      <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px;">Wrapper Era · Phase 0</div>
-      <h1 style="font-size: 44px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin: 0 0 16px;">
-        Audit-grade output for the Wrapper Era.
-      </h1>
-      <p style="font-size: 18px; color: var(--muted); line-height: 1.5; margin: 0 0 12px;">
-        Provenance is the MCP server that surfaces SOX evidence chains, tickmark conventions, workpaper section scaffolds, management-assertion inputs, and a defensibility validator — all consumed by a foundation-model agent like Claude Desktop.
-      </p>
-      <p style="font-size: 14px; color: var(--muted); line-height: 1.5; margin: 0 0 0;">
-        Companion to <a href="https://sandersonboard.github.io/context-borb/" style="color: var(--accent); text-decoration: none;">Context</a>: where Context answers <em>"where are we"</em>, Provenance answers <em>"prove it."</em> The Controller never opens the Optro UI — they ask Claude and get back something a Big 4 reviewer will accept, with every claim cited back to an <code class="inline">optro_record_id</code>.
-      </p>
+    <div class="moment">
+      <div class="moment-label">Demo moment</div>
+      Hover the $250,000 threshold on the RC-047 narrative — Provenance surfaces the NetSuite record, the memo it derives from, the Controller who signed it, and the date the threshold was last raised.
     </div>
+    <div class="arrow">Open the click-through →</div>
+  </a>
 
-    <!-- Framing card -->
-    <div style="margin-top: 40px; max-width: 920px; padding: 20px 24px; background: white; border: 1px solid var(--border); border-radius: 8px;">
-      <div style="font-size: 11px; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;">THE FRAMING</div>
-      <p style="font-size: 14px; color: var(--ink); line-height: 1.65; margin: 0 0 8px;">
-        In the Wrapper Era, the foundation model <em>is</em> the workpaper-drafting interface. A pre-IPO Controller doesn't open Optro — they ask Claude Desktop questions like <em>"draft the management assertion section for our S-1"</em> or <em>"show me the evidence chain for control RC-047."</em>
-      </p>
-      <p style="font-size: 14px; color: var(--ink); line-height: 1.65; margin: 0;">
-        Provenance is the evidence-of-truth backend that makes the agent's output defensible. Structured responses with explicit citations, tickmark vocabulary, and <code class="inline">REQUIRES HUMAN REVIEW</code> markers wherever judgment was applied — so the model can't fabricate evidence and the customer can always trace a claim back to source.
-      </p>
+  <a class="opt-card" href="option-2.html">
+    <span class="letter">Option B</span>
+    <h2>Big 4 walkthrough — one-pager</h2>
+    <div class="tag">A condensed, screenshare-ready surface for the moment a Deloitte engagement partner sees Provenance live. Three frames: the workpaper, the chain, the peer-defensibility distribution. Each frame asks the question Provenance answers that nothing else can.</div>
+    <div class="audience">Audience</div>
+    <div class="aud-name">Deloitte engagement partner during the Q1 walkthrough</div>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><div>Frame 1 — "Can you show me how RC-047 was tested?"</div></div>
+      <div class="step"><span class="num">2</span><div>Frame 2 — "Walk me through the evidence chain"</div></div>
+      <div class="step"><span class="num">3</span><div>Frame 3 — "How does this compare to your peers?"</div></div>
     </div>
+    <div class="moment">
+      <div class="moment-label">Demo moment</div>
+      Frame 3 — Helios trails the peer median on reviewer sign-off depth. The Controller sees a remediation priority surface mid-walkthrough, not in a finding letter three weeks later.
+    </div>
+    <div class="arrow">Open the pitch view →</div>
+  </a>
 
-    <!-- ===== AUDIT-GRADE BY CONSTRUCTION ===== -->
-    <section style="margin-top: 56px; max-width: 1180px;">
-      <div style="display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin-bottom: 6px;">
-        <h2 style="font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0; color: var(--ink);">Audit-grade by construction</h2>
-        <span style="font-size: 12px; color: var(--muted);">— five primitives keep the foundation model honest and the human in the loop.</span>
-      </div>
-      <p style="font-size: 13px; color: var(--muted); line-height: 1.6; margin: 4px 0 0; max-width: 920px;">
-        Drafting workpapers with an LLM is the easy part. Making the output <em>defensible</em> — traceable, attested, and reviewed — is what separates a Wrapper Era prototype from something a pre-IPO Controller can hand to Deloitte. Provenance enforces the five primitives below at the API boundary, so the agent <em>cannot</em> ship audit output without them.
-      </p>
+  <a class="opt-card" href="option-3.html">
+    <span class="letter">Option C</span>
+    <h2>The walkthrough, as Anton lived it</h2>
+    <div class="tag">Narrative scroll — eight scenes from the morning of the Deloitte Q1 walkthrough at Helios Robotics. T-8 months to the S-1. What changes when the Controller can defend any number on the screen without leaving the workpaper.</div>
+    <div class="audience">Audience</div>
+    <div class="aud-name">AuditBoard exec considering the audit-grade output bet</div>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><div>06:42 AM — Anton opens RC-047 at his kitchen table</div></div>
+      <div class="step"><span class="num">2</span><div>09:15 AM — Naomi Wilkes hovers a number; the room goes quiet</div></div>
+      <div class="step"><span class="num">3</span><div>10:08 AM — Peer benchmark surfaces a remediation, not a finding</div></div>
+    </div>
+    <div class="moment">
+      <div class="moment-label">Demo moment</div>
+      The pull-quote near the end: <em>"For the first time in fifteen years I wasn't presenting to Deloitte — they were reading along with me."</em>
+    </div>
+    <div class="arrow">Read the scroll →</div>
+  </a>
 
-      <div class="audit-primitives" style="margin-top: 22px;">
+</div>
 
-        <!-- 1. Provenance envelope -->
-        <div class="primitive-card">
-          <div class="num">01 · WATERMARK</div>
-          <div class="title">Provenance signature on every response</div>
-          <div class="body">Every tool response is wrapped in a tamper-evident envelope: <code class="inline">schema_version</code>, <code class="inline">source_system</code>, <code class="inline">generated_at</code>, <code class="inline">optro_record_id</code>. If a fact in the agent's output doesn't trace to a record_id, it didn't come from Optro — and a reviewer can tell at a glance.</div>
-          <div class="example">
-            "provenance": {<br/>
-            &nbsp;&nbsp;"source_system": <span class="hl">"optro-provenance-preipo"</span>,<br/>
-            &nbsp;&nbsp;"schema_version": <span class="hl">"0.1.0"</span>,<br/>
-            &nbsp;&nbsp;"optro_record_id": <span class="hl">"rec_chain_rc_047"</span><br/>
-            }
-          </div>
-        </div>
+<div class="scenario-block">
+  <div class="scenario-block-label">Where Provenance hedges in the scenario plan</div>
+  <div class="map">
+    <div class="sm-cell"><div class="sm-tag">Wrapper Era</div><div class="sm-name">Hedged separately — see Context (MCP)</div></div>
+    <div class="sm-cell active"><div class="sm-tag">SoR Premium · primary</div><div class="sm-name">Provenance is the proof artifact</div></div>
+    <div class="sm-cell"><div class="sm-tag">Commodity Hell</div><div class="sm-name">Hedged separately — see Practice</div></div>
+    <div class="sm-cell"><div class="sm-tag">AI-Native Newcomers</div><div class="sm-name">Hedged separately — see Velocity</div></div>
+  </div>
+  <div class="ana"><strong>Why this prototype.</strong> If reasoning commoditizes and the moat shifts from "best chat UX" to "only one who can produce the underlying record," Optro wins by being the only vendor whose workpapers ship with verifiable provenance. Other vendors will render a flat document; we render a workpaper with live citations. The peer-defensibility benchmark is what makes the moat visible to a Controller — and to the partner across the table.</div>
+</div>
 
-        <!-- 2. Inline citations -->
-        <div class="primitive-card">
-          <div class="num">02 · TRACEABILITY</div>
-          <div class="title">Every claim cites an <code class="inline">optro_record_id</code></div>
-          <div class="body">When the agent says <em>"4 orphaned production accounts were identified"</em>, that fact is bound to a specific Optro record. The agent renders the citation pill inline so a Big 4 reviewer can drill from prose back to evidence — no hallucinated numbers, no fabricated artifact ids.</div>
-          <div class="example">
-            <span class="cite-pill">rec_art_it001_l1</span>&nbsp;&nbsp;<span class="cite-pill">rec_chain_fr_002</span>
-          </div>
-        </div>
+<div class="family-strip">
+  <span class="label">Optro prototype family</span>
+  <span class="links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="self">Provenance</span>
+  </span>
+</div>
 
-        <!-- 3. REQUIRES HUMAN REVIEW -->
-        <div class="primitive-card">
-          <div class="num">03 · SAFETY BOUNDARY</div>
-          <div class="title"><span class="review-marker">REQUIRES HUMAN REVIEW</span> markers stay verbatim</div>
-          <div class="body">Wherever judgment was applied — severity classification, scope caveats, missing-evidence remediation — Provenance returns an explicit review marker that the agent must preserve. The model literally cannot draft past these points without flagging them to the Controller.</div>
-          <div class="example">
-            slot["step_4"]: <span class="hl">"⚠ REQUIRES HUMAN REVIEW:</span><br/>
-            &nbsp;&nbsp;step 4 has no evidence artifact captured.<br/>
-            &nbsp;&nbsp;Document the outcome before workpaper sign-off."
-          </div>
-        </div>
+<div class="repo-note">
+  <strong>Note.</strong> This repo also contains a separately-scoped MCP server (<code>server.ts</code>, <code>provenance.ts</code>) that hedges the Wrapper-Era scenario from the same underlying data shape. Run <code>npm install &amp;&amp; npm run smoke</code> to exercise it. The static demo above is the System-of-Record-Premium hedge and is what the GitHub Pages site serves.
+</div>
 
-        <!-- 4. Defensibility score -->
-        <div class="primitive-card">
-          <div class="num">04 · READINESS GAUGE</div>
-          <div class="title">Defensibility score (0&nbsp;–&nbsp;100)</div>
-          <div class="body">A numerical readout of chain completeness with severity-banded issues. Controllers see immediately whether a workpaper would survive a Big 4 review — and what specifically would fail it. Below 80 = remediation needed; below 50 = blocking.</div>
-          <div class="example" style="font-family: var(--sans); font-size: 11px;">
-            <div style="height: 8px; background: linear-gradient(to right, #fee2e2 0%, #fee2e2 35%, #fef3c7 35%, #fef3c7 80%, #d1fae5 80%, #d1fae5 100%); border-radius: 4px; position: relative;">
-              <div style="position: absolute; top: -3px; left: 75%; transform: translateX(-50%); width: 3px; height: 14px; background: var(--ink); border-radius: 1px;"></div>
-            </div>
-            <div style="display: flex; justify-content: space-between; margin-top: 4px; color: var(--muted); font-family: var(--mono);"><span>0</span><span style="color: var(--awaiting); font-weight: 700;">75</span><span>100</span></div>
-          </div>
-        </div>
-
-        <!-- 5. Sign-off ribbon -->
-        <div class="primitive-card">
-          <div class="num">05 · WORKFLOW GATE</div>
-          <div class="title">Required human sign-offs before filing</div>
-          <div class="body">Three signatures required on every workpaper: <strong>Preparer</strong>, <strong>Independent Reviewer</strong>, <strong>External Auditor</strong>. The agent renders the ribbon with status pills (<span style="background: var(--signed); color: white; padding: 0 4px; border-radius: 2px; font-size: 9px; font-weight: 700;">SIGNED</span> / <span style="background: var(--awaiting); color: white; padding: 0 4px; border-radius: 2px; font-size: 9px; font-weight: 700;">AWAITING</span> / <span style="background: var(--blocked); color: white; padding: 0 4px; border-radius: 2px; font-size: 9px; font-weight: 700;">BLOCKED</span>) and cannot mark the workpaper complete until all three are captured.</div>
-          <div class="example" style="font-family: var(--sans); font-size: 10px;">
-            <div style="display: flex; gap: 4px;">
-              <div style="flex: 1; padding: 4px 6px; background: var(--signed-bg); border-top: 2px solid var(--signed); border-radius: 0 0 3px 3px; color: var(--signed); font-weight: 700;">✓ PREPARER</div>
-              <div style="flex: 1; padding: 4px 6px; background: var(--awaiting-bg); border-top: 2px solid var(--awaiting); border-radius: 0 0 3px 3px; color: var(--awaiting); font-weight: 700;">⚠ REVIEWER</div>
-              <div style="flex: 1; padding: 4px 6px; background: var(--signed-bg); border-top: 2px solid var(--signed); border-radius: 0 0 3px 3px; color: var(--signed); font-weight: 700;">✓ AUDITOR</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- HCAI footing note -->
-      <div style="margin-top: 18px; padding: 14px 18px; background: white; border-left: 3px solid var(--ink); border-radius: 0 6px 6px 0; font-size: 13px; line-height: 1.65; color: var(--ink-light);">
-        <strong style="color: var(--ink);">Why this matters.</strong> Shneiderman's HCAI framework calls this the "Reliable, Safe, Trustworthy" zone — high automation paired with high human control. The primitives above are how Provenance gets there: <em>visibility of state</em> (provenance strip), <em>recognition over recall</em> (inline citation pills), <em>error prevention</em> (REQUIRES HUMAN REVIEW gates), <em>match to the real world</em> (Deloitte tickmarks + workpaper conventions), and <em>explicit human checkpoints</em> (sign-off ribbon). The model assists. The Controller decides. The Auditor verifies. None of those handoffs happen by accident.
-      </div>
-    </section>
-
-    <section style="margin-top: 64px; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px;">
-
-      <!-- Option 1 -->
-      <a href="option-1.html" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px -8px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="aspect-ratio: 16/10; background: linear-gradient(135deg, #f3f4f6 0%, #fef2f2 100%); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); position: relative;">
-          <div style="position: absolute; inset: 24px; background: var(--code-bg); color: var(--code-fg); border-radius: 6px; padding: 12px; font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.6;">
-            <div style="color: #64748b;">// claude_desktop_config.json</div>
-            <div><span style="color: #94a3b8;">{</span></div>
-            <div style="padding-left: 10px;"><span style="color: #fbbf24;">"mcpServers"</span>: <span style="color: #94a3b8;">{</span></div>
-            <div style="padding-left: 20px;"><span style="color: #fbbf24;">"optro-provenance-preipo"</span>: <span style="color: #94a3b8;">{</span></div>
-            <div style="padding-left: 30px;"><span style="color: #fbbf24;">"command"</span>: <span style="color: #86efac;">"npx"</span>,</div>
-            <div style="padding-left: 30px;"><span style="color: #fbbf24;">"args"</span>: <span style="color: #94a3b8;">[</span><span style="color: #86efac;">"tsx"</span>, <span style="color: #86efac;">"./server.ts"</span><span style="color: #94a3b8;">]</span></div>
-            <div style="padding-left: 20px;"><span style="color: #94a3b8;">}</span></div>
-            <div style="padding-left: 10px;"><span style="color: #94a3b8;">}</span></div>
-            <div><span style="color: #94a3b8;">}</span></div>
-          </div>
-        </div>
-        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-            <div style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Option 1</div>
-            <div style="font-size: 11px; color: var(--muted);">·</div>
-            <div style="font-size: 11px; color: var(--muted);">Setup walkthrough</div>
-          </div>
-          <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">Wire Provenance into Claude Desktop</h2>
-          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px;">Three steps to get the MCP server running locally and registered with Claude Desktop. Includes the full schema for all 5 tools and the citation model.</p>
-
-          <div class="scenario-block">
-            <div class="scenario-block-label">Scenario hedge</div>
-            <div class="scenario-map">
-              <div class="sm-cell active"><span class="sm-tag">S1</span><span class="sm-name">Wrapper Era</span></div>
-              <div class="sm-cell"><span class="sm-tag">S2</span><span class="sm-name">SoR Premium</span></div>
-              <div class="sm-cell"><span class="sm-tag">S3</span><span class="sm-name">Commodity Hell</span></div>
-              <div class="sm-cell"><span class="sm-tag">S4</span><span class="sm-name">AI-Native Newcomers</span></div>
-            </div>
-            <div class="scenario-axis"><span>← platforms</span><span>applications →</span></div>
-            <p class="scenario-analysis"><strong>Hedges Scenario 1 — Wrapper Era.</strong> An installable MCP server that emits <em>audit-grade</em> output is the Phase-0 plant for partner positioning with foundation-model providers. Ship the proof layer before Anthropic ships a SOX agent, not after.</p>
-            <details class="scenario-deep">
-              <summary>Full strategic analysis</summary>
-              <div class="scenario-deep-body">
-                <div class="sd-section">
-                  <div class="sd-label">Scenario story</div>
-                  <div class="sd-text">By 2027 Anthropic and OpenAI ship SOX-aware agents directly with audit reasoning and compliance memory. The agents will draft management assertions and workpapers — but only as well as the structured evidence they can call. Vertical players who survive are the ones whose data <em>and</em> output discipline are wired in as MCP first, before the model vendors pick a default backend.</div>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">What this prototype proves</div>
-                  <ul class="sd-list">
-                    <li>Installable, runnable MCP server — <code>npx tsx server.ts</code> boots cleanly on stdio.</li>
-                    <li>5 tools registered: <code>get_evidence_chain</code>, <code>get_tickmark_legend</code>, <code>draft_workpaper_section</code>, <code>list_management_assertion_inputs</code>, <code>validate_audit_trail</code>.</li>
-                    <li>Provenance envelope on every response — <code>schema_version</code>, <code>optro_record_id</code>, <code>generated_at</code> — so the agent can't claim what Optro didn't return.</li>
-                    <li>One engineer can ship this in &lt;1 day from scenario plan to functional artifact.</li>
-                  </ul>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">What it does not address</div>
-                  <ul class="sd-list">
-                    <li>Real Optro tenant authentication — Phase 0 trusts local client.</li>
-                    <li>HTTP transport for remote-tenant access.</li>
-                    <li>ChatGPT plugin / OpenAI compatibility.</li>
-                    <li>Multi-tenant routing and per-customer evidence stores.</li>
-                  </ul>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">Trigger conditions</div>
-                  <div class="sd-text">Anthropic ships a SOX-aware agent <strong>AND</strong> 2+ funded wrappers raise $20M+ rounds aimed at audit-draft workflows → double down on data-first + output-discipline architecture; ship Provenance immediately alongside Context.</div>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">Cost · win condition</div>
-                  <div class="sd-text"><span class="sd-cost">2 engineers · 1 quarter</span> for the production version. Win = when Anthropic/OpenAI ship a SOX agent, Optro's MCP is the preferred backend because the audit-grade output layer is already wired in and nothing else returns citations Big 4 reviewers will accept.</div>
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <div style="margin-top: auto; font-size: 13px; color: var(--accent); font-weight: 600;">Walk me through it →</div>
-        </div>
-      </a>
-
-      <!-- Option 2 -->
-      <a href="option-2.html" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px -8px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="aspect-ratio: 16/10; background: linear-gradient(135deg, #fef2f2 0%, #f3f4f6 100%); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); position: relative; padding: 24px;">
-          <div style="background: white; border-radius: 6px; padding: 14px; box-shadow: 0 4px 12px -4px rgba(0,0,0,0.08); width: 100%; max-width: 320px;">
-            <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
-              <div style="width: 18px; height: 18px; border-radius: 50%; background: var(--accent); flex-shrink: 0;"></div>
-              <div style="font-size: 10px; color: var(--ink); line-height: 1.4;">"Draft the management assertion section for our S-1."</div>
-            </div>
-            <div style="display: flex; gap: 8px; align-items: flex-start; margin-bottom: 8px;">
-              <div style="width: 18px; height: 18px; border-radius: 50%; background: var(--ink); flex-shrink: 0;"></div>
-              <div style="font-size: 9px; color: var(--muted); font-family: monospace; line-height: 1.4;">→ list_management_assertion_inputs()<br/>→ validate_audit_trail(FR-007)<br/>→ validate_audit_trail(FR-002)<br/>→ validate_audit_trail(IT-001)</div>
-            </div>
-          </div>
-        </div>
-        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-            <div style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Option 2</div>
-            <div style="font-size: 11px; color: var(--muted);">·</div>
-            <div style="font-size: 11px; color: var(--muted);">Conversation transcript</div>
-          </div>
-          <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">Watch Claude draft an assertion</h2>
-          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px;">A full Claude Desktop transcript: the Controller asks for the management assertion, Provenance returns structured inputs, Claude drafts prose with citations and the three SDs disclosed.</p>
-
-          <div class="scenario-block">
-            <div class="scenario-block-label">Scenario hedge · primary + cross-hedge</div>
-            <div class="scenario-map">
-              <div class="sm-cell active"><span class="sm-tag">S1</span><span class="sm-name">Wrapper Era</span></div>
-              <div class="sm-cell cross"><span class="sm-tag">S2</span><span class="sm-name">SoR Premium</span></div>
-              <div class="sm-cell"><span class="sm-tag">S3</span><span class="sm-name">Commodity Hell</span></div>
-              <div class="sm-cell"><span class="sm-tag">S4</span><span class="sm-name">AI-Native Newcomers</span></div>
-            </div>
-            <div class="scenario-axis"><span>← platforms</span><span>applications →</span></div>
-            <p class="scenario-analysis"><strong>Hedges S1; cross-hedges S2.</strong> The drafted assertion <em>only works</em> because every claim cites an <code style="font-family: ui-monospace, monospace;">optro_record_id</code>. Foundation models can write fluent prose; only the system-of-record can supply citations a Big 4 reviewer accepts. This converts the wrapper relationship into a partner relationship and preserves pricing power.</p>
-            <details class="scenario-deep">
-              <summary>Full strategic analysis</summary>
-              <div class="scenario-deep-body">
-                <div class="sd-section">
-                  <div class="sd-label">Scenario story</div>
-                  <div class="sd-text">Same S1 (Wrapper Era) as Option 1. The Claude transcript additionally proves the S2 (System-of-Record Premium) thesis: foundation models commoditize reasoning, but the evidence chain — captured as <code>optro_record_id</code> citations + tickmark vocabulary + reviewer attestations + override semantics — is the value layer that does not commoditize. When the agent says "F-002 has 3 missing months of evidence," it can only say that because Provenance returned it; the model can't fabricate it.</div>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">What this prototype proves</div>
-                  <ul class="sd-list">
-                    <li>The agent's draft assertion discloses all three open SDs by name (F-001, F-002, F-003) with target close dates — output a Controller would actually sign.</li>
-                    <li><code>REQUIRES HUMAN REVIEW</code> markers appear exactly where judgment was applied, not elsewhere — model can't sneak past them.</li>
-                    <li><code>defensibility_score</code> is a first-class concept the agent acts on, not a vibe.</li>
-                    <li>The defensibility sweep across the 3 SDs is the demo that converts skeptical Controllers — they see the model do the actual job in front of them.</li>
-                  </ul>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">What it does not address</div>
-                  <ul class="sd-list">
-                    <li>Multi-turn citation compounding (what happens when the agent caches results across a 20-turn conversation).</li>
-                    <li>SLA / uptime characteristics for a "system of record" data layer.</li>
-                    <li>How citation discipline holds when the model is asked to <em>summarize</em> rather than enumerate.</li>
-                  </ul>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">Trigger conditions</div>
-                  <div class="sd-text">S1 trigger (Anthropic SOX agent + funded wrappers). Plus: Anthropic Citations API ships and becomes the default UX expectation. Plus: a competitor publishes an AI-drafted workpaper that contains hallucinated evidence and gets publicly burned by a Big 4 firm.</div>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">Cost · win condition</div>
-                  <div class="sd-text"><span class="sd-cost">2 engineers · 1 quarter</span>. Win = Optro becomes the <em>only</em> backend a foundation-model agent can call to produce audit-grade output, and Big 4 firms reference the Provenance citation pattern in their AI-readiness guidance.</div>
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <div style="margin-top: auto; font-size: 13px; color: var(--accent); font-weight: 600;">Show me the transcript →</div>
-        </div>
-      </a>
-
-      <!-- Option 3 -->
-      <a href="option-3.html" class="card" style="text-decoration: none; color: inherit; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s, box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px -8px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-        <div style="aspect-ratio: 16/10; background: linear-gradient(135deg, #f3f4f6 0%, #fef2f2 100%); display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); position: relative; padding: 24px;">
-          <div style="background: white; border: 1px solid var(--border); border-radius: 6px; padding: 12px; width: 100%; max-width: 300px; font-family: 'Source Serif 4', serif; font-size: 11px; line-height: 1.5; color: var(--ink);">
-            <div style="font-family: var(--sans); font-size: 9px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">Helios Robotics · WP-RC-047-Q12026</div>
-            <div style="font-style: italic; color: var(--ink-light);">Performed: identify population of contract modifications with ARR delta > $100K from CRM export <span style="color: var(--accent); font-weight: 700;">§</span> <span style="color: var(--accent); font-weight: 700;">b</span>. Evidence: <code class="inline" style="font-size: 9px;">art_rc047_q1</code>.</div>
-            <div style="margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); font-family: var(--sans); font-size: 9px; color: var(--muted);">Reviewer: Anton Dam · 2026-04-16 · score 100/100</div>
-          </div>
-        </div>
-        <div style="padding: 20px; flex: 1; display: flex; flex-direction: column;">
-          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-            <div style="font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em;">Option 3</div>
-            <div style="font-size: 11px; color: var(--muted);">·</div>
-            <div style="font-size: 11px; color: var(--muted);">Workpaper output</div>
-          </div>
-          <h2 style="font-size: 22px; font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 8px;">See workpaper-grade output</h2>
-          <p style="font-size: 14px; color: var(--muted); line-height: 1.55; margin: 0 0 16px;">A side-by-side: the raw structured response from <code class="inline">draft_workpaper_section</code>, and what an agent renders from it — tickmarks, citations, <code class="inline">REQUIRES HUMAN REVIEW</code> markers, defensibility score.</p>
-
-          <div class="scenario-block">
-            <div class="scenario-block-label">Scenario hedge · S1 + cross-hedges S2 and S4</div>
-            <div class="scenario-map">
-              <div class="sm-cell active"><span class="sm-tag">S1</span><span class="sm-name">Wrapper Era</span></div>
-              <div class="sm-cell cross"><span class="sm-tag">S2</span><span class="sm-name">SoR Premium</span></div>
-              <div class="sm-cell"><span class="sm-tag">S3</span><span class="sm-name">Commodity Hell</span></div>
-              <div class="sm-cell cross"><span class="sm-tag">S4</span><span class="sm-name">AI-Native Newcomers</span></div>
-            </div>
-            <div class="scenario-axis"><span>← platforms</span><span>applications →</span></div>
-            <p class="scenario-analysis"><strong>Hedges S1; cross-hedges S2 and S4.</strong> The rendered workpaper is the differentiator vs AI-native newcomers. Tickmark vocabulary, Deloitte conventions, structured-slot output, override semantics — these aren't things a 6-month-old startup can fake. They're the domain moat. This is also the artifact the Optro CEO walks into a Big 4 partnership conversation with.</p>
-            <details class="scenario-deep">
-              <summary>Full strategic analysis</summary>
-              <div class="scenario-deep-body">
-                <div class="sd-section">
-                  <div class="sd-label">Scenario story</div>
-                  <div class="sd-text">Same S1 as Options 1 + 2. The workpaper-grade rendering format is the asset the Optro CEO needs for the Big-4-partnership conversation — converts "we ship an MCP server" into "Optro is the audit-grade output layer the Big 4 already recognizes." Simultaneously cross-hedges S4 (AI-native newcomers) by showing depth that requires audit-domain expertise to produce.</div>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">What this prototype proves</div>
-                  <ul class="sd-list">
-                    <li>The structured-slot pattern stops hallucinated evidence at the API boundary — the model literally can't reference an artifact Optro didn't return.</li>
-                    <li>Deloitte tickmark vocabulary (§, b, c, ¶, ‡, †, ◊, ▲, X, ©) is rendered correctly with per-control subsets — Big 4 reviewers will recognize their own conventions.</li>
-                    <li>The contrast view (clean RC-047 chain vs failing FR-007 chain) demonstrates how <code>REQUIRES HUMAN REVIEW</code> surfaces gaps without forcing the model to drop the work.</li>
-                    <li>Defensibility scoring (100 vs 75) gives the agent and the user a shared shorthand for "is this ready to sign."</li>
-                  </ul>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">What it does not address</div>
-                  <ul class="sd-list">
-                    <li>How this generalizes to PwC, EY, KPMG conventions (they differ in tickmark vocabulary and review templates).</li>
-                    <li>Whether Big 4 firms formally accept model-drafted workpapers — partnership conversation still needed.</li>
-                    <li>Long-tail Controller workflows beyond assertion drafting (controls testing assistance, walkthrough prep, exception triage).</li>
-                    <li>Resilience of "evidence-of-truth backend" framing across multiple Anthropic release cycles.</li>
-                  </ul>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">Trigger conditions</div>
-                  <div class="sd-text">S1 trigger. Plus: Big 4 strategic conversation surfaces (firm wants AI-readiness blessing or sample integration). Plus: AI-native newcomer raises a competing seed round on "we'll draft your workpapers with an LLM." Plus: Optro CEO needs a shareable artifact for the Anthropic / Deloitte partnership 1-pager.</div>
-                </div>
-                <div class="sd-section">
-                  <div class="sd-label">Cost · win condition</div>
-                  <div class="sd-text"><span class="sd-cost">2 engineers · 1 quarter</span>. Win = a Big 4 firm references the Provenance output format publicly, Optro becomes the partner Anthropic picks (not the wrapper they squeeze), and AI-native newcomers can't replicate the domain depth without years of audit-firm relationships.</div>
-                </div>
-              </div>
-            </details>
-          </div>
-
-          <div style="margin-top: auto; font-size: 13px; color: var(--accent); font-weight: 600;">Show the output →</div>
-        </div>
-      </a>
-
-    </section>
-
-    <!-- Family -->
-    <section style="margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--border);">
-      <div style="font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px;">Family</div>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px;">
-        <a href="https://sandersonboard.github.io/velocity-borb/" style="color: var(--muted); text-decoration: none;">Velocity</a>
-        <span style="color: var(--border);">·</span>
-        <a href="https://sandersonboard.github.io/benchmark-borb/" style="color: var(--muted); text-decoration: none;">Benchmark</a>
-        <span style="color: var(--border);">·</span>
-        <a href="https://sandersonboard.github.io/practice-borb/" style="color: var(--muted); text-decoration: none;">Practice</a>
-        <span style="color: var(--border);">·</span>
-        <a href="https://sandersonboard.github.io/context-borb/" style="color: var(--muted); text-decoration: none;">Context</a>
-        <span style="color: var(--border);">·</span>
-        <span style="color: var(--accent); font-weight: 600;">Provenance</span>
-      </div>
-    </section>
-
-  </main>
-
-  <script src="shared.js"></script>
-  <script>injectGate();</script>
+<script>
+  injectGate();
+</script>
 </body>
 </html>
