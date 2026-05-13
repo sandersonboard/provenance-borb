@@ -3,606 +3,545 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Provenance — Three scenario hedges, one audit-grade output layer</title>
+<title>Provenance — Optro audit-grade output layer</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
 <link rel="stylesheet" href="shared.css" />
 <script src="data.js"></script>
 <script src="shared.js" defer></script>
 <style>
-  body { background: #fafaf5; }
+  body { background: #ffffff; }
 
-  .hero { max-width: 1100px; margin: 0 auto; padding: 72px 32px 28px; }
-  .hero .eyebrow {
-    font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--accent); margin-bottom: 16px;
+  /* ============ shared scale ============ */
+  :root {
+    --max: 980px;
+    --pad-x: 32px;
+    --rule: #ececec;
+    --ink-soft: #2a2f3a;
+  }
+
+  /* ============ top brand ============ */
+  .topbar {
+    max-width: var(--max); margin: 0 auto; padding: 22px var(--pad-x) 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 12px; color: var(--muted);
+  }
+  .topbar .brand-line { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--ink); }
+  .topbar .brand-line .pip {
+    width: 8px; height: 8px; border-radius: 2px; background: var(--accent); display: inline-block;
+  }
+  .topbar .meta { font-family: var(--mono); font-size: 11px; }
+
+  /* ============ hero (quiet) ============ */
+  .hero {
+    max-width: var(--max); margin: 0 auto; padding: 88px var(--pad-x) 56px;
   }
   .hero h1 {
     font-family: var(--sans);
-    font-size: 48px; font-weight: 700; letter-spacing: -0.025em;
-    line-height: 1.08; margin: 0 0 16px;
-    max-width: 820px;
+    font-size: 40px; font-weight: 700; letter-spacing: -0.025em;
+    line-height: 1.1; margin: 0 0 18px;
+    color: var(--ink);
+    max-width: 720px;
   }
-  .hero h1 .accent-word { color: var(--accent); }
-  .hero .deck {
-    font-size: 17px; line-height: 1.55; color: var(--ink-light);
-    max-width: 760px;
-  }
-  .hero .deck strong { color: var(--ink); font-weight: 600; }
-  .scenario-strip {
-    margin: 22px 0 0; padding: 14px 18px;
-    background: white; border: 1px solid var(--border); border-radius: 8px;
-    display: flex; justify-content: space-between; align-items: center; gap: 16px;
-    font-size: 12.5px; color: var(--ink-light);
-  }
-  .scenario-strip .ss-tag {
-    font-family: var(--mono); font-size: 11px; font-weight: 700;
-    color: var(--accent); padding: 3px 8px; border: 1px solid var(--accent); border-radius: 4px;
-    text-transform: uppercase; letter-spacing: 0.06em;
+  .hero p {
+    font-size: 17px; line-height: 1.6; color: var(--ink-light);
+    max-width: 660px; margin: 0;
   }
 
-  /* ----- Tab strip ----- */
-  .tab-bar-wrap {
+  /* ============ tab nav (clean) ============ */
+  .tab-nav-wrap {
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
     position: sticky; top: 0; z-index: 30;
-    background: #fafaf5;
-    border-bottom: 1px solid var(--border);
-    margin-top: 28px;
-  }
-  .tab-bar {
-    max-width: 1100px; margin: 0 auto; padding: 0 32px;
-    display: flex; gap: 4px;
-  }
-  .scenario-tab {
-    flex: 1;
-    padding: 16px 20px 14px;
-    border-bottom: 3px solid transparent;
-    cursor: pointer; user-select: none;
-    display: flex; flex-direction: column; gap: 3px;
-    transition: background-color 0.15s, border-color 0.15s;
-  }
-  .scenario-tab:hover { background: rgba(0,0,0,0.025); }
-  .scenario-tab.active {
-    border-bottom-color: var(--accent);
     background: white;
   }
-  .scenario-tab .tab-letter {
-    font-family: var(--mono); font-size: 10px; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--muted);
+  .tab-nav {
+    max-width: var(--max); margin: 0 auto; padding: 0 var(--pad-x);
+    display: flex; gap: 36px;
   }
-  .scenario-tab.active .tab-letter { color: var(--accent); }
+  .scenario-tab {
+    padding: 18px 0 16px;
+    border-bottom: 2px solid transparent;
+    cursor: pointer; user-select: none;
+    display: flex; flex-direction: column; gap: 2px;
+    transition: border-color 0.15s, color 0.15s;
+    margin-bottom: -1px;
+  }
   .scenario-tab .tab-name {
-    font-size: 16px; font-weight: 700; letter-spacing: -0.01em; color: var(--ink);
+    font-size: 14px; font-weight: 600; color: var(--ink-light);
   }
-  .scenario-tab.active .tab-name { color: var(--accent); }
-  .scenario-tab .tab-deck {
-    font-size: 11.5px; color: var(--muted); line-height: 1.4; font-weight: 500;
+  .scenario-tab .tab-sub {
+    font-size: 11.5px; color: var(--muted); font-weight: 400;
   }
-  @media (max-width: 780px) {
-    .tab-bar { flex-direction: column; gap: 0; }
-    .scenario-tab { border-bottom: 1px solid var(--border); padding: 12px 16px; }
-    .scenario-tab.active { border-bottom: 1px solid var(--accent); border-left: 3px solid var(--accent); padding-left: 13px; }
+  .scenario-tab:hover .tab-name { color: var(--ink); }
+  .scenario-tab.active {
+    border-bottom-color: var(--accent);
+  }
+  .scenario-tab.active .tab-name { color: var(--ink); font-weight: 700; }
+  .scenario-tab.active .tab-sub  { color: var(--ink-light); }
+  @media (max-width: 720px) {
+    .tab-nav { gap: 20px; overflow-x: auto; }
+    .scenario-tab { flex-shrink: 0; }
   }
 
+  /* ============ tab pane ============ */
   .tab-pane { display: none; }
   .tab-pane.active { display: block; }
 
-  /* ----- Strategic explainer (per tab) ----- */
-  .strat {
-    max-width: 1100px; margin: 30px auto 0; padding: 0 32px;
+  /* ----- scenario pitch (small, single block) ----- */
+  .pitch {
+    max-width: var(--max); margin: 0 auto; padding: 56px var(--pad-x) 0;
   }
-  .strat-headline {
-    font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
-    color: var(--ink); margin: 0 0 8px; line-height: 1.18;
-    max-width: 820px;
+  .pitch .pitch-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 10px;
   }
-  .strat-headline .accent { color: var(--accent); }
-  .strat-deck {
+  .pitch h2 {
+    font-family: var(--sans);
+    font-size: 26px; font-weight: 700; letter-spacing: -0.015em;
+    line-height: 1.25; margin: 0 0 14px; color: var(--ink);
+    max-width: 760px;
+  }
+  .pitch h2 .em { color: var(--accent); }
+  .pitch p {
     font-size: 15px; line-height: 1.6; color: var(--ink-light);
-    max-width: 820px; margin: 0 0 24px;
+    margin: 0; max-width: 720px;
   }
-  .strat-deck strong { color: var(--ink); font-weight: 600; }
-  .strat-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    margin-bottom: 16px;
+  .pitch p strong { color: var(--ink); font-weight: 600; }
+
+  /* ----- trigger meta (inline, small) ----- */
+  .trigger-meta {
+    max-width: var(--max); margin: 18px auto 0; padding: 0 var(--pad-x);
+    display: flex; gap: 8px; align-items: flex-start;
+    font-size: 12.5px; color: var(--muted);
+    line-height: 1.5;
   }
-  @media (max-width: 880px) { .strat-grid { grid-template-columns: 1fr; } }
-  .strat-cell {
-    background: white; border: 1px solid var(--border); border-radius: 8px;
-    padding: 16px 18px;
+  .trigger-meta .tm-label {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    color: var(--accent); padding: 2px 8px;
+    border: 1px solid var(--accent); border-radius: 3px;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    flex-shrink: 0; line-height: 1.4;
   }
-  .strat-cell .se-label {
-    font-size: 9.5px; font-weight: 700; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 0.1em;
-    margin-bottom: 6px;
-    display: flex; align-items: center; gap: 6px;
+
+  /* ----- progressive disclosure: strategic context ----- */
+  .deeper {
+    max-width: var(--max); margin: 32px auto 0; padding: 0 var(--pad-x);
   }
-  .strat-cell .se-label .icon-pip {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent); display: inline-block;
+  .deeper > summary {
+    list-style: none;
+    cursor: pointer; user-select: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12.5px; font-weight: 600; color: var(--ink-light);
+    padding: 8px 0;
   }
-  .strat-cell .se-headline {
-    font-family: var(--sans); font-size: 14px; font-weight: 700;
-    color: var(--ink); margin-bottom: 6px; line-height: 1.3;
+  .deeper > summary::-webkit-details-marker { display: none; }
+  .deeper > summary .chev {
+    width: 0; height: 0;
+    border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 5px solid var(--ink-light);
+    display: inline-block;
+    transition: transform 0.15s;
   }
-  .strat-cell .se-body {
-    font-size: 12.5px; line-height: 1.55; color: var(--ink-light);
+  .deeper[open] > summary .chev { transform: rotate(180deg); }
+  .deeper > summary:hover { color: var(--ink); }
+  .deeper-body {
+    margin-top: 16px; padding-top: 24px;
+    border-top: 1px solid var(--rule);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
   }
-  .strat-cell .se-body code {
+  @media (max-width: 800px) { .deeper-body { grid-template-columns: 1fr; gap: 22px; } }
+  .deeper-cell .dc-label {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.09em;
+    margin-bottom: 8px;
+  }
+  .deeper-cell .dc-headline {
+    font-size: 14px; font-weight: 600; color: var(--ink);
+    line-height: 1.4; margin-bottom: 6px;
+  }
+  .deeper-cell .dc-body {
+    font-size: 12.5px; line-height: 1.6; color: var(--ink-light);
+  }
+  .deeper-cell .dc-body code {
     font-family: var(--mono); font-size: 11.5px; background: var(--bg);
     padding: 1px 5px; border-radius: 3px; color: var(--ink);
   }
-  .strat-trigger {
-    padding: 14px 18px;
-    background: #fef2f2; border: 1px solid #fed7d7; border-left: 3px solid var(--accent);
-    border-radius: 6px;
-    font-size: 13px; line-height: 1.6; color: var(--ink);
-    margin-bottom: 24px;
-  }
-  .strat-trigger .lbl {
-    font-size: 9.5px; font-weight: 700; color: var(--accent);
-    text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
-  }
-  .strat-trigger code {
-    font-family: var(--mono); font-size: 12px; background: white;
-    padding: 1px 6px; border-radius: 3px; color: var(--ink);
-    border: 1px solid #fed7d7;
-  }
 
-  /* ----- Option cards (re-used) ----- */
+  /* ----- cards (quiet) ----- */
   .grid {
-    max-width: 1100px; margin: 12px auto 28px; padding: 0 32px;
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    max-width: var(--max); margin: 48px auto 0; padding: 0 var(--pad-x);
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
   }
-  @media (max-width: 940px) { .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 800px) { .grid { grid-template-columns: 1fr; } }
   .opt-card {
-    background: white; border: 1px solid var(--border); border-radius: 10px;
-    padding: 24px 26px; text-decoration: none; color: inherit;
+    text-decoration: none; color: inherit;
+    border: 1px solid var(--rule); border-radius: 8px;
+    padding: 24px 24px 22px;
+    background: white;
     display: flex; flex-direction: column;
-    transition: transform 0.15s, box-shadow 0.15s;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+    position: relative;
   }
-  .opt-card:hover { transform: translateY(-3px); box-shadow: 0 16px 36px rgba(15,23,42,0.08); text-decoration: none; }
-  .opt-card .letter {
-    font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
-    color: var(--accent); text-transform: uppercase;
+  .opt-card:hover {
+    text-decoration: none;
+    border-color: var(--ink-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(15,23,42,0.05);
   }
-  .opt-card .recommend {
-    display: inline-block; margin-left: 8px;
+  .opt-card.primary { border-color: var(--accent); }
+  .opt-card.primary::before {
+    content: 'Acceptance path';
+    position: absolute; top: -10px; left: 16px;
     background: var(--accent); color: white;
-    font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 999px;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    vertical-align: middle;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px; border-radius: 3px;
   }
-  .opt-card h2 { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; margin: 6px 0 8px; line-height: 1.2; }
-  .opt-card .tag { color: var(--muted); font-size: 13px; line-height: 1.55; margin-bottom: 16px; }
-  .opt-card .audience {
+  .opt-card .o-label {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.06em; color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .opt-card h3 {
+    font-size: 17px; font-weight: 700; letter-spacing: -0.01em;
+    line-height: 1.3; color: var(--ink); margin: 0 0 10px;
+  }
+  .opt-card .o-desc {
+    font-size: 13px; line-height: 1.55; color: var(--ink-light);
+    margin: 0 0 16px;
+    flex: 1;
+  }
+  .opt-card .o-desc code {
+    font-family: var(--mono); font-size: 11.5px; background: var(--bg);
+    padding: 1px 5px; border-radius: 3px; color: var(--ink);
+  }
+  .opt-card .o-aud {
+    font-size: 11.5px; color: var(--muted); font-style: italic;
+    padding-top: 14px; border-top: 1px solid var(--rule);
+    line-height: 1.4;
+  }
+  .opt-card .o-cta {
+    margin-top: 14px;
+    font-size: 13px; font-weight: 600; color: var(--accent);
+  }
+  .opt-card .o-cta .arr {
+    transition: transform 0.15s;
+    display: inline-block; margin-left: 2px;
+  }
+  .opt-card:hover .o-cta .arr { transform: translateX(3px); }
+
+  /* ============ footer (quiet) ============ */
+  .footer {
+    max-width: var(--max); margin: 88px auto 0; padding: 32px var(--pad-x) 24px;
+    border-top: 1px solid var(--rule);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start;
+  }
+  @media (max-width: 720px) { .footer-grid { grid-template-columns: 1fr; gap: 24px; } }
+  .scenario-map {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  }
+  .scenario-map .sm-cell {
+    padding: 10px 12px;
+    background: var(--bg); border: 1px solid var(--rule); border-radius: 5px;
+    font-size: 11px; line-height: 1.35;
+  }
+  .scenario-map .sm-tag {
+    font-family: var(--mono); font-size: 9.5px; font-weight: 700;
+    color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .scenario-map .sm-name {
+    color: var(--ink); margin-top: 2px; font-weight: 500;
+  }
+  .scenario-map .sm-cell.active { background: var(--accent); border-color: var(--accent); }
+  .scenario-map .sm-cell.active .sm-tag,
+  .scenario-map .sm-cell.active .sm-name { color: white; }
+  .footer-side h4 {
     font-size: 10px; font-weight: 700; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.08em;
-    margin-bottom: 4px;
+    margin: 0 0 10px;
   }
-  .opt-card .aud-name {
-    font-family: var(--serif); font-size: 14px; color: var(--ink); font-style: italic;
-    margin-bottom: 16px;
+  .footer-side .family-links { display: flex; flex-direction: column; gap: 6px; font-size: 13px; }
+  .footer-side .family-links a { color: var(--ink-light); text-decoration: none; }
+  .footer-side .family-links a:hover { color: var(--ink); text-decoration: underline; }
+  .footer-side .family-links .self { color: var(--accent); font-weight: 600; }
+  .footer-side .repo-note {
+    font-size: 11.5px; color: var(--muted); line-height: 1.55; margin-top: 14px;
   }
-  .opt-card .steps {
-    background: var(--bg); border-radius: 6px; padding: 12px 14px;
-    margin: 0 0 16px;
+  .footer-side .repo-note code {
+    background: var(--bg); padding: 1px 5px; border-radius: 3px; font-family: var(--mono);
+    color: var(--ink);
   }
-  .opt-card .steps .step {
-    display: flex; align-items: flex-start; gap: 8px; padding: 4px 0;
-    font-size: 12.5px; line-height: 1.4; color: var(--ink-light);
+  .footer-fineprint {
+    margin-top: 24px; padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: flex; justify-content: space-between; gap: 16px;
+    font-size: 11px; color: var(--muted);
   }
-  .opt-card .steps .step .num {
-    flex-shrink: 0; width: 16px; height: 16px; border-radius: 50%;
-    background: var(--ink); color: white;
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--mono); font-size: 9px; font-weight: 700;
-    margin-top: 1px;
-  }
-  .opt-card .moment {
-    margin-top: auto;
-    padding: 10px 12px;
-    background: #fffafa; border: 1px solid #fed7d7;
-    border-left: 3px solid var(--accent);
-    border-radius: 4px;
-    font-size: 12px; line-height: 1.5; color: var(--ink);
-  }
-  .opt-card .moment-label {
-    font-size: 9px; font-weight: 700; color: var(--accent);
-    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 3px;
-  }
-  .opt-card .arrow {
-    margin-top: 14px; color: var(--accent); font-weight: 600; font-size: 13px;
-  }
-
-  /* ----- Scenario block (global, kept) ----- */
-  .scenario-block {
-    max-width: 1100px; margin: 20px auto 0; padding: 18px 22px;
-    background: white; border: 1px solid var(--border); border-radius: 8px;
-  }
-  .scenario-block-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-  .scenario-block .map {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
-  }
-  .sm-cell {
-    padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
-    font-size: 11.5px; line-height: 1.35;
-  }
-  .sm-cell .sm-tag { font-family: var(--mono); font-size: 9.5px; font-weight: 700; color: var(--muted); letter-spacing: 0.04em; }
-  .sm-cell .sm-name { font-weight: 600; color: var(--ink); margin-top: 2px; }
-  .sm-cell.active { background: var(--accent); border-color: var(--accent); }
-  .sm-cell.active .sm-tag, .sm-cell.active .sm-name { color: white; }
-  .scenario-block .ana { font-size: 12.5px; line-height: 1.6; color: var(--ink-light); margin-top: 10px; }
-  .scenario-block .ana strong { color: var(--accent); }
-
-  .family-strip {
-    max-width: 1100px; margin: 36px auto 0; padding: 18px 32px;
-    border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-    font-size: 11.5px; color: var(--muted);
-  }
-  .family-strip .label { font-size: 9.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-  .family-strip .links { display: flex; gap: 18px; flex-wrap: wrap; }
-  .family-strip .links a { color: var(--ink-light); text-decoration: none; }
-  .family-strip .links a:hover { color: var(--ink); }
-  .family-strip .self { color: var(--accent); font-weight: 700; }
-  .repo-note {
-    max-width: 1100px; margin: 16px auto 0; padding: 0 32px 60px;
-    font-size: 11.5px; color: var(--muted); line-height: 1.6;
-  }
-  .repo-note code { background: var(--bg); padding: 1px 6px; border-radius: 3px; font-family: var(--mono); }
 </style>
 </head>
 <body>
 
-<div class="hero">
-  <div class="eyebrow">Optro · Provenance · Phase-0 prototype · three scenarios, one backbone</div>
-  <h1>Provenance is the <span class="accent-word">audit-grade output layer</span> — rendered three ways for three scenarios.</h1>
-  <p class="deck">Nine demos across three scenarios in the pre-IPO plan. Same Helios Robotics data, same Optro Provenance v1 signature, three different consumers — the Controller, the foundation-model agent, and the FDE pod. Pick a tab to see one hedge fully argued.</p>
-
-  <div class="scenario-strip">
-    <span><span class="ss-tag">No-regret move · #2 Audit-grade output</span> <span style="margin-left:10px;">Defensibility is the bet that pays across three scenarios — the audit firm cares about the chain whether the agent drafts, the Controller drafts, or the FDE drafts.</span></span>
-    <span style="font-family: var(--mono); font-size: 11px;">9 demos · 3 hedges</span>
-  </div>
+<div class="topbar">
+  <div class="brand-line"><span class="pip"></span>Optro Provenance</div>
+  <div class="meta">Phase-0 prototype · 9 demos · 3 scenario hedges</div>
 </div>
 
-<!-- ============= TAB STRIP ============= -->
-<div class="tab-bar-wrap">
-  <div class="tab-bar">
+<div class="hero">
+  <h1>The audit-grade output layer for Optro.</h1>
+  <p>Nine demo formats hedging three of the four scenarios in the pre-IPO plan. Same Helios Robotics data; same Optro Provenance v1 signature; three different consumers of the output. Pick a scenario to see one hedge argued in full.</p>
+</div>
+
+<div class="tab-nav-wrap">
+  <div class="tab-nav">
     <div class="scenario-tab active" data-tab="a">
-      <span class="tab-letter">Group A · Options 1–3</span>
       <span class="tab-name">System-of-Record Premium</span>
-      <span class="tab-deck">The Controller reads the workpaper · live citation chain on every value</span>
+      <span class="tab-sub">The Controller drafts</span>
     </div>
     <div class="scenario-tab" data-tab="b">
-      <span class="tab-letter">Group B · Options 4–6</span>
       <span class="tab-name">Wrapper Era</span>
-      <span class="tab-deck">The agent reads the workpaper · MCP server, optro_record_id citations</span>
+      <span class="tab-sub">The agent drafts</span>
     </div>
     <div class="scenario-tab" data-tab="c">
-      <span class="tab-letter">Group C · Options 7–9</span>
       <span class="tab-name">Agent Commodity Hell</span>
-      <span class="tab-deck">The FDE pod is the moat · production line at 4% rework vs 18% baseline</span>
+      <span class="tab-sub">The FDE pod drafts</span>
     </div>
   </div>
 </div>
 
-<!-- ============= TAB A — System-of-Record Premium ============= -->
+<!-- ============= TAB A ============= -->
 <div class="tab-pane active" id="pane-a">
 
-  <div class="strat">
-    <h2 class="strat-headline">The workpaper itself is the moat — every claim, <span class="accent">live-cited</span> to its source.</h2>
-    <p class="strat-deck">If reasoning commoditizes and the next decade of vendor competition is decided by who owns the underlying data and workflow, the audit-grade output layer becomes the moat. <strong>Other vendors render flat documents; Provenance renders a workpaper with verifiable provenance on every value.</strong> The peer-defensibility benchmark — a number Helios can compute only because Optro sits on the data of 47 consented pre-IPO peers — is what makes the moat visible to a Controller and to the partner across the table.</p>
-
-    <div class="strat-grid">
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>The scenario thesis</div>
-        <div class="se-headline">Data + workflow ownership decides the next decade.</div>
-        <div class="se-body">Reasoning commoditizes. Foundation models become a utility. The vendors that own the systems-of-record + the workflow on top of them keep their ARR; the rest become features inside someone else's product.</div>
-      </div>
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>What Provenance hedges</div>
-        <div class="se-headline">The live citation chain on every value in the workpaper.</div>
-        <div class="se-body">Hover the $250k threshold, see the NetSuite workflow record. Hover the population count, see the saved-search query export. Hover the defensibility score, see the engine that computed it. <strong>No flat document can render this</strong> because the metadata lives behind the page.</div>
-      </div>
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>The peer-benchmark proof</div>
-        <div class="se-headline">A number only the SoR can produce.</div>
-        <div class="se-body">Helios at P22 on reviewer sign-off depth, P8 on override-reason capture — across 47 anonymized pre-IPO peers in the technology vertical. That distribution exists because Optro sits on the data of every customer in it. An LLM wrapper cannot synthesize it.</div>
-      </div>
-    </div>
-
-    <div class="strat-trigger">
-      <div class="lbl">Trigger condition · all in on data products when this fires</div>
-      <strong>3+ customers cite Optro data as the deciding factor in renewal.</strong> Build the peer-benchmark product surface for every Big-4-visible control category. Pre-positioning lives in <a href="https://sandersonboard.github.io/benchmark-borb/" style="color: var(--accent); text-decoration: underline;">Benchmark</a>; Provenance is what makes it auditor-grade.
-    </div>
+  <div class="pitch">
+    <div class="pitch-eyebrow">Group A · Options 1–3</div>
+    <h2>The workpaper itself is the moat — every claim, <span class="em">live-cited</span> to its source.</h2>
+    <p>If reasoning commoditizes and the next decade of vendor competition is decided by who owns the underlying data and workflow, the audit-grade output layer becomes what we sell. <strong>Other vendors render flat documents; Provenance renders a workpaper with verifiable provenance on every value.</strong></p>
   </div>
 
+  <div class="trigger-meta">
+    <span class="tm-label">Trigger</span>
+    <span>Go all-in on data products when <strong style="color: var(--ink);">3+ customers cite Optro data as the deciding factor in renewal</strong>. Pre-positioning lives in <a href="https://sandersonboard.github.io/benchmark-borb/" style="color: var(--accent);">Benchmark</a>; Provenance is what makes that surface auditor-grade.</span>
+  </div>
+
+  <details class="deeper">
+    <summary>Why this hedge matters <span class="chev"></span></summary>
+    <div class="deeper-body">
+      <div class="deeper-cell">
+        <div class="dc-label">Scenario thesis</div>
+        <div class="dc-headline">Data + workflow ownership decides the next decade.</div>
+        <div class="dc-body">Reasoning commoditizes; foundation models become a utility. Vendors that own the systems of record plus the workflow on top keep their ARR; the rest become features inside someone else's product.</div>
+      </div>
+      <div class="deeper-cell">
+        <div class="dc-label">What Provenance hedges</div>
+        <div class="dc-headline">The live citation chain on every value.</div>
+        <div class="dc-body">Hover a threshold, see the NetSuite workflow record. Hover a population count, see the saved-search query export. The metadata lives behind the page — no flat document can render this.</div>
+      </div>
+      <div class="deeper-cell">
+        <div class="dc-label">The proof point</div>
+        <div class="dc-headline">A peer-benchmark number only the SoR can produce.</div>
+        <div class="dc-body">Helios at P22 on reviewer sign-off depth, P8 on override-reason capture — across 47 anonymized pre-IPO peers. That distribution exists because Optro sits on the underlying data of every customer in it.</div>
+      </div>
+    </div>
+  </details>
+
   <div class="grid">
-
-    <a class="opt-card" href="option-1.html">
-      <span class="letter">Option A <span class="recommend">Acceptance path</span></span>
-      <h2>Walk the workpaper end-to-end</h2>
-      <div class="tag">The product as a Controller would actually use it before the Deloitte walkthrough. Workpaper viewer → evidence chain graph → peer benchmark → walkthrough mode → print to PDF.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">Controller (Anton Dam, Helios) preparing for the Q1 walkthrough</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>Workpaper index — 175 controls, status badges, Big 4 filter</div></div>
-        <div class="step"><span class="num">2</span><div>RC-047 workpaper — hover any value for provenance</div></div>
-        <div class="step"><span class="num">3</span><div>Evidence chain — graph view, every artifact linked</div></div>
-        <div class="step"><span class="num">4</span><div>Peer benchmark — Helios vs 47 pre-IPO peers</div></div>
-        <div class="step"><span class="num">5</span><div>Walkthrough mode — print-clean PDF for Deloitte</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        Hover the $250,000 threshold on the RC-047 narrative — Provenance surfaces the NetSuite record, the memo it derives from, the Controller who signed it, and the date the threshold was last raised.
-      </div>
-      <div class="arrow">Open the click-through →</div>
+    <a class="opt-card primary" href="option-1.html">
+      <span class="o-label">Option A</span>
+      <h3>Walk the workpaper end-to-end</h3>
+      <p class="o-desc">The product as a Controller would actually use it before the Deloitte walkthrough — workpaper viewer, evidence chain graph, peer-defensibility benchmark, walkthrough mode, print to PDF.</p>
+      <div class="o-aud">Controller (Anton Dam, Helios) preparing for the Q1 walkthrough</div>
+      <div class="o-cta">Open the click-through <span class="arr">→</span></div>
     </a>
-
     <a class="opt-card" href="option-2.html">
-      <span class="letter">Option B</span>
-      <h2>Big 4 walkthrough — one-pager</h2>
-      <div class="tag">A condensed, screenshare-ready surface for the moment a Deloitte engagement partner sees Provenance live. Three frames: the workpaper, the chain, the peer-defensibility distribution.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">Deloitte engagement partner during the Q1 walkthrough</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>Frame 1 — "Can you show me how RC-047 was tested?"</div></div>
-        <div class="step"><span class="num">2</span><div>Frame 2 — "Walk me through the evidence chain"</div></div>
-        <div class="step"><span class="num">3</span><div>Frame 3 — "How does this compare to your peers?"</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        Frame 3 — Helios trails the peer median on reviewer sign-off depth. The Controller sees a remediation priority surface mid-walkthrough, not in a finding letter three weeks later.
-      </div>
-      <div class="arrow">Open the pitch view →</div>
+      <span class="o-label">Option B</span>
+      <h3>Big-4 walkthrough — one-pager</h3>
+      <p class="o-desc">A condensed, screenshare-ready surface for the moment a Deloitte engagement partner sees Provenance live. Three frames: the workpaper, the chain, the peer-defensibility distribution.</p>
+      <div class="o-aud">Deloitte engagement partner during the Q1 walkthrough</div>
+      <div class="o-cta">Open the pitch view <span class="arr">→</span></div>
     </a>
-
     <a class="opt-card" href="option-3.html">
-      <span class="letter">Option C</span>
-      <h2>The walkthrough, as Anton lived it</h2>
-      <div class="tag">Narrative scroll — eight scenes from the morning of the Deloitte Q1 walkthrough at Helios Robotics. T-8 months to the S-1. What changes when the Controller can defend any number on the screen without leaving the workpaper.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">AuditBoard exec considering the audit-grade output bet</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>06:42 AM — Anton opens RC-047 at his kitchen table</div></div>
-        <div class="step"><span class="num">2</span><div>09:15 AM — Naomi Wilkes hovers a number; the room goes quiet</div></div>
-        <div class="step"><span class="num">3</span><div>10:08 AM — Peer benchmark surfaces a remediation, not a finding</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        The pull-quote near the end: <em>"For the first time in fifteen years I wasn't presenting to Deloitte — they were reading along with me."</em>
-      </div>
-      <div class="arrow">Read the scroll →</div>
+      <span class="o-label">Option C</span>
+      <h3>The walkthrough, as Anton lived it</h3>
+      <p class="o-desc">Narrative scroll — eight scenes from the morning of the Q1 walkthrough at Helios Robotics. T-8 months to S-1. What changes when the Controller can defend any number on the screen.</p>
+      <div class="o-aud">AuditBoard exec considering the audit-grade output bet</div>
+      <div class="o-cta">Read the scroll <span class="arr">→</span></div>
     </a>
-
   </div>
 </div>
 
-<!-- ============= TAB B — Wrapper Era ============= -->
+<!-- ============= TAB B ============= -->
 <div class="tab-pane" id="pane-b">
 
-  <div class="strat">
-    <h2 class="strat-headline">When the agent drafts the workpaper, Optro is the <span class="accent">evidence-of-truth backend</span>.</h2>
-    <p class="strat-deck">If Anthropic ships SOX-aware agents and YC speed-shops follow, the Controller stops opening the Optro UI — they ask Claude Desktop questions and expect audit-ready output back. <strong>Hallucination is the existential risk and the structured citation envelope is the moat.</strong> The MCP server forces the agent to surface optro_record_id citations on every claim and to flag REQUIRES HUMAN REVIEW wherever judgment was applied. Anyone can wrap an LLM around a chat box; what stops the management assertion from being fabricated is the evidence-of-truth backend returning <em>exactly the citations the agent is allowed to use</em>.</p>
-
-    <div class="strat-grid">
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>The scenario thesis</div>
-        <div class="se-headline">Foundation models ship SOX-aware agents directly.</div>
-        <div class="se-body">Claude / ChatGPT become the workpaper-drafting interface. Vertical players survive only with deep data + workflow integration that the model needs. The product surface moves from the human's screen to the model's tool-call envelope.</div>
-      </div>
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>What Provenance hedges</div>
-        <div class="se-headline">The structured citation envelope around every tool response.</div>
-        <div class="se-body">Five MCP tools, every response wrapped with <code>optro_record_id</code> citations, schema-versioned, sha256-verified at ingest. The agent cannot fabricate a defensibility score because the MCP contract forces the citation on the wire.</div>
-      </div>
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>Why no other vendor can do this</div>
-        <div class="se-headline">The data shape is the moat.</div>
-        <div class="se-body">An LLM wrapper that doesn't sit on the source-of-record systems can ask the agent to cite — but cannot guarantee the citation is real. Provenance's MCP returns only artifacts that exist in NetSuite, Salesforce, Workday at ingest time. The citation is structurally enforced, not stylistically requested.</div>
-      </div>
-    </div>
-
-    <div class="strat-trigger">
-      <div class="lbl">Trigger condition · ship the MCP server commercially when this fires</div>
-      <strong>Anthropic ships a SOX agent AND 2+ funded LLM-wrapper startups raise $20M+.</strong> The repo's <code>server.ts</code> + <code>provenance.ts</code> are real, runnable code today — Phase-1 is hardening the auth + tenant model, not building the surface. The pre-positioning lives in <a href="https://sandersonboard.github.io/context-borb/" style="color: var(--accent); text-decoration: underline;">Context</a>; Provenance is the evidence-of-truth layer Context calls.
-    </div>
+  <div class="pitch">
+    <div class="pitch-eyebrow">Group B · Options 4–6</div>
+    <h2>When the agent drafts the workpaper, Optro is the <span class="em">evidence-of-truth backend</span>.</h2>
+    <p>If foundation models ship SOX-aware agents and Controllers stop opening the Optro UI, hallucination is the existential risk. <strong>The structured citation envelope around every tool response is the moat.</strong> The MCP server forces the agent to surface optro_record_id citations on every claim and to flag REQUIRES HUMAN REVIEW wherever judgment was applied.</p>
   </div>
 
+  <div class="trigger-meta">
+    <span class="tm-label">Trigger</span>
+    <span>Ship the MCP server commercially when <strong style="color: var(--ink);">Anthropic ships a SOX agent AND 2+ funded LLM-wrapper startups raise $20M+</strong>. The repo's <code style="font-family: var(--mono); font-size: 11.5px; background: var(--bg); padding: 1px 5px; border-radius: 3px;">server.ts</code> + <code style="font-family: var(--mono); font-size: 11.5px; background: var(--bg); padding: 1px 5px; border-radius: 3px;">provenance.ts</code> are real, runnable code today. Pre-positioning lives in <a href="https://sandersonboard.github.io/context-borb/" style="color: var(--accent);">Context</a>.</span>
+  </div>
+
+  <details class="deeper">
+    <summary>Why this hedge matters <span class="chev"></span></summary>
+    <div class="deeper-body">
+      <div class="deeper-cell">
+        <div class="dc-label">Scenario thesis</div>
+        <div class="dc-headline">Foundation models ship SOX-aware agents directly.</div>
+        <div class="dc-body">Claude / ChatGPT become the workpaper-drafting interface. Vertical players survive only with deep data + workflow integration the model needs. The product surface moves from the human's screen to the model's tool-call envelope.</div>
+      </div>
+      <div class="deeper-cell">
+        <div class="dc-label">What Provenance hedges</div>
+        <div class="dc-headline">The structured citation envelope on every tool response.</div>
+        <div class="dc-body">Five MCP tools wrapped with <code>optro_record_id</code> citations, schema-versioned, sha256-verified at ingest. The agent cannot fabricate a defensibility score because the MCP contract forces the citation on the wire.</div>
+      </div>
+      <div class="deeper-cell">
+        <div class="dc-label">Why no one else can do this</div>
+        <div class="dc-headline">The data shape is the moat.</div>
+        <div class="dc-body">An LLM wrapper not sitting on the source-of-record can ask the agent to cite — but cannot guarantee the citation is real. Provenance's MCP returns only artifacts that exist in NetSuite, Salesforce, Workday at ingest time. The citation is structurally enforced, not stylistically requested.</div>
+      </div>
+    </div>
+  </details>
+
   <div class="grid">
-
     <a class="opt-card" href="option-4.html">
-      <span class="letter">Option D</span>
-      <h2>Wire Provenance into Claude Desktop</h2>
-      <div class="tag">Install walkthrough for the MCP server. Five tools — <code style="font-family: var(--mono); font-size: 11px;">get_evidence_chain</code>, <code style="font-family: var(--mono); font-size: 11px;">get_tickmark_legend</code>, <code style="font-family: var(--mono); font-size: 11px;">draft_workpaper_section</code>, <code style="font-family: var(--mono); font-size: 11px;">list_management_assertion_inputs</code>, <code style="font-family: var(--mono); font-size: 11px;">validate_audit_trail</code>. Every response carries the Optro Provenance v1 signature.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">Implementer wiring Optro into a foundation-model agent</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>Install the npm package and configure Claude Desktop</div></div>
-        <div class="step"><span class="num">2</span><div>Inspect the five tools and their schemas</div></div>
-        <div class="step"><span class="num">3</span><div>Run <code style="font-family: var(--mono); font-size: 11px;">npm run smoke</code> to verify every handler</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        The provenance signature wrapping every tool response — Optro guarantees the agent gets back source-of-record data with citations the agent must surface.
-      </div>
-      <div class="arrow">Open the install →</div>
+      <span class="o-label">Option D</span>
+      <h3>Wire Provenance into Claude Desktop</h3>
+      <p class="o-desc">Install walkthrough for the MCP server. Five tools — <code>get_evidence_chain</code>, <code>get_tickmark_legend</code>, <code>draft_workpaper_section</code>, <code>list_management_assertion_inputs</code>, <code>validate_audit_trail</code>.</p>
+      <div class="o-aud">Implementer wiring Optro into a foundation-model agent</div>
+      <div class="o-cta">Open the install <span class="arr">→</span></div>
     </a>
-
     <a class="opt-card" href="option-5.html">
-      <span class="letter">Option E</span>
-      <h2>Watch Claude draft an assertion</h2>
-      <div class="tag">Simulated Claude Desktop transcript — the Controller types three prompts; the agent calls Provenance, surfaces citations, and refuses to fabricate where evidence is missing. Tool calls are inspectable and collapsible.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">AuditBoard exec evaluating the Wrapper-Era hedge</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>"Draft the S-1 management assertion"</div></div>
-        <div class="step"><span class="num">2</span><div>"Show me the evidence chain for RC-047"</div></div>
-        <div class="step"><span class="num">3</span><div>"Run a defensibility check on the 3 open SDs"</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        The agent disclosing all three significant deficiencies in the management assertion with their <code style="font-family: var(--mono); font-size: 11px;">optro_record_id</code> citations — no hallucination, no buried risk.
-      </div>
-      <div class="arrow">Open the transcript →</div>
+      <span class="o-label">Option E</span>
+      <h3>Watch Claude draft an assertion</h3>
+      <p class="o-desc">Simulated Claude Desktop transcript — the Controller types three prompts; the agent calls Provenance, surfaces citations, and refuses to fabricate where evidence is missing. Tool calls are inspectable and collapsible.</p>
+      <div class="o-aud">AuditBoard exec evaluating the Wrapper-Era hedge</div>
+      <div class="o-cta">Open the transcript <span class="arr">→</span></div>
     </a>
-
     <a class="opt-card" href="option-6.html">
-      <span class="letter">Option F</span>
-      <h2>See workpaper-grade output</h2>
-      <div class="tag">A worked example of the audit-grade artifact the agent produces — workpaper section for RC-047 with structured slots, tickmark annotations following Deloitte standard, <code style="font-family: var(--mono); font-size: 11px;">REQUIRES HUMAN REVIEW</code> markers where judgment was applied.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">Big-4 audit partner asking "what does the LLM-drafted workpaper look like?"</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>The tickmark legend Provenance returns</div></div>
-        <div class="step"><span class="num">2</span><div>The narrative + testing sections, rendered</div></div>
-        <div class="step"><span class="num">3</span><div>What "REQUIRES HUMAN REVIEW" looks like in practice</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        The agent surfacing exactly which judgment calls it deferred to a human — no quietly-baked-in assumptions, no fabricated tickmark annotations.
-      </div>
-      <div class="arrow">Open the output →</div>
+      <span class="o-label">Option F</span>
+      <h3>See workpaper-grade output</h3>
+      <p class="o-desc">A worked example of the artifact the agent produces — workpaper for RC-047 with structured slots, Deloitte tickmark annotations, and explicit <code>REQUIRES HUMAN REVIEW</code> markers where judgment was applied.</p>
+      <div class="o-aud">Big-4 audit partner asking "what does LLM output look like?"</div>
+      <div class="o-cta">Open the output <span class="arr">→</span></div>
     </a>
-
   </div>
 </div>
 
-<!-- ============= TAB C — Agent Commodity Hell ============= -->
+<!-- ============= TAB C ============= -->
 <div class="tab-pane" id="pane-c">
 
-  <div class="strat">
-    <h2 class="strat-headline">When software ARR breaks, the <span class="accent">FDE pod</span> is what we sell.</h2>
-    <p class="strat-deck">If Controllers use Claude directly and renewal economics collapse, Optro pivots margin to the Practice service line. The defensible value becomes the production line itself — agent drafts the routine 76% in seconds, FDE pod owns the judgment-shaped 24%, the audit trail captures the seam, and the external auditor signs the deliverable without rework. <strong>Measured at 4% rework rate this quarter vs the 18% industry baseline for boutique advisory firms.</strong> Foundation models cannot replace that workflow without replacing the FDE pod, and the FDE pod is the moat the production tool is designed to scale.</p>
-
-    <div class="strat-grid">
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>The scenario thesis</div>
-        <div class="se-headline">Software ARR economics break.</div>
-        <div class="se-body">Controllers use Claude / ChatGPT directly. Vertical SaaS becomes commodity. Renewals fall, multiples compress. The only defensible position is the human-plus-machine service delivery that audit firms actually accept on first review.</div>
-      </div>
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>What Provenance hedges</div>
-        <div class="se-headline">The FDE production line itself.</div>
-        <div class="se-body">Three pod members deliver what used to take a 12-person Big-4 senior team. Agent + scorer save <code>1,840 hours</code> per quarter. The audit trail captures every agent draft, every FDE edit, every customer sign-off — so the partner across the table can verify the work without re-doing it.</div>
-      </div>
-      <div class="strat-cell">
-        <div class="se-label"><span class="icon-pip"></span>The KPI that proves the moat</div>
-        <div class="se-headline">4% rework vs 18% industry baseline.</div>
-        <div class="se-body">14 workpapers shipped this quarter; 3 triggered any auditor follow-up; 0 required substantive re-test. Boutique advisory firms typically see 15-22% rework on first auditor review. <strong>That 14-point spread is the production-line product.</strong></div>
-      </div>
-    </div>
-
-    <div class="strat-trigger">
-      <div class="lbl">Trigger condition · pivot revenue to services when this fires</div>
-      <strong>Renewals fall &gt;15% citing "built it ourselves."</strong> Scale the FDE pod from 3 to 12; the production console below is what makes that scaling work without quality regression. Pre-positioning lives in <a href="https://sandersonboard.github.io/practice-borb/" style="color: var(--accent); text-decoration: underline;">Practice</a>; Provenance is the production tool the FDE pod runs every day.
-    </div>
+  <div class="pitch">
+    <div class="pitch-eyebrow">Group C · Options 7–9</div>
+    <h2>When software ARR breaks, the <span class="em">FDE pod</span> is what we sell.</h2>
+    <p>If Controllers use Claude directly and renewal economics collapse, Optro pivots margin to the Practice service line. The agent drafts the routine 76%; the FDE pod owns the judgment-shaped 24%; the audit trail captures the seam; the external auditor signs without rework. <strong>Measured at 4% rework this quarter vs 18% industry baseline.</strong></p>
   </div>
+
+  <div class="trigger-meta">
+    <span class="tm-label">Trigger</span>
+    <span>Pivot revenue to services when <strong style="color: var(--ink);">renewals fall &gt;15% citing "built it ourselves"</strong>. Scale the FDE pod from 3 to 12; the production console below is what makes that scaling work without quality regression. Pre-positioning lives in <a href="https://sandersonboard.github.io/practice-borb/" style="color: var(--accent);">Practice</a>.</span>
+  </div>
+
+  <details class="deeper">
+    <summary>Why this hedge matters <span class="chev"></span></summary>
+    <div class="deeper-body">
+      <div class="deeper-cell">
+        <div class="dc-label">Scenario thesis</div>
+        <div class="dc-headline">Software ARR economics break.</div>
+        <div class="dc-body">Controllers use Claude directly. Vertical SaaS becomes commodity. Renewals fall, multiples compress. The only defensible position is the human-plus-machine service delivery that audit firms accept on first review.</div>
+      </div>
+      <div class="deeper-cell">
+        <div class="dc-label">What Provenance hedges</div>
+        <div class="dc-headline">The FDE production line itself.</div>
+        <div class="dc-body">Three pod members deliver what used to take a 12-person Big-4 senior team. Agent + scorer save <code>1,840 hours</code> per quarter. The audit trail captures every agent draft and FDE edit so the partner can verify without re-doing.</div>
+      </div>
+      <div class="deeper-cell">
+        <div class="dc-label">The KPI that proves the moat</div>
+        <div class="dc-headline">4% rework vs 18% industry baseline.</div>
+        <div class="dc-body">14 workpapers shipped this quarter; 3 triggered any auditor follow-up; 0 required substantive re-test. Boutique advisory firms typically see 15–22%. <strong>That 14-point spread is the product.</strong></div>
+      </div>
+    </div>
+  </details>
 
   <div class="grid">
-
-    <a class="opt-card" href="option-7.html">
-      <span class="letter">Option G <span class="recommend">Acceptance path</span></span>
-      <h2>The production console</h2>
-      <div class="tag">The working FDE tool. Engagement queue → workpaper editor (split-pane with streaming agent drafts and live audit trail) → defensibility scorer → Big-4 template library → customer handoff package. Acceptance-path click-through.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">FDE pod member working through a Helios workpaper</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>Engagement queue — 28 workpapers, 5 states, T-minus sorted</div></div>
-        <div class="step"><span class="num">2</span><div>RC-047 editor — stream an agent draft, edit, audit trail captures every change</div></div>
-        <div class="step"><span class="num">3</span><div>Defensibility scorer — 3 Big-4 review-note risks, with fixes</div></div>
-        <div class="step"><span class="num">4</span><div>Big-4 templates — Deloitte / EY / PwC / KPMG tickmark conventions</div></div>
-        <div class="step"><span class="num">5</span><div>Handoff package — bundle, manifest, audit log CSV</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        Click <strong>Ask agent</strong> on the testing procedures section. Watch tokens stream in tagged AGENT_DRAFT. Edit two lines. The right-pane audit trail captures both edits with timestamps and rationale. Export the CSV.
-      </div>
-      <div class="arrow">Open the production tool →</div>
+    <a class="opt-card primary" href="option-7.html">
+      <span class="o-label">Option G</span>
+      <h3>The production console</h3>
+      <p class="o-desc">The working FDE tool — engagement queue, split-pane workpaper editor with streaming agent drafts and live audit trail, defensibility scorer, Big-4 template library, customer handoff package.</p>
+      <div class="o-aud">FDE pod member working through a Helios workpaper</div>
+      <div class="o-cta">Open the production tool <span class="arr">→</span></div>
     </a>
-
     <a class="opt-card" href="option-8.html">
-      <span class="letter">Option H</span>
-      <h2>Practice principal portfolio</h2>
-      <div class="tag">Higher-altitude exec view. Three engagements, one pod of three FDE members, the production-line KPIs that matter to the principal — workpapers shipped, defensibility average at handoff, rework rate at auditor (4% vs industry 18%), hours saved by the agent-plus-scorer.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">Optro Practice principal reviewing pod performance</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>Three engagements — Helios, Aperture, Pelagic</div></div>
-        <div class="step"><span class="num">2</span><div>Pod utilization — Jamie 92%, Priya 88%, Marcus 78%</div></div>
-        <div class="step"><span class="num">3</span><div>Q-rework benchmark — 4% vs 18% industry baseline</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        Pelagic flagged at_risk · 71 defensibility · the portfolio view is the surface where that becomes visible before anyone has to escalate it.
-      </div>
-      <div class="arrow">Open the portfolio →</div>
+      <span class="o-label">Option H</span>
+      <h3>Practice principal portfolio</h3>
+      <p class="o-desc">Higher-altitude exec view across three engagements (Helios, Aperture, Pelagic), pod utilization for Jamie/Priya/Marcus, and the rework-rate KPI that defines the moat.</p>
+      <div class="o-aud">Optro Practice principal reviewing pod performance</div>
+      <div class="o-cta">Open the portfolio <span class="arr">→</span></div>
     </a>
-
     <a class="opt-card" href="option-9.html">
-      <span class="letter">Option I</span>
-      <h2>Jamie ships four workpapers in one day</h2>
-      <div class="tag">Day-in-the-life long-scroll. Eight scenes following Jamie Okonkwo, the FDE pod lead on the Helios engagement, through one Tuesday — from picking up FR-021 in fde_review at 08:14 to Naomi Wilkes' "no rework" email at 16:47.</div>
-      <div class="audience">Audience</div>
-      <div class="aud-name">AuditBoard exec evaluating the services-arm pivot</div>
-      <div class="steps">
-        <div class="step"><span class="num">1</span><div>08:14 — agent draft was good; the threshold was wrong</div></div>
-        <div class="step"><span class="num">2</span><div>10:48 — Pranav signs in 36 minutes; provenance saved him the time</div></div>
-        <div class="step"><span class="num">3</span><div>16:47 — Naomi's email: "no rework requested"</div></div>
-      </div>
-      <div class="moment">
-        <div class="moment-label">Demo moment</div>
-        The pull-quote: <em>"Reviewed all four workpapers and the cover memo. No rework requested. — N.W."</em>
-      </div>
-      <div class="arrow">Read the scroll →</div>
+      <span class="o-label">Option I</span>
+      <h3>Jamie ships four workpapers in one day</h3>
+      <p class="o-desc">Day-in-the-life long-scroll. Eight scenes from 07:48 to 16:47 — picking up FR-021 in fde_review, applying the scorer's three review-note fixes, closing on Naomi Wilkes' "no rework" email.</p>
+      <div class="o-aud">AuditBoard exec evaluating the services-arm pivot</div>
+      <div class="o-cta">Read the scroll <span class="arr">→</span></div>
     </a>
-
   </div>
 </div>
 
-<!-- ============= Scenario summary block (global) ============= -->
-<div class="scenario-block">
-  <div class="scenario-block-label">Where Provenance hedges in the four-scenario plan</div>
-  <div class="map">
-    <div class="sm-cell active"><div class="sm-tag">Wrapper Era</div><div class="sm-name">Options D–F · MCP server</div></div>
-    <div class="sm-cell active"><div class="sm-tag">SoR Premium</div><div class="sm-name">Options A–C · workpaper viewer</div></div>
-    <div class="sm-cell active"><div class="sm-tag">Commodity Hell</div><div class="sm-name">Options G–I · production line</div></div>
-    <div class="sm-cell"><div class="sm-tag">AI-Native Newcomers</div><div class="sm-name">Hedged separately — see Velocity</div></div>
+<!-- ============= footer ============= -->
+<div class="footer">
+  <div class="footer-grid">
+
+    <div>
+      <h4 style="font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 10px;">Scenario plan coverage</h4>
+      <div class="scenario-map">
+        <div class="sm-cell active"><div class="sm-tag">SoR Premium</div><div class="sm-name">Options A–C</div></div>
+        <div class="sm-cell active"><div class="sm-tag">Wrapper Era</div><div class="sm-name">Options D–F</div></div>
+        <div class="sm-cell active"><div class="sm-tag">Commodity Hell</div><div class="sm-name">Options G–I</div></div>
+        <div class="sm-cell"><div class="sm-tag">AI-Native Newcomers</div><div class="sm-name">See Velocity →</div></div>
+      </div>
+      <div style="font-size: 11.5px; color: var(--muted); line-height: 1.55; margin-top: 12px; max-width: 460px;">
+        Same audit-grade output layer; three different consumers — Controller, agent, FDE pod. Build once; ship under whichever GTM motion the scenario triggers reward.
+      </div>
+    </div>
+
+    <div class="footer-side">
+      <h4>Family</h4>
+      <div class="family-links">
+        <a href="https://sandersonboard.github.io/velocity-borb/">Velocity — AI-native SOX setup</a>
+        <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark — peer comparison</a>
+        <a href="https://sandersonboard.github.io/practice-borb/">Practice — FDE engagement ops</a>
+        <a href="https://sandersonboard.github.io/context-borb/">Context — MCP server</a>
+        <span class="self">Provenance — audit-grade output (this)</span>
+      </div>
+      <div class="repo-note">
+        The MCP server behind Options D–F is real, runnable code. Run <code>npm install &amp;&amp; npm run smoke</code> from a clone to exercise the five tools.
+      </div>
+    </div>
+
   </div>
-  <div class="ana"><strong>Three hedges, one data backbone.</strong> The underlying data shape is constant across all three scenarios — what changes is the consumer of the audit-grade output. Build the layer once; ship it under whichever GTM motion the scenario triggers reward. The fourth scenario (AI-Native Newcomers) is hedged by the <a href="https://sandersonboard.github.io/velocity-borb/" style="color: var(--accent); text-decoration: underline;">Velocity</a> sibling — an AI-native speed-shop pattern, separate codebase.</div>
-</div>
-
-<div class="family-strip">
-  <span class="label">Optro prototype family</span>
-  <span class="links">
-    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
-    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
-    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
-    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
-    <span class="self">Provenance</span>
-  </span>
-</div>
-
-<div class="repo-note">
-  <strong>Note.</strong> The MCP server behind Options D–F is real, runnable code — <code>server.ts</code>, <code>provenance.ts</code>, exposing the five tools described in Option D. Run <code>npm install &amp;&amp; npm run smoke</code> from a clone of this repo to exercise every handler. The static demos above are the smoke-and-mirrors view of all three hedges.
+  <div class="footer-fineprint">
+    <span>Anonymized prototype · Auditborb / Optro / Helios are not real entities.</span>
+    <span style="font-family: var(--mono);">Phase-0 · 2026-Q2</span>
+  </div>
 </div>
 
 <script>
   injectGate();
 
-  // ----- Tab switching with URL-hash deep linking -----
+  // Tab switching with URL-hash deep linking
   (function () {
     const tabs = document.querySelectorAll('.scenario-tab');
     const panes = document.querySelectorAll('.tab-pane');
     function activate(key) {
       tabs.forEach(t => t.classList.toggle('active', t.getAttribute('data-tab') === key));
       panes.forEach(p => p.classList.toggle('active', p.id === 'pane-' + key));
-      // Reflect in URL hash without scroll jump
       try { history.replaceState(null, '', '#' + key); } catch (e) {}
     }
     tabs.forEach(t => t.addEventListener('click', () => activate(t.getAttribute('data-tab'))));
-
-    // On load: honor #a / #b / #c if present
     const initial = (location.hash || '').replace('#', '');
     if (['a', 'b', 'c'].includes(initial)) activate(initial);
   })();
