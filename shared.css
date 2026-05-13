@@ -50,7 +50,20 @@ body {
   font-weight: 700;
   letter-spacing: -0.02em;
   font-size: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
+.brand::before {
+  content: "";
+  width: 22px;
+  height: 14px;
+  background: url("optro-mark.svg") center/contain no-repeat;
+  display: inline-block;
+  flex-shrink: 0;
+}
+/* In-app topbars use the .pip child element for the mark; suppress the ::before so we don't double-render */
+.wp-topnav .brand::before { display: none; }
 .accent { color: var(--accent); }
 
 .card {
