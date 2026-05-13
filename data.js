@@ -245,6 +245,7 @@ window.RC_047 = {
     "Manual journal entries posted to revenue ledger accounts may be recorded inaccurately or fraudulently — for example, posted without dual approval at or above the materiality threshold, posted outside authorized periods, or posted with the intent to manipulate period-end results. The resulting risk is misstatement of revenue, deferred revenue, and related balance-sheet accounts at a level that could materially affect the financial statements.",
   financial_assertions: [
     { name: "Occurrence",     scope: "Revenue and deferred revenue postings actually occurred and pertain to Helios's operations" },
+    { name: "Completeness",   scope: "All in-scope manual revenue entries are captured in the population and subjected to the approval workflow" },
     { name: "Accuracy",       scope: "Manual entries are recorded at correct amounts in the correct accounts" },
     { name: "Cutoff",         scope: "Entries are recorded in the proper period" },
     { name: "Classification", scope: "Entries are recorded in the appropriate ledger accounts and disclosed properly" },
@@ -456,10 +457,10 @@ window.RC_047.evidence.forEach(a => {
 });
 
 // ---------- Peer defensibility benchmark ----------
-// 47 anonymized pre-IPO S-1 filers, Jan 2024 — Apr 2025, technology vertical, Series D+.
+// 47 anonymized pre-IPO S-1 filers, Jan 2024 — Apr 2025, industrials vertical, Series D+.
 window.PEER_COHORT = {
   size: 47,
-  vertical: "Technology",
+  vertical: "Industrials",
   stage: "Series D+",
   s1_window: "Jan 2024 — Apr 2025",
   source: "Optro Benchmark v1 — anonymized aggregate across consented customers",
