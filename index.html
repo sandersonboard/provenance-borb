@@ -47,41 +47,58 @@
     max-width: 640px; margin: 0;
   }
 
-  /* ============ tab nav (clean) ============ */
+  /* ============ tab nav — single-line, no horizontal rules ============ */
   .tab-nav-wrap {
     position: sticky; top: 0; z-index: 30;
-    background: white;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(12px);
+    -webkit-backdrop-filter: saturate(180%) blur(12px);
   }
   .tab-nav {
-    max-width: var(--max); margin: 0 auto; padding: 0 var(--pad-x);
-    display: flex; gap: 28px;
-    border-top: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad-x);
+    display: flex;
+    gap: 36px;
+    position: relative;
+  }
+  /* Hairline only under the tabs (not full-bleed) */
+  .tab-nav::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: var(--pad-x); right: var(--pad-x);
+    height: 1px;
+    background: #ececec;
   }
   .scenario-tab {
-    padding: 22px 0 18px;
-    border-bottom: 2px solid transparent;
+    padding: 18px 0 16px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #94a3b8;
     cursor: pointer; user-select: none;
-    display: flex; flex-direction: column; gap: 3px;
-    transition: border-color 0.18s ease, color 0.18s ease;
-    margin-bottom: -1px;
-  }
-  .scenario-tab .tab-name {
-    font-size: 13.5px; font-weight: 500; color: #6b7280;
     letter-spacing: -0.005em;
+    position: relative;
+    transition: color 0.18s ease;
+    white-space: nowrap;
   }
-  .scenario-tab .tab-sub {
-    font-size: 11px; color: #94a3b8; font-weight: 400;
-    letter-spacing: 0.005em;
+  .scenario-tab::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: transparent;
+    transition: background-color 0.18s ease;
+    z-index: 1;
   }
-  .scenario-tab:hover .tab-name { color: var(--ink); }
+  .scenario-tab:hover { color: #1f2937; }
   .scenario-tab.active {
-    border-bottom-color: var(--accent);
+    color: #1f2937;
+    font-weight: 600;
   }
-  .scenario-tab.active .tab-name { color: var(--ink); font-weight: 700; }
-  .scenario-tab.active .tab-sub  { color: var(--ink-light); }
+  .scenario-tab.active::after { background: var(--accent); }
   @media (max-width: 720px) {
-    .tab-nav { gap: 20px; overflow-x: auto; }
+    .tab-nav { gap: 24px; overflow-x: auto; scrollbar-width: none; }
+    .tab-nav::-webkit-scrollbar { display: none; }
     .scenario-tab { flex-shrink: 0; }
   }
 
@@ -685,22 +702,10 @@
 
 <div class="tab-nav-wrap">
   <div class="tab-nav">
-    <div class="scenario-tab active" data-tab="a">
-      <span class="tab-name">System-of-Record Premium</span>
-      <span class="tab-sub">The Controller drafts</span>
-    </div>
-    <div class="scenario-tab" data-tab="b">
-      <span class="tab-name">Wrapper Era</span>
-      <span class="tab-sub">The agent drafts</span>
-    </div>
-    <div class="scenario-tab" data-tab="c">
-      <span class="tab-name">Agent Commodity Hell</span>
-      <span class="tab-sub">The FDE pod drafts</span>
-    </div>
-    <div class="scenario-tab" data-tab="d">
-      <span class="tab-name">AI-Native Newcomers</span>
-      <span class="tab-sub">The customer self-serves</span>
-    </div>
+    <div class="scenario-tab active" data-tab="a">System-of-Record Premium</div>
+    <div class="scenario-tab" data-tab="b">Wrapper Era</div>
+    <div class="scenario-tab" data-tab="c">Agent Commodity Hell</div>
+    <div class="scenario-tab" data-tab="d">AI-Native Newcomers</div>
   </div>
 </div>
 
