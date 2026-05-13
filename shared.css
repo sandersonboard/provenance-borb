@@ -2600,6 +2600,134 @@ body.walkthrough [data-prov] { border-bottom: 1px dotted rgba(168, 49, 63, 0.7);
 .review-row > .av { display: none; }
 
 /* ============================================================
+   WALKTHROUGH POLISH — page-load fade-up + live-feel pulse
+   Pulled from velocity-borb's wizard polish vocabulary
+   ============================================================ */
+
+@keyframes wt-fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes wt-pipPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(168, 49, 63, 0.4); }
+  50%      { box-shadow: 0 0 0 5px rgba(168, 49, 63, 0); }
+}
+@keyframes wt-livePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.55; transform: scale(0.85); }
+}
+
+/* Staggered entrance on walkthrough surfaces */
+.wt-strip { animation: wt-fadeUp 0.4s cubic-bezier(0.4, 0, 0.2, 1) both; animation-delay: 0.02s; }
+.wt-setup { animation: wt-fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; animation-delay: 0.05s; }
+.paper, .editor-paper, .chain-shell, .peer-shell, .scorer-shell, .pkg-shell, .gen-shell, .ev-shell, .rehearsal-shell, .handoff-shell, .q-shell, .port-shell, .tpl-shell {
+  animation: wt-fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+  animation-delay: 0.1s;
+}
+.wt-next { animation: wt-fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; animation-delay: 0.28s; }
+.wt-close { animation: wt-fadeUp 0.5s cubic-bezier(0.4, 0, 0.2, 1) both; animation-delay: 0.22s; }
+
+/* Live-recording dot on the elapsed clock */
+.wt-strip .wt-clock {
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.wt-strip .wt-clock::before {
+  content: '';
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #ef4444;
+  display: inline-block;
+  animation: wt-livePulse 1.4s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* Subtle pulse on the current progress pip */
+.wt-strip .wt-progress .wt-pip.current {
+  animation: wt-pipPulse 2s ease-in-out infinite;
+}
+
+/* Richer wt-next hover — closer to velocity's card lift */
+.wt-next a {
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.22s cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 0.18s ease,
+              background 0.18s ease;
+}
+.wt-next a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(168, 49, 63, 0.06), 0 20px 44px rgba(15, 23, 42, 0.08);
+  border-color: rgba(168, 49, 63, 0.45);
+  background: white;
+}
+.wt-next .wn-arrow {
+  transition: transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.wt-next a:hover .wn-arrow { transform: translateX(6px); }
+
+/* Refined wt-setup CTA (the "Open RC-047" button on step 1) */
+.wt-setup .ws-cta {
+  transition: transform 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 0.18s cubic-bezier(0.4, 0, 0.2, 1),
+              background 0.15s ease;
+  box-shadow: 0 2px 6px rgba(168, 49, 63, 0.18), 0 6px 16px rgba(168, 49, 63, 0.18);
+}
+.wt-setup .ws-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(168, 49, 63, 0.22), 0 10px 28px rgba(168, 49, 63, 0.24);
+}
+
+/* Tighter wt-strip rhythm */
+.wt-strip {
+  margin: 0 auto;
+  border-bottom: 1px solid #ececec;
+}
+.wt-strip .wt-step {
+  display: flex; align-items: center; gap: 10px;
+}
+
+/* Subtle reveal animation on workpaper sections — staggered nth-child */
+.paper > h2,
+.paper > div.narrative,
+.paper > .proc-list,
+.paper > .ctrl-attrs,
+.paper > .risk-block,
+.paper > .assertion-grid,
+.paper > .sample-block,
+.paper > .evidence-list,
+.paper > .ipe-block,
+.paper > .conclusion-block,
+.paper > .review-thread,
+.paper > .def-sig {
+  animation: wt-fadeUp 0.45s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+.paper > *:nth-child(1)  { animation-delay: 0.10s; }
+.paper > *:nth-child(2)  { animation-delay: 0.14s; }
+.paper > *:nth-child(3)  { animation-delay: 0.18s; }
+.paper > *:nth-child(4)  { animation-delay: 0.22s; }
+.paper > *:nth-child(5)  { animation-delay: 0.26s; }
+.paper > *:nth-child(6)  { animation-delay: 0.30s; }
+.paper > *:nth-child(7)  { animation-delay: 0.34s; }
+.paper > *:nth-child(8)  { animation-delay: 0.38s; }
+.paper > *:nth-child(9)  { animation-delay: 0.42s; }
+.paper > *:nth-child(10) { animation-delay: 0.46s; }
+.paper > *:nth-child(11) { animation-delay: 0.50s; }
+.paper > *:nth-child(12) { animation-delay: 0.54s; }
+.paper > *:nth-child(n+13) { animation-delay: 0.58s; }
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .wt-strip, .wt-setup, .paper, .editor-paper, .wt-next, .wt-close,
+  .chain-shell, .peer-shell, .scorer-shell, .pkg-shell, .gen-shell,
+  .ev-shell, .rehearsal-shell, .handoff-shell, .q-shell, .port-shell,
+  .tpl-shell, .paper > * {
+    animation: none !important;
+  }
+  .wt-strip .wt-clock::before,
+  .wt-strip .wt-progress .wt-pip.current {
+    animation: none !important;
+  }
+}
+
+/* ============================================================
    QUEUE / INDEX ROWS — today-target vs static-context distinction
    ============================================================ */
 /* Today's walkthrough target — the one interactive row */
