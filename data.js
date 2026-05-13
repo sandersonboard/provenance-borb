@@ -490,10 +490,12 @@ window.FR_021_CHAIN_PREVIEW = {
 // ===================================================================
 
 // ---------- FDE pod (Optro Practice) ----------
+// FDE pod colors are chosen so each member is distinctive AND distinct from
+// the Deloitte green (#1B5E20) used for Naomi/engagement avatars elsewhere.
 window.FDE_POD = {
-  jamie:  { name: "Jamie Okonkwo", role: "FDE Pod Lead", initials: "JO", color: "#1B5E20" },
-  priya:  { name: "Priya Raman", role: "Senior FDE",     initials: "PR", color: "#1e3a8a" },
-  marcus: { name: "Marcus Chen", role: "FDE Analyst",     initials: "MC", color: "#6d28d9" },
+  jamie:  { name: "Jamie Okonkwo", role: "FDE Pod Lead", initials: "JO", color: "#b45309" },
+  priya:  { name: "Priya Raman",   role: "Senior FDE",   initials: "PR", color: "#1e3a8a" },
+  marcus: { name: "Marcus Chen",   role: "FDE Analyst",  initials: "MC", color: "#6d28d9" },
 };
 
 // ---------- Active Practice engagements ----------
