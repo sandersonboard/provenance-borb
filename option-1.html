@@ -44,8 +44,6 @@
           <div>Control</div>
           <div>Name</div>
           <div>Category</div>
-          <div style="text-align:right;">Evidence</div>
-          <div style="text-align:right;">Sign-offs</div>
           <div>Status</div>
         </div>
         <div id="wp-tbody"></div>
@@ -73,7 +71,6 @@
     // target. Every other row is read-only context so users don't click
     // into a workpaper that doesn't exist.
     const rows = window.CONTROLS.map(c => {
-      const big4Pill = c.big4_visible ? '<span class="wp-big4">Big-4</span>' : '<span class="wp-big4 no">—</span>';
       const sp = c.status === 'chain_complete' ? '<span class="status-pill complete"><span class="sp-dot"></span>Complete</span>'
               : c.status === 'chain_partial'  ? '<span class="status-pill partial"><span class="sp-dot"></span>Partial</span>'
               : c.status === 'chain_broken'   ? '<span class="status-pill broken"><span class="sp-dot"></span>Broken</span>'
@@ -83,9 +80,7 @@
       const innerCells = `<div class="wp-id">${escapeHtml(c.id)}</div>
         <div class="wp-name">${escapeHtml(c.name)} ${todayPill}</div>
         <div class="wp-cat">${escapeHtml(c.category_name)}</div>
-        <div class="wp-num">${c.evidence_count}</div>
-        <div class="wp-num">${c.reviewer_signoff_layers.toFixed(1)}</div>
-        <div>${sp} ${big4Pill}</div>`;
+        <div class="wp-status-cell">${sp}</div>`;
       // RC-047 → clickable link.  Other rows → static div, no hover, no nav.
       if (isToday) {
         return `<a class="wp-row wp-row-today" href="option-1-viewer.html"

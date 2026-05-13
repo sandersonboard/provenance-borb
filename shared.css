@@ -2771,7 +2771,15 @@ body.walkthrough [data-prov] { border-bottom: 1px dotted rgba(168, 49, 63, 0.7);
    QUEUE DISCLOSURE — collapsed-by-default "show full queue"
    ============================================================ */
 .queue-details {
-  max-width: 1200px; margin: 24px auto 64px; padding: 0 24px;
+  max-width: 900px; margin: 24px auto 64px; padding: 0 24px;
+}
+/* 4-col grid scoped to the option-1 queue (overrides the 6-col default) */
+.queue-details .wp-table .wp-th,
+.queue-details .wp-table .wp-row {
+  grid-template-columns: 92px 1fr 150px 140px;
+}
+.queue-details .wp-status-cell {
+  display: flex; align-items: center;
 }
 .queue-details > summary {
   list-style: none;
