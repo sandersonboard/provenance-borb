@@ -2599,8 +2599,793 @@ body.walkthrough [data-prov] { border-bottom: 1px dotted rgba(168, 49, 63, 0.7);
 /* Reduce noise — drop the redundant text-init avatar styles */
 .review-row > .av { display: none; }
 
+/* ==============================================================
+   DESIGN POLISH — modern minimalist tightening
+   Last pass: rhythm, type, consistent radii, calmer borders
+   ============================================================== */
+
+:root {
+  /* Single rule color used everywhere */
+  --rule: #ececec;
+  --rule-strong: #d9dde3;
+}
+
+/* ----- Typography refinements ----- */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+h1, h2, h3, h4, h5 {
+  font-feature-settings: "ss01", "cv11";
+  letter-spacing: -0.015em;
+}
+
+/* ----- Consistent border colors ----- */
+.card, .paper, .editor-paper, .gen-paper, .gen-controls, .gen-status,
+.ev-slots, .ev-drop, .ev-slot, .ev-file-row,
+.check-checklist, .check-fixes, .check-score-wrap, .check-fix,
+.rehearsal-intro, .rehearsal-q,
+.pkg-cover, .manifest-table, .scorer-head, .scorer-summary .s-cell,
+.peer-card, .peer-intro, .peer-mini,
+.eng-card, .port-side,
+.handoff-head, .handoff-head .dest-card, .handoff-stats .cell, .cover-memo,
+.scenario-block, .footer, .footer-fineprint,
+.tpl-card, .changelog-card, .speed-grid,
+.finding, .gen-paper .section-block h3,
+.q-table, .q-stat-card, .q-pod-chip, .q-filters,
+.attr-row, .ipe-block .ipe-item, .ipe-block .ipe-conc,
+.ctrl-attrs .ca-cell, .assertion-grid .assert-cell, .conclusion-block .conc-cell {
+  border-color: var(--rule);
+}
+
+/* ----- Soften the paper shadow ----- */
+.paper, .editor-paper {
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 8px 32px rgba(15, 23, 42, 0.04);
+  border-color: var(--rule);
+}
+
+/* ----- Consistent border-radius scale ----- */
+/* tight (chips/pills/inline) → small → medium → large → hero */
+.tm, .e-tm, .file-status, .rc-resolved, .state-pill, .status-pill,
+.status-pill, .beta-badge, .speed-callout .v-mult {
+  border-radius: 999px;
+}
+.gen-controls .gc-input, .gen-controls .gc-select, .gen-controls .gc-btn,
+.tm-grid .seg, .order .seg,
+.q-row .wp-big4, .wp-row .wp-big4,
+.cf-prio, .f-prio, .priority-tag {
+  border-radius: 6px;
+}
+.ca-cell, .assert-cell, .ipe-block .ipe-item, .ipe-conc,
+.ev-slot, .ev-file-row, .conc-cell,
+.scorer-summary .s-cell, .handoff-stats .cell, .check-fix,
+.q-stat-card, .q-pod-chip,
+.def-sig, .opt-card .moment, .pc-num-cell, .sb-cell,
+.attr-row, .nav-back, .trigger-meta,
+.eng-card .em-cell, .util-row {
+  border-radius: 8px;
+}
+.scenario-block, .scenario-map .sm-cell,
+.opt-card, .tpl-card, .finding,
+.rehearsal-intro, .rehearsal-q, .scorer-head,
+.check-checklist, .check-fixes, .check-score-wrap,
+.peer-card, .peer-intro, .peer-mini,
+.eng-card, .port-side, .port-callout,
+.handoff-head, .handoff-head .dest-card, .cover-memo,
+.gen-controls, .gen-status, .gen-paper,
+.ev-slots, .ev-drop, .ev-agent-banner,
+.changelog-card, .speed-grid,
+.editor-paper, .q-table, .q-filters {
+  border-radius: 10px;
+}
+.paper, .b-hero, .b-deck, .moat-callout, .closer {
+  border-radius: 14px;
+}
+
+/* ----- Section headers — replace heavy underlines with a tight accent stripe ----- */
+.paper h2,
+.editor-paper h2,
+.rpane-body h4 {
+  border-bottom: none;
+  position: relative;
+}
+.paper h2 {
+  font-weight: 600;
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  color: #4b5563;
+  padding-left: 14px;
+  margin-top: 44px;
+  margin-bottom: 16px;
+}
+.paper h2:first-of-type { margin-top: 24px; }
+.paper h2 .sub {
+  font-weight: 500; letter-spacing: 0; text-transform: none;
+  color: #9aa1ad; font-size: 11px; margin-left: 10px;
+}
+.paper h2::before {
+  content: '';
+  position: absolute; left: 0; top: 4px;
+  width: 3px; height: 11px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* ----- Paper container: more breathing room ----- */
+.paper {
+  padding: 56px 60px 64px;
+  border-color: var(--rule);
+}
+body.walkthrough .paper {
+  padding: 64px 76px 76px;
+}
+
+/* ----- Workpaper header refinement ----- */
+.paper-header {
+  border-bottom: 1px solid var(--rule-strong);
+  padding-bottom: 22px;
+  margin-bottom: 0;
+}
+.paper-header h1 {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  margin: 6px 0 10px;
+}
+.paper-header .wp-firm-tag {
+  font-size: 9.5px; letter-spacing: 0.12em; font-weight: 700;
+}
+.paper-meta {
+  margin-top: 22px;
+  gap: 18px 28px;
+}
+.paper-meta .m-label {
+  font-size: 9px; letter-spacing: 0.1em; font-weight: 700;
+  color: #94a3b8;
+}
+.paper-meta .m-value { font-size: 12.5px; font-weight: 500; }
+
+/* ----- Procedure list refinements ----- */
+.proc-list li {
+  padding: 14px 14px 14px 58px;
+  font-size: 14px;
+  line-height: 1.6;
+  border-bottom: 1px solid var(--rule);
+}
+.proc-list li:last-child { border-bottom: none; }
+.proc-list li::before {
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+.proc-list .tm {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 1px 7px;
+  border-width: 1px;
+  margin-left: 6px;
+}
+
+/* ----- Control attributes — calmer cells ----- */
+.ctrl-attrs {
+  gap: 10px;
+}
+.ctrl-attrs .ca-cell {
+  padding: 12px 14px;
+  background: #fafbfc;
+  border-color: var(--rule);
+}
+.ctrl-attrs .ca-k {
+  font-size: 9px; letter-spacing: 0.1em; color: #94a3b8;
+}
+.ctrl-attrs .ca-v { font-size: 12.5px; line-height: 1.45; }
+
+/* ----- Risk block: refined accent ----- */
+.risk-block {
+  padding: 18px 22px;
+  border-left-width: 2px;
+  background: #fcfafa;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* ----- Assertion grid: clean ----- */
+.assertion-grid { gap: 10px; }
+.assertion-grid .assert-cell {
+  padding: 12px 14px;
+  background: #fafbfc;
+  border-left-width: 2px;
+}
+.assertion-grid .assert-name {
+  font-size: 11px; letter-spacing: 0.04em;
+}
+.assertion-grid .assert-scope {
+  font-size: 12.5px; line-height: 1.55;
+}
+
+/* ----- IPE block refinement ----- */
+.ipe-block .ipe-intro {
+  font-size: 13.5px; line-height: 1.65;
+}
+.ipe-block .ipe-item {
+  padding: 14px 16px;
+  background: #fafbfc;
+}
+.ipe-block .ipe-src {
+  font-size: 12.5px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule);
+}
+.ipe-block .ipe-tag {
+  font-size: 9.5px; letter-spacing: 0.06em; padding: 2px 8px;
+}
+.ipe-block .ipe-k {
+  font-size: 9px; letter-spacing: 0.1em; color: #94a3b8;
+}
+.ipe-block .ipe-v { font-size: 12.5px; line-height: 1.6; }
+.ipe-block .ipe-conc {
+  margin-top: 12px;
+  padding: 12px 14px;
+  font-size: 12.5px;
+  background: #f0faf4; border-color: #cbe9d3; color: #1a5d3a;
+}
+
+/* ----- Conclusions: calmer cards ----- */
+.conclusion-block {
+  gap: 12px;
+}
+.conclusion-block .conc-cell {
+  padding: 16px 18px;
+  background: #fafbfc;
+  border-color: var(--rule);
+}
+.conclusion-block .conc-label {
+  font-size: 9px; letter-spacing: 0.1em;
+}
+.conclusion-block .conc-body {
+  font-size: 13.5px; line-height: 1.7;
+}
+
+/* ----- Evidence rows: cleaner thumbs ----- */
+.evidence-row {
+  padding: 12px 14px;
+  border-color: var(--rule);
+}
+.evidence-row .thumb {
+  width: 44px; height: 52px;
+  border-radius: 4px;
+  border-width: 1px;
+  border-color: var(--rule);
+  background: #fafbfc !important;
+  color: #94a3b8 !important;
+  font-size: 9.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+.evidence-row .file-name { font-size: 12px; }
+.evidence-row .file-meta { font-size: 10.5px; }
+.evidence-row .e-tm {
+  padding: 3px 7px;
+  font-size: 10.5px;
+}
+
+/* ----- Exception rows refined ----- */
+.exception-row {
+  padding: 14px 16px;
+  border-left-width: 2px;
+  background: #fffcf6;
+  border-color: var(--rule);
+}
+.exception-row .ex-disp {
+  padding: 10px 12px;
+  border-color: var(--rule);
+  font-size: 13px; line-height: 1.6;
+}
+
+/* ----- Defensibility signature: cleaner ----- */
+.def-sig {
+  margin-top: 44px;
+  padding: 18px 20px;
+  background: #fafbfc;
+  border-color: var(--rule);
+  gap: 16px;
+}
+.def-sig .seal {
+  width: 32px; height: 32px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.def-sig .sig-text { font-size: 12.5px; line-height: 1.55; }
+.def-sig .sig-rec { font-size: 10px; line-height: 1.4; }
+
+/* ----- Reviewer thread refinements ----- */
+.review-row {
+  padding: 14px 0;
+  gap: 14px;
+  border-top: 1px solid var(--rule);
+}
+.review-row:first-child { border-top: none; }
+.review-row .rc-head {
+  font-size: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.review-row .rc-name { font-weight: 600; color: #1f2937; }
+.review-row .rc-org-tag {
+  font-size: 10.5px;
+  padding: 2px 7px;
+  letter-spacing: 0.02em;
+  background: #f3f5f8;
+  color: #6b7280;
+}
+.review-row .rc-ts { font-size: 10.5px; }
+.review-row .rc-resolved {
+  font-size: 9.5px; letter-spacing: 0.06em;
+  padding: 2px 7px;
+}
+.review-row .rc-text { font-size: 13.5px; line-height: 1.65; margin-top: 6px; }
+
+/* ----- Sample selection block: cleaner ----- */
+.sample-block {
+  gap: 12px;
+}
+.sample-block .sb-cell {
+  padding: 16px 18px;
+  background: #fafbfc;
+}
+.sample-block .sb-num {
+  font-size: 24px;
+  letter-spacing: -0.03em;
+}
+.sample-block .sb-label {
+  font-size: 9.5px; letter-spacing: 0.1em; margin-top: 6px;
+}
+.sample-rationale {
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-left-width: 2px;
+  background: #fcfafa;
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+
+/* ----- Workpaper top nav: lighter ----- */
+.wp-topnav {
+  padding: 14px 32px;
+  border-color: var(--rule);
+}
+.wp-topnav .breadcrumb { font-size: 12.5px; }
+.wp-topnav .wp-tab { font-size: 12px; padding: 7px 14px; }
+.wp-topnav .as-of { font-size: 10.5px; padding-left: 18px; }
+
+/* ----- Workpaper index — calmer table ----- */
+.wp-table { border-color: var(--rule); }
+.wp-th, .wp-row { padding: 12px 18px; }
+.wp-row { border-color: var(--rule); }
+.wp-th {
+  font-size: 9.5px; letter-spacing: 0.1em;
+  color: #94a3b8; background: #fafbfc;
+}
+
+/* ----- Status pills: refined ----- */
+.status-pill, .state-pill {
+  padding: 3px 10px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* ----- Tickmark legend refinement ----- */
+.tm-legend { gap: 6px 18px; }
+.tm-legend .tm-row { font-size: 12px; padding: 3px 0; }
+.tm-legend .tm-row .mark { min-width: 24px; font-weight: 700; }
+
+/* ----- Editor refinements ----- */
+.section {
+  padding: 16px 14px;
+  margin: 22px -14px;
+}
+.section .sec-title {
+  font-size: 9.5px; letter-spacing: 0.12em; color: #6b7280;
+}
+.section .sec-status {
+  font-size: 9.5px; letter-spacing: 0.06em; padding: 2px 7px;
+}
+.section .sec-btn {
+  font-size: 11px;
+  padding: 4px 12px;
+  border-color: var(--rule);
+}
+.section .sec-body { font-size: 14px; line-height: 1.7; }
+
+/* ----- Right pane / audit trail ----- */
+.rpane-head {
+  padding: 16px 22px;
+  border-color: var(--rule);
+}
+.rpane-head .ph-label { font-size: 9px; letter-spacing: 0.12em; }
+.rpane-tabs { background: #fafbfc; border-color: var(--rule); }
+.rpane-tab { font-size: 10.5px; letter-spacing: 0.04em; padding: 11px 8px; }
+.rpane-body { padding: 18px 22px 80px; }
+.rpane-body h4 {
+  font-size: 9.5px; letter-spacing: 0.1em;
+  color: #94a3b8;
+  margin: 20px 0 10px;
+}
+.rpane-body h4:first-child { margin-top: 0; }
+.trail-row { padding: 10px 0; border-color: var(--rule); }
+.trail-row .body .who { font-size: 12px; }
+.trail-row .body .action { font-size: 12px; margin-top: 3px; }
+.trail-row .body .diff { font-size: 10.5px; line-height: 1.5; }
+
+/* ----- Defensibility checklist refined ----- */
+.defens-checklist .ci {
+  padding: 8px 0;
+  font-size: 12px;
+  gap: 10px;
+  border-color: var(--rule);
+}
+.defens-checklist .ci .box {
+  width: 14px; height: 14px;
+  border-radius: 3px;
+  font-size: 10px;
+}
+
+/* ----- Queue table refinements ----- */
+.q-th, .q-row {
+  padding: 11px 18px;
+}
+.q-row { border-color: var(--rule); }
+.q-th {
+  font-size: 9.5px; letter-spacing: 0.1em; color: #94a3b8;
+  background: #fafbfc;
+}
+.q-pod-chip {
+  padding: 9px 14px;
+  border-color: var(--rule);
+}
+.q-pod-chip .name { font-size: 12px; }
+.q-pod-chip .role { font-size: 10.5px; }
+.q-pod-chip .util { font-size: 10.5px; }
+.q-stat-card {
+  padding: 14px 16px;
+  border-color: var(--rule);
+}
+.q-stat-card .top { font-size: 9.5px; letter-spacing: 0.1em; }
+.q-stat-card .num { font-size: 22px; letter-spacing: -0.02em; }
+.q-filters {
+  padding: 12px 16px;
+  border-color: var(--rule);
+  gap: 10px;
+}
+.q-filters .fl-chip {
+  padding: 5px 11px;
+  font-size: 11.5px;
+  border-color: var(--rule);
+}
+
+/* ----- Portfolio refinements ----- */
+.port-hero {
+  border-radius: 14px;
+  padding: 32px 36px;
+}
+.port-hero h1 {
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  margin: 10px 0 8px;
+}
+.port-hero .deck { font-size: 14px; line-height: 1.65; }
+.port-hero .pkpis { gap: 16px; margin-top: 26px; padding-top: 26px; }
+.port-hero .pkpi .num { font-size: 22px; letter-spacing: -0.02em; }
+.port-hero .pkpi .lbl { font-size: 9.5px; letter-spacing: 0.1em; }
+.eng-card {
+  padding: 20px 24px;
+  border-color: var(--rule);
+}
+.eng-card .ec-name { font-size: 16px; letter-spacing: -0.01em; }
+.eng-card .ec-sub { font-size: 11.5px; }
+.eng-card .ec-health {
+  padding: 3px 9px;
+  font-size: 9.5px; letter-spacing: 0.06em;
+  border-radius: 999px;
+}
+.eng-card .ec-metrics { gap: 8px; }
+.eng-card .em-cell {
+  padding: 9px 11px;
+  background: #fafbfc;
+}
+.eng-card .em-num { font-size: 15px; }
+.eng-card .em-lbl { font-size: 9px; letter-spacing: 0.08em; }
+.port-side {
+  padding: 20px 24px;
+  border-color: var(--rule);
+}
+.port-side h3 { font-size: 9.5px; letter-spacing: 0.1em; }
+
+/* ----- Scorer view refinements ----- */
+.scorer-head {
+  padding: 22px 26px;
+  border-color: var(--rule);
+}
+.scorer-head h1 {
+  font-size: 22px;
+  letter-spacing: -0.015em;
+  margin: 0 0 8px;
+}
+.scorer-head .sub { font-size: 13px; line-height: 1.65; }
+.scorer-head .prompt-box {
+  padding: 14px 16px;
+  background: #fafbfc;
+  border-color: var(--rule);
+  font-size: 13px;
+}
+.scorer-summary { gap: 10px; }
+.scorer-summary .s-cell {
+  padding: 14px 16px;
+  border-color: var(--rule);
+}
+.scorer-summary .s-cell .lbl { font-size: 9.5px; letter-spacing: 0.1em; }
+.scorer-summary .s-cell .val { font-size: 22px; letter-spacing: -0.02em; }
+.finding {
+  padding: 18px 20px;
+  border-color: var(--rule);
+}
+.finding .f-prio {
+  font-size: 9.5px; letter-spacing: 0.06em; padding: 2px 8px;
+}
+.finding .f-cat { font-size: 12px; }
+.finding .f-effort { font-size: 10.5px; }
+.finding .f-finding { font-size: 13.5px; line-height: 1.65; }
+.finding .f-fix {
+  padding: 12px 14px;
+  border-color: #f1e1e3;
+  font-size: 13px; line-height: 1.65;
+}
+.finding .f-fix .lbl { font-size: 9.5px; letter-spacing: 0.1em; }
+.finding .f-btn {
+  padding: 5px 12px; font-size: 11px;
+  border-color: var(--rule);
+}
+
+/* ----- Templates ----- */
+.tpl-card {
+  padding: 20px 22px;
+  border-color: var(--rule);
+}
+.tpl-card.active { border-color: var(--accent); }
+.tpl-card .tc-head { padding-bottom: 12px; border-color: var(--rule); }
+.tpl-card .tc-name { font-size: 14px; }
+.tpl-card .tc-sub { font-size: 10.5px; }
+.tpl-card h5 {
+  font-size: 9px; letter-spacing: 0.1em;
+  color: #94a3b8;
+  margin: 14px 0 6px;
+}
+.tpl-card .tm-grid .row { font-size: 11.5px; }
+.tpl-card .voice { font-size: 12.5px; line-height: 1.65; }
+.tpl-card .notes {
+  font-size: 11px;
+  padding-top: 12px; margin-top: 12px;
+  border-color: var(--rule);
+  line-height: 1.55;
+}
+
+/* ----- Handoff package ----- */
+.handoff-head { padding: 24px 28px; border-color: var(--rule); }
+.handoff-head h1 { font-size: 22px; letter-spacing: -0.015em; margin: 0 0 6px; }
+.handoff-head .sub { font-size: 13px; line-height: 1.65; }
+.handoff-head .dest-card {
+  padding: 14px 16px;
+  background: #fafbfc;
+  border-color: var(--rule);
+}
+.handoff-stats { gap: 10px; }
+.handoff-stats .cell {
+  padding: 14px 16px;
+  border-color: var(--rule);
+}
+.handoff-stats .num { font-size: 22px; letter-spacing: -0.02em; }
+.handoff-stats .lbl { font-size: 9.5px; letter-spacing: 0.1em; }
+.cover-memo {
+  padding: 24px 28px;
+  border-color: var(--rule);
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+.cover-memo h2 {
+  font-size: 9.5px; letter-spacing: 0.12em;
+  margin: 18px 0 8px;
+  padding-bottom: 0;
+  border-bottom: none;
+  position: relative;
+  padding-left: 14px;
+}
+.cover-memo h2::before {
+  content: ''; position: absolute; left: 0; top: 4px;
+  width: 3px; height: 11px;
+  background: var(--accent); border-radius: 2px;
+}
+.cover-memo h2:first-child { margin-top: 0; }
+.manifest-table { border-color: var(--rule); }
+.manifest-table .mt-th {
+  font-size: 9.5px; letter-spacing: 0.1em; color: #94a3b8;
+  background: #fafbfc;
+  border-color: var(--rule);
+}
+.manifest-table .mt-row {
+  border-color: var(--rule);
+  font-size: 12px;
+}
+
+/* ----- Peer benchmark refinements ----- */
+.peer-intro { padding: 22px 26px; border-color: var(--rule); }
+.peer-intro h1 { font-size: 22px; letter-spacing: -0.015em; }
+.peer-intro .cohort {
+  margin-top: 16px; padding-top: 16px;
+  gap: 14px;
+  border-color: var(--rule);
+}
+.peer-card {
+  padding: 22px 26px;
+  border-color: var(--rule);
+}
+.peer-card .pc-label { font-size: 13.5px; }
+.peer-card .pc-pct {
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+}
+.peer-card .pc-num-val { font-size: 22px; letter-spacing: -0.02em; }
+.peer-card .pc-num-lbl { font-size: 9.5px; letter-spacing: 0.06em; }
+.peer-card .pc-interp { font-size: 12.5px; line-height: 1.7; }
+.peer-card .pc-remed {
+  padding: 12px 14px;
+  font-size: 12.5px; line-height: 1.65;
+  border-color: #f1e1e3;
+}
+.peer-card .pc-remed-label { font-size: 9.5px; letter-spacing: 0.1em; }
+
+/* ----- Velocity generator (Tab D) ----- */
+.gen-controls {
+  padding: 18px 20px;
+  border-color: var(--rule);
+  gap: 16px;
+}
+.gen-controls .gc-label { font-size: 9.5px; letter-spacing: 0.1em; color: #94a3b8; }
+.gen-controls .gc-input, .gen-controls .gc-select {
+  border-color: var(--rule);
+}
+.gen-status {
+  padding: 12px 16px;
+  border-color: var(--rule);
+  background: #fffdf5;
+  font-size: 12.5px;
+}
+.gen-status.done { background: #f0faf4; }
+.gen-paper {
+  padding: 36px 44px;
+  border-color: var(--rule);
+}
+.gen-paper .section-block h3 {
+  font-size: 9.5px; letter-spacing: 0.12em;
+  color: #6b7280; font-weight: 700;
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 8px;
+  position: relative;
+  padding-left: 12px;
+}
+.gen-paper .section-block h3::before {
+  content: ''; position: absolute; left: 0; top: 3px;
+  width: 2px; height: 11px;
+  background: var(--accent); border-radius: 1px;
+}
+
+/* ----- Evidence drop / slots ----- */
+.ev-slots, .ev-drop, .ev-agent-banner {
+  padding: 20px 22px;
+  border-color: var(--rule);
+}
+.ev-slots h3 { font-size: 9.5px; letter-spacing: 0.1em; color: #94a3b8; }
+.ev-slot {
+  padding: 13px 15px;
+  border-color: var(--rule);
+}
+.ev-slot.filled { border-color: #cbe9d3; }
+
+/* ----- Defensibility check view ----- */
+.check-score-wrap {
+  padding: 28px 30px;
+  border-color: var(--rule);
+  gap: 32px;
+}
+.score-gauge .score-num { font-size: 56px; letter-spacing: -0.04em; }
+.score-gauge .score-out { font-size: 14px; }
+.score-gauge .score-lbl { font-size: 9.5px; letter-spacing: 0.1em; }
+.check-checklist, .check-fixes {
+  padding: 20px 24px;
+  border-color: var(--rule);
+}
+.check-checklist h3, .check-fixes h3 {
+  font-size: 9.5px; letter-spacing: 0.1em; color: #94a3b8;
+}
+.check-fix {
+  padding: 14px 16px;
+  border-left-width: 2px;
+}
+.check-fix .cf-title { font-size: 13px; }
+.check-fix .cf-desc { font-size: 12.5px; line-height: 1.65; }
+
+/* ----- Rehearsal Q&A polish ----- */
+.rehearsal-intro {
+  padding: 24px 28px;
+  border-color: var(--rule);
+}
+.rehearsal-intro h1 { font-size: 22px; letter-spacing: -0.015em; }
+.rehearsal-intro p { font-size: 14px; line-height: 1.65; }
+.rehearsal-q {
+  padding: 24px 28px;
+  border-color: var(--rule);
+}
+.rehearsal-q .q-head {
+  font-size: 9.5px; letter-spacing: 0.1em; color: #94a3b8;
+}
+.rehearsal-q .q-bubble {
+  padding: 16px 18px;
+  font-size: 15px; line-height: 1.65;
+}
+.rehearsal-q .q-bubble::before { font-size: 9px; letter-spacing: 0.1em; }
+.rehearsal-q .q-hint {
+  padding: 12px 14px;
+  font-size: 12px; line-height: 1.6;
+}
+.rehearsal-q .q-answer-box {
+  padding: 12px 14px;
+  font-size: 14px; line-height: 1.6;
+  border-color: var(--rule);
+}
+.rehearsal-q .q-btn {
+  padding: 7px 14px;
+  font-size: 11.5px;
+  border-color: var(--rule);
+}
+.rehearsal-q .q-feedback {
+  padding: 14px 16px;
+  font-size: 12.5px; line-height: 1.65;
+}
+
+/* ----- Family footer (in option pages) ----- */
+.family-footer {
+  padding: 32px 24px 24px;
+  margin-top: 88px;
+  border-color: var(--rule);
+}
+.family-footer .ff-label { font-size: 9px; letter-spacing: 0.12em; }
+.family-footer .ff-links { gap: 20px; }
+.family-footer .ff-links a { font-size: 12px; }
+
+/* ----- Bird avatar refinements ----- */
+.borb-av { transition: transform 0.15s; }
+.review-row:hover .borb-av { transform: scale(1.04); }
+
+/* ----- Make hover-provenance more discoverable ----- */
+[data-prov] {
+  border-bottom-style: dotted;
+  border-bottom-width: 1.5px;
+  border-bottom-color: rgba(168, 49, 63, 0.45) !important;
+  padding-bottom: 1px;
+  transition: background-color 0.12s, border-color 0.12s;
+}
+[data-prov]:hover {
+  background: rgba(168, 49, 63, 0.05) !important;
+  border-bottom-color: rgba(168, 49, 63, 0.85) !important;
+}
+
 /* Print */
 @media print {
   body { background: white; }
-  .demo-nav { display: none; }
+  .demo-nav, .wp-topnav, .family-footer { display: none; }
+  .paper, .editor-paper { box-shadow: none; border: none; padding: 0; }
 }
