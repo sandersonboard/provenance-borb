@@ -144,7 +144,7 @@
           <div class="em-cell"><div class="em-num">${e.defensibility_avg}<span style="font-size: 12px; color: var(--muted);">/100</span></div><div class="em-lbl">Avg defensibility</div></div>
         </div>
         <div class="ec-pod-lead">
-          <div class="miniav" style="background:${lead.color}">${lead.initials}</div>
+          ${birdAvatar(lead, { size: 26 })}
           <span><strong style="color: var(--ink); font-weight: 600;">${escapeHtml(lead.name)}</strong> · ${escapeHtml(lead.role)} on this engagement</span>
         </div>
       </div>`;
@@ -156,7 +156,7 @@
       const p = pod[k];
       const u = util[k];
       return `<div class="util-row">
-        <div class="miniav" style="background:${p.color}">${p.initials}</div>
+        ${birdAvatar(p, { size: 30 })}
         <div class="body">
           <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 8px;">
             <span class="name">${escapeHtml(p.name)}</span>

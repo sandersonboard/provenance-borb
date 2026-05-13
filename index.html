@@ -294,6 +294,389 @@
   <p>Twelve demo formats hedging all four scenarios in the pre-IPO plan. Same Helios Robotics data; same Optro Provenance v1 signature; four different consumers of the output. Pick a scenario to see one hedge argued in full.</p>
 </div>
 
+<!-- ============ EXPLAINER — progressive disclosure, chunked ============ -->
+<style>
+  .explainer { max-width: 980px; margin: 8px auto 0; padding: 0 32px; }
+  .explainer-summary {
+    cursor: pointer; user-select: none; list-style: none;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px;
+    background: white; border: 1px solid #ececec; border-radius: 8px;
+    font-size: 13px; color: var(--ink);
+    transition: background-color 0.12s, border-color 0.12s;
+  }
+  .explainer-summary::-webkit-details-marker { display: none; }
+  .explainer-summary:hover { background: #fafafa; border-color: #d1d5db; }
+  .explainer-summary .es-left {
+    display: flex; align-items: center; gap: 12px; font-weight: 500;
+  }
+  .explainer-summary .es-pip {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: var(--accent); color: white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; flex-shrink: 0;
+  }
+  .explainer-summary .es-toggle {
+    font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px;
+  }
+  .explainer-summary .es-chev {
+    width: 0; height: 0;
+    border-left: 4px solid transparent; border-right: 4px solid transparent;
+    border-top: 5px solid var(--muted);
+    transition: transform 0.15s;
+  }
+  details[open] > .explainer-summary { background: #fafafa; border-color: #d1d5db; }
+  details[open] > .explainer-summary .es-chev { transform: rotate(180deg); }
+
+  .ex-body {
+    margin-top: 18px; padding: 36px 40px;
+    background: white; border: 1px solid #ececec; border-radius: 10px;
+  }
+  .ex-section { margin-bottom: 36px; }
+  .ex-section:last-child { margin-bottom: 0; }
+  .ex-section h3 {
+    font-family: var(--sans); font-size: 11px; font-weight: 700;
+    color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em;
+    margin: 0 0 8px;
+  }
+  .ex-section h2 {
+    font-family: var(--sans); font-size: 22px; font-weight: 700; letter-spacing: -0.015em;
+    color: var(--ink); margin: 0 0 14px; line-height: 1.3;
+    max-width: 720px;
+  }
+  .ex-section p {
+    font-size: 14px; line-height: 1.65; color: var(--ink-light);
+    margin: 0 0 12px; max-width: 720px;
+  }
+  .ex-section p strong { color: var(--ink); font-weight: 600; }
+  .ex-section p code {
+    font-family: var(--mono); font-size: 12.5px;
+    background: var(--bg); padding: 1px 5px; border-radius: 3px;
+    color: var(--ink);
+  }
+
+  /* Reusable chunked 3-card grid */
+  .ex-chunks { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 16px 0 0; }
+  @media (max-width: 800px) { .ex-chunks { grid-template-columns: 1fr; } }
+  .ex-chunk {
+    padding: 16px 18px;
+    background: var(--bg); border: 1px solid #ececec; border-radius: 6px;
+  }
+  .ex-chunk .ec-num {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    color: var(--accent); letter-spacing: 0.06em;
+    margin-bottom: 6px;
+  }
+  .ex-chunk .ec-headline {
+    font-size: 13.5px; font-weight: 700; color: var(--ink); line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .ex-chunk .ec-body {
+    font-size: 12px; line-height: 1.55; color: var(--ink-light);
+  }
+
+  /* Diagrams */
+  .ex-diagram {
+    margin: 20px 0 4px;
+    padding: 20px 24px;
+    background: #fcfcfd; border: 1px solid #ececec; border-radius: 8px;
+    overflow-x: auto;
+  }
+  .ex-diagram .diagram-label {
+    font-size: 10px; font-weight: 700; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 12px;
+  }
+  .ex-diagram svg { display: block; max-width: 100%; height: auto; }
+  .ex-diagram .dx-caption {
+    margin-top: 10px;
+    font-size: 11.5px; color: var(--muted); line-height: 1.55;
+  }
+
+  /* Comparison: with vs without */
+  .ex-compare {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+    margin: 20px 0 4px;
+  }
+  @media (max-width: 800px) { .ex-compare { grid-template-columns: 1fr; } }
+  .ex-compare-cell {
+    padding: 18px 20px; border: 1px solid #ececec; border-radius: 8px;
+  }
+  .ex-compare-cell.without { background: #fafafa; }
+  .ex-compare-cell.with { background: #fffafa; border-color: #fed7d7; }
+  .ex-compare-cell h4 {
+    font-family: var(--sans); font-size: 11px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin: 0 0 10px;
+  }
+  .ex-compare-cell.without h4 { color: var(--muted); }
+  .ex-compare-cell.with h4 { color: var(--accent); }
+  .ex-compare-cell ul { margin: 0; padding-left: 18px; }
+  .ex-compare-cell li {
+    font-size: 12.5px; line-height: 1.55; color: var(--ink-light);
+    margin-bottom: 4px;
+  }
+  .ex-compare-cell.with li::marker { color: var(--accent); }
+
+  /* Subsection nav */
+  .ex-toc {
+    display: flex; flex-wrap: wrap; gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid #ececec;
+    margin: -12px 0 24px;
+    font-size: 11.5px;
+  }
+  .ex-toc a { color: var(--ink-light); text-decoration: none; }
+  .ex-toc a:hover { color: var(--accent); text-decoration: underline; }
+</style>
+
+<details class="explainer">
+  <summary class="explainer-summary">
+    <span class="es-left">
+      <span class="es-pip">i</span>
+      <span>New to the audit-grade output layer? Read the 5-minute explainer — what it is, why it matters for GRC, and what the diagrams show.</span>
+    </span>
+    <span class="es-toggle">Show the explainer <span class="es-chev"></span></span>
+  </summary>
+  <div class="ex-body">
+
+    <div class="ex-toc">
+      <a href="#ex-what">1 · What it is</a>
+      <a href="#ex-without">2 · Without it</a>
+      <a href="#ex-why">3 · Why it matters for GRC</a>
+      <a href="#ex-chain">4 · The chain of custody</a>
+      <a href="#ex-consumers">5 · Three consumers, one layer</a>
+      <a href="#ex-anatomy">6 · Anatomy of an audit-grade workpaper</a>
+    </div>
+
+    <!-- ===== 1 · WHAT IT IS ===== -->
+    <div class="ex-section" id="ex-what">
+      <h3>1 · The definition</h3>
+      <h2>What is the &ldquo;audit-grade output layer&rdquo;?</h2>
+      <p>The audit-grade output layer is the part of a GRC product that converts internal records into evidence an external auditor will accept <strong>without rework</strong>. It is the bridge between the <em>system of record</em> (NetSuite, Salesforce, Workday) and the <em>system of judgment</em> (the partner reviewing your workpaper).</p>
+      <p>It is not the workpaper itself. It is not the LLM that drafts the workpaper. It is the structured pipeline that ensures every value on the page is traceable to its source record, every sign-off is time-stamped, every override has a documented reason, and every section was attributed to the system or human that produced it.</p>
+      <p><strong>Why this is novel for AI-era GRC tools:</strong> any vendor can ship a chat box that emits a workpaper-looking document. The audit-grade output layer is what makes the document <em>accepted</em> by the auditor — the part the LLM cannot manufacture.</p>
+    </div>
+
+    <!-- ===== 2 · WITHOUT IT ===== -->
+    <div class="ex-section" id="ex-without">
+      <h3>2 · The default state</h3>
+      <h2>What goes wrong without an audit-grade output layer.</h2>
+      <div class="ex-compare">
+        <div class="ex-compare-cell without">
+          <h4>Flat document (default)</h4>
+          <ul>
+            <li>Values on the page have no link to the underlying source record</li>
+            <li>Sign-offs are wet signatures or hand-typed names — no timestamps</li>
+            <li>Sample-size and methodology rationale is narrative, not citable</li>
+            <li>Overrides exist but the rationale lives in someone's email</li>
+            <li>Tickmark annotations are convention but the chain stops at the document</li>
+            <li>An LLM that drafts this can fabricate confidently and undetectably</li>
+            <li>Big-4 review-note cycle becomes the failure mode — 18% industry rework rate</li>
+          </ul>
+        </div>
+        <div class="ex-compare-cell with">
+          <h4>Audit-grade output layer</h4>
+          <ul>
+            <li>Every value carries an <code>optro_record_id</code> back to its source system</li>
+            <li>Sign-offs are application-layer events with capture timestamps and SHA-256 hashes</li>
+            <li>Sample methodology references the engagement-team agreement memo by reference</li>
+            <li>Overrides flow through a workflow and the rationale field is non-skippable</li>
+            <li>Tickmark annotations map back to the procedure they came from</li>
+            <li>LLM-drafted sections are tagged <code>AGENT_DRAFT</code> until a human promotes them</li>
+            <li>Auditors verify the chain in real time during walkthrough — measured at 4% rework</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 3 · WHY IT MATTERS ===== -->
+    <div class="ex-section" id="ex-why">
+      <h3>3 · The GRC case</h3>
+      <h2>Why this matters specifically for GRC, internal audit, and SOX 404.</h2>
+      <p>GRC is unusual among enterprise-software categories: the deliverable is consumed by a regulated third party (the external auditor) who is legally and professionally required to evaluate its evidentiary quality. That changes the design constraints for the software.</p>
+      <div class="ex-chunks">
+        <div class="ex-chunk">
+          <div class="ec-num">REASON 1</div>
+          <div class="ec-headline">Defensibility is becoming the moat.</div>
+          <div class="ec-body">Reasoning is commoditizing. The work that takes seconds for an LLM (drafting procedures, summarizing narratives, formatting tickmark conventions) is no longer the bottleneck. The bottleneck — the part that gates audit firm acceptance — is the citation chain on every value. That chain is what owns the price-power going forward.</div>
+        </div>
+        <div class="ex-chunk">
+          <div class="ec-num">REASON 2</div>
+          <div class="ec-headline">Foundation models cannot manufacture provenance.</div>
+          <div class="ec-body">An LLM can write a confident sentence about why a threshold is $250,000. It cannot prove that the threshold was reviewed quarterly by the Controller, captured in NetSuite workflow rule WF-MJE-RR-047, and signed in memo M-2026-Q1-MJE. That kind of fact requires sitting on the underlying system of record — which is exactly what the output layer connects to.</div>
+        </div>
+        <div class="ex-chunk">
+          <div class="ec-num">REASON 3</div>
+          <div class="ec-headline">Big-4 walkthroughs measure the layer, not the surface.</div>
+          <div class="ec-body">A Deloitte senior reviewing a workpaper does not grade the prose. They grade: can each claim be traced? Is each judgment documented? Is each piece of system-generated data IPE-tested for completeness and accuracy? Was the sample methodology pre-agreed? The output layer is what makes the answer to all four <em>yes</em> without alt-tabbing to nine other systems.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 4 · CHAIN OF CUSTODY DIAGRAM ===== -->
+    <div class="ex-section" id="ex-chain">
+      <h3>4 · The diagram</h3>
+      <h2>Chain of custody — from system of record to external auditor.</h2>
+      <p>The audit-grade output layer is the second box from the left below. It takes raw evidence from the system of record, attaches structured provenance metadata (timestamps, hashes, captor, override history), and emits artifacts the workpaper consumes.</p>
+      <div class="ex-diagram">
+        <div class="diagram-label">Diagram 1 — chain of custody, five stages</div>
+        <svg viewBox="0 0 900 240" preserveAspectRatio="xMidYMid meet" style="width: 100%;">
+          <defs>
+            <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#9ca3af"/>
+            </marker>
+          </defs>
+          <!-- 5 boxes -->
+          <g font-family="Inter, system-ui, sans-serif">
+            <!-- Box 1 -->
+            <rect x="20" y="80" width="140" height="80" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+            <text x="90" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#6b7280" letter-spacing="0.5">SYSTEM OF RECORD</text>
+            <text x="90" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">NetSuite</text>
+            <text x="90" y="136" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Salesforce</text>
+            <text x="90" y="152" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Workday</text>
+
+            <!-- Box 2 (Output layer - highlighted) -->
+            <rect x="195" y="60" width="160" height="120" rx="6" fill="#fffafa" stroke="#A8313F" stroke-width="2"/>
+            <text x="275" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#A8313F" letter-spacing="0.5">AUDIT-GRADE OUTPUT LAYER</text>
+            <text x="275" y="100" text-anchor="middle" font-size="12" fill="#1f2937">Provenance signature</text>
+            <text x="275" y="116" text-anchor="middle" font-size="12" fill="#1f2937">SHA-256 at ingest</text>
+            <text x="275" y="132" text-anchor="middle" font-size="12" fill="#1f2937">Captor + timestamp</text>
+            <text x="275" y="148" text-anchor="middle" font-size="12" fill="#1f2937">Override history</text>
+            <text x="275" y="164" text-anchor="middle" font-size="12" fill="#1f2937">optro_record_id</text>
+
+            <!-- Box 3 -->
+            <rect x="390" y="80" width="140" height="80" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+            <text x="460" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#6b7280" letter-spacing="0.5">WORKPAPER</text>
+            <text x="460" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Narrative</text>
+            <text x="460" y="136" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Procedures (TOD/TOE)</text>
+            <text x="460" y="152" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Evidence + IPE</text>
+
+            <!-- Box 4 -->
+            <rect x="565" y="80" width="140" height="80" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+            <text x="635" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#6b7280" letter-spacing="0.5">WALKTHROUGH</text>
+            <text x="635" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Hover &amp; verify</text>
+            <text x="635" y="136" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Sign-off chain visible</text>
+            <text x="635" y="152" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Q&amp;A on-demand</text>
+
+            <!-- Box 5 -->
+            <rect x="740" y="80" width="140" height="80" rx="6" fill="#ecfdf5" stroke="#047857" stroke-width="1.5"/>
+            <text x="810" y="100" text-anchor="middle" font-size="10" font-weight="700" fill="#047857" letter-spacing="0.5">EXTERNAL AUDITOR</text>
+            <text x="810" y="120" text-anchor="middle" font-size="13" font-weight="600" fill="#064e3b">Big-4 partner</text>
+            <text x="810" y="136" text-anchor="middle" font-size="13" font-weight="600" fill="#064e3b">Signs without rework</text>
+
+            <!-- Arrows -->
+            <line x1="162" y1="120" x2="190" y2="120" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr1)"/>
+            <line x1="358" y1="120" x2="386" y2="120" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr1)"/>
+            <line x1="532" y1="120" x2="560" y2="120" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr1)"/>
+            <line x1="707" y1="120" x2="735" y2="120" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arr1)"/>
+
+            <!-- Labels under arrows -->
+            <text x="176" y="200" text-anchor="middle" font-size="10" fill="#6b7280">capture +</text>
+            <text x="176" y="212" text-anchor="middle" font-size="10" fill="#6b7280">stamp</text>
+
+            <text x="372" y="200" text-anchor="middle" font-size="10" fill="#6b7280">cite</text>
+
+            <text x="546" y="200" text-anchor="middle" font-size="10" fill="#6b7280">surface</text>
+
+            <text x="721" y="200" text-anchor="middle" font-size="10" fill="#6b7280">defend</text>
+          </g>
+        </svg>
+        <div class="dx-caption">The output layer (red) is where Optro adds value over a vanilla GRC suite. Vendors who skip this stage emit flat documents into the workpaper that auditors then have to re-verify line-by-line; vendors who own this stage emit live citations that auditors can verify in seconds.</div>
+      </div>
+    </div>
+
+    <!-- ===== 5 · THREE CONSUMERS ===== -->
+    <div class="ex-section" id="ex-consumers">
+      <h3>5 · The same layer, four ways</h3>
+      <h2>Three consumers of the audit-grade output, one underlying layer.</h2>
+      <p>The output layer doesn't change. What changes is who reads the workpaper. Each tab below explores one consumer.</p>
+      <div class="ex-diagram">
+        <div class="diagram-label">Diagram 2 — one layer, four consumers</div>
+        <svg viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" style="width: 100%;">
+          <g font-family="Inter, system-ui, sans-serif">
+            <!-- Center: output layer -->
+            <rect x="370" y="100" width="160" height="60" rx="6" fill="#fffafa" stroke="#A8313F" stroke-width="2"/>
+            <text x="450" y="124" text-anchor="middle" font-size="11" font-weight="700" fill="#A8313F" letter-spacing="0.5">AUDIT-GRADE</text>
+            <text x="450" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="#A8313F" letter-spacing="0.5">OUTPUT LAYER</text>
+
+            <!-- Top-left consumer: Controller -->
+            <rect x="80" y="20" width="180" height="68" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+            <text x="170" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="0.5">GROUP A · SoR PREMIUM</text>
+            <text x="170" y="60" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Controller</text>
+            <text x="170" y="78" text-anchor="middle" font-size="11" fill="#6b7280">reads &amp; hovers in the UI</text>
+
+            <!-- Top-right consumer: Agent -->
+            <rect x="640" y="20" width="180" height="68" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+            <text x="730" y="42" text-anchor="middle" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="0.5">GROUP B · WRAPPER ERA</text>
+            <text x="730" y="60" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Foundation-model agent</text>
+            <text x="730" y="78" text-anchor="middle" font-size="11" fill="#6b7280">calls MCP tools, surfaces cites</text>
+
+            <!-- Bottom-left consumer: FDE pod -->
+            <rect x="80" y="172" width="180" height="68" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+            <text x="170" y="194" text-anchor="middle" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="0.5">GROUP C · COMMODITY HELL</text>
+            <text x="170" y="212" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">FDE pod</text>
+            <text x="170" y="230" text-anchor="middle" font-size="11" fill="#6b7280">reviews, edits, ships package</text>
+
+            <!-- Bottom-right consumer: Self-serve customer -->
+            <rect x="640" y="172" width="180" height="68" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
+            <text x="730" y="194" text-anchor="middle" font-size="11" font-weight="700" fill="#6b7280" letter-spacing="0.5">GROUP D · AI-NATIVE NEWCOMERS</text>
+            <text x="730" y="212" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Self-serve customer</text>
+            <text x="730" y="230" text-anchor="middle" font-size="11" fill="#6b7280">generates, checks, rehearses</text>
+
+            <!-- Arrows from output layer to each -->
+            <line x1="370" y1="118" x2="262" y2="60"  stroke="#9ca3af" stroke-width="1.5"/>
+            <line x1="530" y1="118" x2="638" y2="60"  stroke="#9ca3af" stroke-width="1.5"/>
+            <line x1="370" y1="142" x2="262" y2="200" stroke="#9ca3af" stroke-width="1.5"/>
+            <line x1="530" y1="142" x2="638" y2="200" stroke="#9ca3af" stroke-width="1.5"/>
+          </g>
+        </svg>
+        <div class="dx-caption">The same Helios Robotics workpaper data sits behind every tab. Group A renders it as a hover-citable web page. Group B serves it through MCP tools to an LLM agent. Group C runs it through a production-line editor. Group D bolts it onto a self-serve customer wizard. Build the layer once.</div>
+      </div>
+    </div>
+
+    <!-- ===== 6 · ANATOMY OF A WORKPAPER ===== -->
+    <div class="ex-section" id="ex-anatomy">
+      <h3>6 · Inside a workpaper</h3>
+      <h2>Anatomy of an audit-grade SOX 404 workpaper.</h2>
+      <p>For readers without a GRC background — here is what a Big-4 senior reviewer expects to see on every SOX 404 control workpaper. Each tab's hero control (<code>RC-047</code>, manual journal-entry approval over revenue recognition) demonstrates all of these.</p>
+      <div class="ex-chunks">
+        <div class="ex-chunk">
+          <div class="ec-num">SECTION 1 — IDENTITY</div>
+          <div class="ec-headline">Control attributes.</div>
+          <div class="ec-body">Owner (named human), frequency (per-transaction / quarterly / annual), nature (manual / automated / hybrid), type (preventive / detective), and the key-control flag. Without these a reviewer cannot evaluate scope.</div>
+        </div>
+        <div class="ex-chunk">
+          <div class="ec-num">SECTION 2 — RISK</div>
+          <div class="ec-headline">Risk statement &amp; assertions.</div>
+          <div class="ec-body">What financial-statement risk this control mitigates, mapped to the five assertions (Occurrence, Accuracy, Cutoff, Classification, Existence). A control without a named risk is a control without a reason to exist.</div>
+        </div>
+        <div class="ex-chunk">
+          <div class="ec-num">SECTION 3 — TESTING</div>
+          <div class="ec-headline">Test of design + test of operating effectiveness.</div>
+          <div class="ec-body">Two distinct phases. <em>TOD:</em> does the control, as designed, address the risk? <em>TOE:</em> does it actually operate that way across the period? Conflating these is the single most common pre-IPO workpaper defect.</div>
+        </div>
+        <div class="ex-chunk">
+          <div class="ec-num">SECTION 4 — EVIDENCE</div>
+          <div class="ec-headline">Artifacts &amp; IPE.</div>
+          <div class="ec-body">The supporting documents the testing relied on, plus an IPE evaluation: any system-generated report used as audit evidence must be tested for completeness and accuracy before the auditor can rely on it.</div>
+        </div>
+        <div class="ex-chunk">
+          <div class="ec-num">SECTION 5 — EXCEPTIONS</div>
+          <div class="ec-headline">Findings &amp; dispositions.</div>
+          <div class="ec-body">Anything the procedures surfaced that didn't match expectation, plus how it was dispositioned. Auditors are not looking for zero exceptions; they're looking for clean disposition trails on each one.</div>
+        </div>
+        <div class="ex-chunk">
+          <div class="ec-num">SECTION 6 — CONCLUSION</div>
+          <div class="ec-headline">Design + operating conclusions.</div>
+          <div class="ec-body">Two sentences. Did the design address the risk? Did the control operate effectively across the period? Each is a separate professional judgment from the preparer and the reviewer, signed and time-stamped.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</details>
+
 <div class="tab-nav-wrap">
   <div class="tab-nav">
     <div class="scenario-tab active" data-tab="a">

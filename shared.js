@@ -344,6 +344,55 @@ function mountWalkCue(label, html) {
   document.body.appendChild(c);
 }
 
+// ===== Bird avatars — round, business-casual borbs =====
+// Returns an inline SVG string. Same shape across characters; color varies
+// per `person.color`, optional accessory varies by `person.accessory` in
+// { 'tie', 'glasses', 'bowtie', 'plain' }. Drop-in replacement for the
+// initials-in-a-colored-circle pattern.
+function birdAvatar(person, opts) {
+  opts = opts || {};
+  const size = opts.size || 32;
+  const color = (person && person.color) || '#4b5563';
+  const accessory = (person && person.accessory) || opts.accessory || 'plain';
+  const title = (person && person.name) || '';
+  // Use the color in a couple of derived ways: belly highlight + accessory
+  const beak = '#f59e0b';   // amber across all birds (warm contrast)
+  const eyeBg = '#ffffff';
+  const eyeFg = '#0f172a';
+  // Accessory layer
+  let acc = '';
+  if (accessory === 'tie') {
+    acc = '<path d="M19 27 L21 27 L23 36 L17 36 Z" fill="#0f172a" opacity="0.85"/>'
+        + '<rect x="19" y="26.5" width="2" height="2" fill="#0f172a"/>';
+  } else if (accessory === 'bowtie') {
+    acc = '<path d="M14 28 L20 26 L20 30 Z" fill="#0f172a"/>'
+        + '<path d="M26 28 L20 26 L20 30 Z" fill="#0f172a"/>'
+        + '<circle cx="20" cy="28" r="1" fill="#0f172a"/>';
+  } else if (accessory === 'glasses') {
+    acc = '<circle cx="15.5" cy="18" r="3.2" fill="none" stroke="#0f172a" stroke-width="1.1"/>'
+        + '<circle cx="24.5" cy="18" r="3.2" fill="none" stroke="#0f172a" stroke-width="1.1"/>'
+        + '<line x1="18.7" y1="18" x2="21.3" y2="18" stroke="#0f172a" stroke-width="1.1"/>';
+  }
+  return [
+    `<svg viewBox="0 0 40 40" class="borb-av" role="img" aria-label="${escapeHtml(title)}"`,
+    ` style="width:${size}px;height:${size}px;display:inline-block;vertical-align:middle;flex-shrink:0;border-radius:50%;background:#f1f5f9;">`,
+    `<title>${escapeHtml(title)}</title>`,
+    // body (round borb)
+    `<circle cx="20" cy="22" r="14" fill="${color}"/>`,
+    // belly highlight
+    `<ellipse cx="20" cy="27" rx="8" ry="5" fill="#ffffff" opacity="0.18"/>`,
+    // eyes — drawn first so glasses overlay sits on top
+    accessory === 'glasses' ? '' : `<circle cx="15.5" cy="18" r="2.2" fill="${eyeBg}"/><circle cx="24.5" cy="18" r="2.2" fill="${eyeBg}"/><circle cx="15.9" cy="18.4" r="1.1" fill="${eyeFg}"/><circle cx="24.9" cy="18.4" r="1.1" fill="${eyeFg}"/>`,
+    // small triangular beak
+    `<path d="M 17.6 22.3 L 22.4 22.3 L 20 25.6 Z" fill="${beak}"/>`,
+    // accessory layer
+    acc,
+    `</svg>`,
+  ].join('');
+}
+
+window.birdAvatar = birdAvatar;
+
 window.injectGate = injectGate;
 window.setupProvenance = setupProvenance;
 window.setupWpFilters = setupWpFilters;

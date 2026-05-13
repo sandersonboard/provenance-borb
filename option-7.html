@@ -92,7 +92,7 @@
     document.getElementById('pod-bar').innerHTML = Object.keys(pod).map(k => {
       const p = pod[k];
       return `<div class="q-pod-chip">
-        <div class="av" style="background:${p.color}">${p.initials}</div>
+        ${birdAvatar(p, { size: 32 })}
         <div><div class="name">${p.name}</div><div class="role">${p.role}</div></div>
         <div class="util">${util[k]}% util</div>
       </div>`;
@@ -129,7 +129,7 @@
         <div class="tminus${urgent ? ' urgent' : ''}" style="text-align:right;">T${w.deadline_days < 0 ? '+' : '-'}${Math.abs(w.deadline_days)}d</div>
         <div class="defens ${defens}" style="text-align:right;">${w.defensibility}/100</div>
         <div class="firm">${escapeHtml(w.audit_firm)}</div>
-        <div class="assigned"><div class="miniav" style="background:${p.color}">${p.initials}</div><span>${escapeHtml(p.name.split(' ')[0])}</span></div>
+        <div class="assigned">${birdAvatar(p, { size: 22 })}<span>${escapeHtml(p.name.split(' ')[0])}</span></div>
       </a>`;
     }).join('');
 

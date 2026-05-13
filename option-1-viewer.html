@@ -76,13 +76,28 @@
     </div>
   </div>
 
+  <!-- Control attributes (a tight grid surfacing the SOX-required descriptors) -->
+  <h2>Control attributes</h2>
+  <div class="ctrl-attrs" id="ctrl-attrs"></div>
+
+  <!-- Risk addressed by the control -->
+  <h2>Risk addressed <span class="sub">What this control is designed to mitigate</span></h2>
+  <div class="risk-block" id="risk-block"></div>
+
+  <!-- Financial-statement assertions -->
+  <h2>Financial-statement assertions</h2>
+  <div class="assertion-grid" id="assertion-grid"></div>
+
   <!-- Control narrative -->
   <h2>Control narrative</h2>
   <div class="narrative" id="narr"></div>
 
-  <!-- Testing procedures -->
-  <h2>Testing procedures <span class="sub">7 procedures · tickmark annotations per Deloitte standard</span></h2>
-  <ol class="proc-list" id="procs"></ol>
+  <!-- Testing procedures — split by phase (Test of Design / Test of Operating Effectiveness) -->
+  <h2>Test of design <span class="sub">Does the control as designed mitigate the identified risk?</span></h2>
+  <ol class="proc-list" id="procs-tod" start="1"></ol>
+
+  <h2>Test of operating effectiveness <span class="sub">Does the control actually operate as designed?</span></h2>
+  <ol class="proc-list" id="procs-toe"></ol>
 
   <!-- Tickmark legend -->
   <h2>Tickmark legend <span class="sub">Subset used in this workpaper</span></h2>
@@ -110,9 +125,26 @@
   <h2>Evidence attachments <span class="sub">5 artifacts · source-of-record verified</span></h2>
   <div class="evidence-list" id="ev-list"></div>
 
+  <!-- IPE — Information Produced by Entity (PCAOB / AS 2201 requirement) -->
+  <h2>IPE — Information Produced by Entity <span class="sub">Completeness &amp; accuracy of system-generated reports relied upon as audit evidence</span></h2>
+  <div class="ipe-block" id="ipe-block"></div>
+
   <!-- Exceptions -->
   <h2>Exceptions &amp; dispositions <span class="sub">2 exceptions · both dispositioned</span></h2>
   <div id="exc-list"></div>
+
+  <!-- Conclusions split by test phase -->
+  <h2>Conclusions</h2>
+  <div class="conclusion-block">
+    <div class="conc-cell">
+      <div class="conc-label">Test of design</div>
+      <div class="conc-body" id="conc-design"></div>
+    </div>
+    <div class="conc-cell">
+      <div class="conc-label">Operating effectiveness</div>
+      <div class="conc-body" id="conc-op"></div>
+    </div>
+  </div>
 
   <!-- Reviewer comments -->
   <h2>Reviewer comments &amp; override log</h2>
@@ -122,7 +154,7 @@
   <div class="def-sig">
     <div class="seal">v1</div>
     <div class="sig-text">
-      <strong>Optro Provenance v1</strong> — chain verified · <span data-prov="rc047.defensibility">5 evidence artifacts</span> · 2 reviewer sign-offs · 1 walkthrough completed · defensibility score 100/100.
+      <strong>Optro Provenance v1</strong> — chain verified · <span data-prov="rc047.defensibility">5 evidence artifacts</span> · 2 reviewer sign-offs · 1 walkthrough completed · IPE evaluated · defensibility score 96/100.
     </div>
     <div class="sig-rec">rec_optro_defens_047<br>2026-04-22 11:35 PT</div>
   </div>
@@ -144,18 +176,44 @@
   (function () {
     const C = window.RC_047;
 
-    // ----- Narrative — make the $250k threshold and 47 accounts hover-citable
+    // ----- Control attributes grid
+    const ca = C.control_attributes;
+    document.getElementById('ctrl-attrs').innerHTML = `
+      <div class="ca-cell"><div class="ca-k">Control owner</div><div class="ca-v">${escapeHtml(ca.control_owner.name)} <span style="color: var(--muted);">· ${escapeHtml(ca.control_owner.role)} (${escapeHtml(ca.control_owner.org)})</span></div></div>
+      <div class="ca-cell"><div class="ca-k">Frequency</div><div class="ca-v">${escapeHtml(ca.frequency)}</div></div>
+      <div class="ca-cell"><div class="ca-k">Nature</div><div class="ca-v">${escapeHtml(ca.nature)}</div></div>
+      <div class="ca-cell"><div class="ca-k">Type</div><div class="ca-v">${escapeHtml(ca.type)}</div></div>
+      <div class="ca-cell"><div class="ca-k">Key control?</div><div class="ca-v">${ca.key_control ? 'Yes — key SOX control' : 'No'}</div></div>
+      <div class="ca-cell" style="grid-column: span 2;"><div class="ca-k">Automated vs manual components</div><div class="ca-v">${escapeHtml(ca.automated_components)}</div></div>
+    `;
+
+    // ----- Risk + assertions
+    document.getElementById('risk-block').innerHTML = `<p>${escapeHtml(C.risk_statement)}</p>`;
+    document.getElementById('assertion-grid').innerHTML = C.financial_assertions.map(a => `
+      <div class="assert-cell">
+        <div class="assert-name">${escapeHtml(a.name)}</div>
+        <div class="assert-scope">${escapeHtml(a.scope)}</div>
+      </div>
+    `).join('');
+
+    // ----- Narrative — make the $250k threshold hover-citable
     const narr = document.getElementById('narr');
     const para1 = C.narrative[0].replace('$250,000 single-entry threshold',
                                           '<span data-prov="rc047.threshold">$250,000 single-entry threshold</span>');
     const html = [para1, ...C.narrative.slice(1)].map(p => `<p>${p}</p>`).join('');
     narr.innerHTML = html;
 
-    // ----- Procedures
-    document.getElementById('procs').innerHTML = C.testing_procedures.map(p => {
+    // ----- Procedures (split by phase)
+    function renderProc(p) {
       const tms = p.tickmarks.map(t => `<span class="tm">${escapeHtml(t)}</span>`).join('');
       return `<li data-prov="rc047.proc_${p.n}">${escapeHtml(p.text)} ${tms}</li>`;
-    }).join('');
+    }
+    const tod = C.testing_procedures.filter(p => p.phase === 'TOD');
+    const toe = C.testing_procedures.filter(p => p.phase === 'TOE');
+    document.getElementById('procs-tod').innerHTML = tod.map(renderProc).join('');
+    const toeList = document.getElementById('procs-toe');
+    toeList.setAttribute('start', String(tod.length + 1));
+    toeList.innerHTML = toe.map(renderProc).join('');
 
     // ----- Tickmark legend (subset actually used)
     const used = new Set();
@@ -200,33 +258,55 @@
       </div>`;
     }).join('');
 
-    // ----- Reviewer comments
+    // ----- IPE testing
+    const ipe = C.ipe_testing;
+    document.getElementById('ipe-block').innerHTML = `
+      <div class="ipe-intro">When reports from Helios's systems are used as audit evidence, the auditor must verify the report is complete and accurate. The two reports relied upon here:</div>
+      ${ipe.items.map(it => `
+        <div class="ipe-item">
+          <div class="ipe-src"><span class="ipe-tag">IPE</span><strong>${escapeHtml(it.source)}</strong></div>
+          <div class="ipe-row"><div class="ipe-k">Completeness</div><div class="ipe-v">${escapeHtml(it.completeness)}</div></div>
+          <div class="ipe-row"><div class="ipe-k">Accuracy</div><div class="ipe-v">${escapeHtml(it.accuracy)}</div></div>
+        </div>
+      `).join('')}
+      <div class="ipe-conc"><strong>IPE conclusion.</strong> ${escapeHtml(ipe.conclusion)}</div>
+    `;
+
+    // ----- Conclusions
+    document.getElementById('conc-design').innerHTML = `<p>${escapeHtml(C.design_conclusion)}</p>`;
+    document.getElementById('conc-op').innerHTML = `<p>${escapeHtml(C.operating_conclusion)}</p>`;
+
+    // ----- Reviewer comments — using bird avatars instead of text initials
+    const personLookup = { 'Pranav Iyer': window.REVIEWERS.pranav, 'Naomi Wilkes': window.REVIEWERS.naomi, 'Anton Dam': window.REVIEWERS.anton, 'Tara Okoye': window.REVIEWERS.tara };
     document.getElementById('review-list').innerHTML = C.reviewer_comments.map(r => {
-      const initials = r.from.split(' ').map(p => p[0]).join('').slice(0,2);
-      const dlClass = r.from.includes('Wilkes') ? ' deloitte' : '';
+      const p = personLookup[r.from] || { name: r.from, color: '#4b5563', accessory: 'plain' };
       return `<div class="review-row">
-        <div class="av${dlClass}">${escapeHtml(initials)}</div>
+        ${birdAvatar(p, { size: 36 })}
         <div>
           <div class="rc-head">
             <span class="rc-name">${escapeHtml(r.from)}</span>
+            <span class="rc-org-tag">${escapeHtml(p.org || '')}${p.role ? ' · ' + escapeHtml(p.role) : ''}</span>
             <span class="rc-ts">${escapeHtml(r.at.slice(0,16).replace('T',' '))} PT</span>
             ${r.resolved ? '<span class="rc-resolved">resolved</span>' : ''}
           </div>
           <div class="rc-text">${escapeHtml(r.text)}</div>
         </div>
       </div>`;
-    }).join('') + C.override_log.map(o =>
-      `<div class="review-row">
-        <div class="av" style="background: var(--accent);">OV</div>
+    }).join('') + C.override_log.map(o => {
+      const p = personLookup[o.by] || { name: o.by, color: '#4b5563', accessory: 'plain' };
+      return `<div class="review-row">
+        ${birdAvatar(p, { size: 36 })}
         <div>
           <div class="rc-head">
-            <span class="rc-name">Override · ${escapeHtml(o.id)}</span>
+            <span class="rc-name">${escapeHtml(o.by)}</span>
+            <span class="rc-org-tag">override entry · ${escapeHtml(o.id)}</span>
             <span class="rc-ts">${escapeHtml(o.at.slice(0,16).replace('T',' '))} PT</span>
-            <span class="rc-resolved">reviewed ${escapeHtml(o.reviewed_at.slice(0,10))}</span>
+            <span class="rc-resolved">reviewed by ${escapeHtml(o.reviewed_by)} · ${escapeHtml(o.reviewed_at.slice(0,10))}</span>
           </div>
-          <div class="rc-text">By ${escapeHtml(o.by)} · reviewed by ${escapeHtml(o.reviewed_by)}<br><em>"${escapeHtml(o.reason)}"</em></div>
+          <div class="rc-text"><em>"${escapeHtml(o.reason)}"</em></div>
         </div>
-      </div>`).join('');
+      </div>`;
+    }).join('');
 
     setupProvenance();
   })();

@@ -223,7 +223,7 @@
     document.getElementById('trail-list').innerHTML = trail.map(t => {
       const p = pod[t.actor];
       return `<div class="trail-row">
-        <div class="miniav" style="background:${p.color}">${p.initials}</div>
+        ${birdAvatar(p, { size: 26 })}
         <div class="body">
           <div><span class="who">${escapeHtml(p.name)}</span> <span class="when">· ${escapeHtml(t.at.slice(0,16).replace('T',' '))} PT</span></div>
           <div class="action">${escapeHtml(t.action)}</div>
@@ -357,7 +357,7 @@
       const list = document.getElementById('trail-list');
       const row = document.createElement('div');
       row.className = 'trail-row';
-      row.innerHTML = `<div class="miniav" style="background:${p.color}">${p.initials}</div>
+      row.innerHTML = `${birdAvatar(p, { size: 26 })}
         <div class="body">
           <div><span class="who">${escapeHtml(p.name)}</span> <span class="when">· ${escapeHtml(ts)} PT</span></div>
           <div class="action">${escapeHtml(action)}</div>
