@@ -1224,7 +1224,7 @@ code.inline {
 .wp-stats .stat-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 6px; }
 
 /* Chain graph view */
-.chain-shell { max-width: 1200px; margin: 24px auto 64px; padding: 0 24px; }
+.chain-shell { max-width: 900px; margin: 24px auto 64px; padding: 0 24px; }
 .chain-grid { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
 .chain-svg-card {
   background: white; border: 1px solid var(--border); border-radius: 8px;
@@ -1267,7 +1267,7 @@ code.inline {
 .chain-compare strong { color: var(--accent); }
 
 /* Peer benchmark view */
-.peer-shell { max-width: 1100px; margin: 24px auto 64px; padding: 0 24px; }
+.peer-shell { max-width: 900px; margin: 24px auto 64px; padding: 0 24px; }
 .peer-intro {
   background: white; border: 1px solid var(--border); border-radius: 8px;
   padding: 18px 22px; margin-bottom: 16px;
