@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Velocity · Evidence upload — RC-047</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav v-nav">
+  <div class="brand"><span class="pip"></span><strong>Velocity · Provenance</strong> <span class="beta-badge">Beta</span></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-10.html">Generate</a>
+    <span class="sep">/</span>
+    <span>RC-047 evidence</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab" href="option-10.html">Generate</a>
+    <a class="wp-tab active" href="option-10-evidence.html">Evidence</a>
+    <a class="wp-tab" href="option-10-check.html">Defensibility</a>
+    <a class="wp-tab" href="option-10-rehearsal.html">Rehearsal</a>
+    <a class="wp-tab" href="option-10-package.html">Package</a>
+  </div>
+  <span class="as-of">As of 2026-05-13 09:18 PT</span>
+</nav>
+
+<div class="ev-shell">
+
+  <div style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+    <div>
+      <h1 style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 4px;">Evidence upload &amp; tagging</h1>
+      <p style="font-size: 13px; color: var(--muted); margin: 0;">Drag evidence into the slots — Velocity uses the agent to map each file to the right procedure based on content and filename.</p>
+    </div>
+    <div class="speed-callout">
+      <span class="v-time">90 sec</span>
+      <span class="v-vs">vs</span>
+      <span class="v-big4">Half-day admin</span>
+      <span class="v-mult">~150×</span>
+    </div>
+  </div>
+
+  <div class="ev-grid">
+
+    <div class="ev-slots">
+      <h3>Workpaper attachment slots · RC-047</h3>
+      <div id="slots-list"></div>
+    </div>
+
+    <div>
+      <div class="ev-drop">
+        <h3>Drop evidence files here</h3>
+        <p>4 mock files are pre-loaded — click <strong>Drop &amp; map</strong> to watch Velocity's agent suggest which slot each one belongs to.</p>
+        <button class="drop-btn" id="drop-btn">⚡ Drop 4 files &amp; auto-map</button>
+
+        <div class="ev-files-list" id="files-list" style="display: none;"></div>
+      </div>
+
+      <div class="ev-agent-banner" id="agent-banner" style="display: none;">
+        <span class="lbl">Agent</span>
+        <span id="agent-msg">Velocity agent scanning filenames + content for slot mapping…</span>
+      </div>
+
+      <div style="margin-top: 14px; padding: 14px 16px; background: white; border: 1px solid #ececec; border-radius: 8px; font-size: 12.5px; color: var(--ink-light); line-height: 1.6; display: none;" id="ev-next">
+        <strong style="color: var(--ink);">4 of 5 slots filled.</strong> Slot 4 (per-sample approval evidence) is still empty — the defensibility check will flag this and offer to auto-generate the NetSuite saved-search.
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+          <a href="option-10-check.html" style="padding: 7px 14px; background: var(--accent); color: white; text-decoration: none; border-radius: 5px; font-weight: 600; font-size: 12px;">Run defensibility check →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    const slots = [
+      { n: 1, label: "Population query export", sub: "Tickmark: PBC · expected: CSV or query result from source system" },
+      { n: 2, label: "Sample selection memo", sub: "Tickmark: § · expected: PDF documenting stratified-sampling methodology" },
+      { n: 3, label: "NetSuite workflow configuration", sub: "Tickmark: ✓ · expected: PNG/screenshot of the workflow rule" },
+      { n: 4, label: "Approval evidence per sample", sub: "Tickmark: ✓ · expected: CSV with per-sample approval timestamps" },
+      { n: 5, label: "Weekly exception report (Q2 2026)", sub: "Tickmark: † · expected: XLSX with weekly tabs" },
+    ];
+
+    function renderSlots(filled) {
+      document.getElementById('slots-list').innerHTML = slots.map(s => {
+        const f = (filled || {})[s.n];
+        const cls = f ? 'ev-slot filled' : 'ev-slot';
+        const right = f
+          ? `<span class="slot-file">${escapeHtml(f.filename)}</span>`
+          : `<span class="slot-empty">empty</span>`;
+        return `<div class="${cls}" id="slot-${s.n}">
+          <div class="slot-n">${s.n}</div>
+          <div class="slot-label"><div class="lbl">${escapeHtml(s.label)}</div><div class="sub">${escapeHtml(s.sub)}</div></div>
+          ${right}
+        </div>`;
+      }).join('');
+    }
+    renderSlots({});
+
+    document.getElementById('drop-btn').addEventListener('click', () => {
+      const btn = document.getElementById('drop-btn');
+      btn.disabled = true; btn.textContent = '… mapping';
+      const files = window.VELOCITY_EVIDENCE_FILES;
+      const list = document.getElementById('files-list');
+      list.style.display = 'block';
+      list.innerHTML = files.map(f => {
+        const t = f.type.toLowerCase();
+        return `<div class="ev-file-row" id="file-row-${f.filename}">
+          <div class="thumb ${t}">${escapeHtml(t.toUpperCase())}</div>
+          <div>
+            <div class="file-name">${escapeHtml(f.filename)}</div>
+            <div class="file-meta">${escapeHtml(f.size)} · ${escapeHtml(f.hash)}</div>
+          </div>
+          <span class="file-status pending">pending</span>
+        </div>`;
+      }).join('');
+
+      const banner = document.getElementById('agent-banner');
+      banner.style.display = 'flex';
+      let i = 0;
+      const filled = {};
+
+      function next() {
+        if (i >= files.length) {
+          document.getElementById('agent-msg').innerHTML = `<strong>Mapping complete.</strong> 4 files attached. Slot 4 (per-sample approval evidence) needs an additional export.`;
+          banner.style.background = '#ecfdf5'; banner.style.borderColor = '#a7f3d0'; banner.style.color = '#065f46';
+          banner.querySelector('.lbl').style.background = '#047857';
+          document.getElementById('ev-next').style.display = 'block';
+          btn.textContent = '✓ Mapped';
+          return;
+        }
+        const f = files[i];
+        const row = document.getElementById('file-row-' + f.filename);
+        const slot = document.getElementById('slot-' + f.suggested_slot);
+        // pulse the candidate slot
+        slot.classList.add('suggesting');
+        row.querySelector('.file-status').className = 'file-status suggested';
+        row.querySelector('.file-status').textContent = `→ slot ${f.suggested_slot}`;
+        document.getElementById('agent-msg').innerHTML = `Mapping <code style="font-family: var(--mono); font-size: 11.5px;">${escapeHtml(f.filename)}</code> → Slot ${f.suggested_slot} (confidence ${Math.round(f.suggested_confidence * 100)}%) · ${escapeHtml(f.rationale)}`;
+        setTimeout(() => {
+          slot.classList.remove('suggesting');
+          filled[f.suggested_slot] = { filename: f.filename };
+          renderSlots(filled);
+          row.querySelector('.file-status').className = 'file-status mapped';
+          row.querySelector('.file-status').textContent = '✓ mapped';
+          i += 1;
+          setTimeout(next, 350);
+        }, 900);
+      }
+      next();
+    });
+  })();
+</script>
+</body>
+</html>

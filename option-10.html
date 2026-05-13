@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Velocity · Workpaper generator</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav v-nav">
+  <div class="brand"><span class="pip"></span><strong>Velocity · Provenance</strong> <span class="beta-badge">Beta</span></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <span>Generate</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab active" href="option-10.html">Generate</a>
+    <a class="wp-tab" href="option-10-evidence.html">Evidence</a>
+    <a class="wp-tab" href="option-10-check.html">Defensibility</a>
+    <a class="wp-tab" href="option-10-rehearsal.html">Rehearsal</a>
+    <a class="wp-tab" href="option-10-package.html">Package</a>
+  </div>
+  <span class="as-of">As of 2026-05-13 09:11 PT</span>
+</nav>
+
+<div class="gen-shell">
+
+  <div style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+    <div>
+      <h1 style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 4px;">Workpaper generator</h1>
+      <p style="font-size: 13px; color: var(--muted); margin: 0;">Pick a control from your Velocity-generated library and a Big-4 firm. Velocity streams a complete workpaper in seconds.</p>
+    </div>
+    <div class="speed-callout">
+      <span class="v-time">47 sec</span>
+      <span class="v-vs">vs</span>
+      <span class="v-big4">3–5 days Big-4 advisory</span>
+      <span class="v-mult">~500×</span>
+    </div>
+  </div>
+
+  <div class="gen-controls">
+    <div>
+      <div class="gc-label">Control id</div>
+      <input class="gc-input" id="gc-id" value="RC-047" />
+    </div>
+    <div>
+      <div class="gc-label">Big-4 firm template</div>
+      <select class="gc-select" id="gc-firm">
+        <option>Deloitte</option>
+        <option>EY</option>
+      </select>
+    </div>
+    <button class="gc-btn" id="gen-btn">⚡ Generate workpaper</button>
+  </div>
+
+  <div class="gen-status" id="gen-status" style="display: none;">
+    <div class="gs-spinner"></div>
+    <div class="gs-progress">
+      <div><strong style="color: var(--ink);" id="gs-text">Drafting workpaper…</strong> claude-sonnet-4-5 · Deloitte tickmark conventions</div>
+      <div class="gs-bar"><div class="gs-fill" id="gs-fill" style="width: 0%;"></div></div>
+    </div>
+    <div style="font-family: var(--mono); font-size: 11px; color: var(--muted);" id="gs-tokens">0 tokens</div>
+  </div>
+
+  <div class="gen-paper" id="gen-paper">
+    <div style="color: var(--muted); font-style: italic; font-family: var(--sans); text-align: center; padding: 40px 0;">Press <strong style="color: var(--ink);">Generate workpaper</strong> to stream a Deloitte-style workpaper for control RC-047.</div>
+  </div>
+
+  <div style="margin-top: 16px; padding: 14px 16px; background: white; border: 1px solid #ececec; border-radius: 8px; font-size: 12.5px; color: var(--ink-light); line-height: 1.6; display: none;" id="gen-next">
+    <strong style="color: var(--ink);">Next:</strong> attach evidence to the 5 attachment slots, then run the defensibility self-check.
+    <div style="display: flex; gap: 10px; margin-top: 10px;">
+      <a href="option-10-evidence.html" style="padding: 7px 14px; background: var(--accent); color: white; text-decoration: none; border-radius: 5px; font-weight: 600; font-size: 12px;">Attach evidence →</a>
+      <a href="option-10-check.html" style="padding: 7px 14px; background: white; color: var(--ink); border: 1px solid #ececec; text-decoration: none; border-radius: 5px; font-weight: 600; font-size: 12px;">Skip to defensibility check</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    const G = window.VELOCITY_GENERATOR_RC_047;
+    const btn = document.getElementById('gen-btn');
+    const paper = document.getElementById('gen-paper');
+    const status = document.getElementById('gen-status');
+    const gsText = document.getElementById('gs-text');
+    const gsFill = document.getElementById('gs-fill');
+    const gsTokens = document.getElementById('gs-tokens');
+    const next = document.getElementById('gen-next');
+
+    btn.addEventListener('click', () => {
+      btn.disabled = true; btn.textContent = '… streaming';
+      status.style.display = 'flex';
+      paper.innerHTML = '';
+      // Pre-create section blocks
+      G.sections.forEach(sec => {
+        paper.insertAdjacentHTML('beforeend', `
+          <div class="section-block" id="block-${sec.id}">
+            <h3>${escapeHtml(sec.title)}</h3>
+            <div class="section-content" id="content-${sec.id}"></div>
+          </div>
+        `);
+      });
+
+      const totalTokens = G.sections.reduce((a, s) => a + s.tokens.length, 0);
+      let tokensSeen = 0;
+      let secIdx = 0;
+      let tIdx = 0;
+      let buf = '';
+
+      function tick() {
+        if (secIdx >= G.sections.length) {
+          status.classList.add('done');
+          gsText.textContent = '✓ Workpaper draft complete · ' + totalTokens + ' tokens · 47s elapsed';
+          gsFill.style.width = '100%';
+          btn.textContent = '✓ Generated';
+          // strip streaming caret
+          document.querySelectorAll('.section-block.streaming').forEach(b => b.classList.remove('streaming'));
+          next.style.display = 'block';
+          return;
+        }
+        const sec = G.sections[secIdx];
+        const block = document.getElementById('block-' + sec.id);
+        const content = document.getElementById('content-' + sec.id);
+        // ensure streaming class on current block only
+        document.querySelectorAll('.section-block.streaming').forEach(b => b.classList.remove('streaming'));
+        block.classList.add('streaming');
+
+        if (tIdx >= sec.tokens.length) {
+          // finalize this section's HTML with formatting
+          const finalText = sec.tokens.join('');
+          content.innerHTML = formatStreamingText(finalText);
+          secIdx += 1; tIdx = 0; buf = '';
+          setTimeout(tick, 80);
+          return;
+        }
+        buf += sec.tokens[tIdx];
+        content.textContent = buf;
+        tIdx += 1; tokensSeen += 1;
+        const pct = Math.min(100, Math.round(tokensSeen / totalTokens * 100));
+        gsFill.style.width = pct + '%';
+        gsTokens.textContent = tokensSeen + ' tokens';
+        gsText.textContent = `Drafting ${sec.title.toLowerCase()}…`;
+        setTimeout(tick, 12 + Math.random() * 28);
+      }
+      tick();
+    });
+
+    function formatStreamingText(s) {
+      let h = escapeHtml(s);
+      // highlight tickmark brackets
+      h = h.replace(/\[([^\]]+)\]/g, '<span style="font-family: var(--mono); color: var(--accent); font-weight: 600;">[$1]</span>');
+      // highlight REQUIRES HUMAN REVIEW
+      h = h.replace(/REQUIRES HUMAN REVIEW/g, '<span style="background: #fef3c7; color: #b45309; padding: 1px 6px; border-radius: 3px; font-weight: 700; font-family: var(--sans); font-style: normal;">REQUIRES HUMAN REVIEW</span>');
+      // preserve newlines
+      h = h.replace(/\n/g, '<br>');
+      return h;
+    }
+  })();
+</script>
+</body>
+</html>

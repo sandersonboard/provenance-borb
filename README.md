@@ -1,6 +1,6 @@
 # provenance-borb
 
-Audit-grade output layer for Optro — hedging **three** scenarios in the pre-IPO scenario plan from one codebase. A Big-4-style workpaper with live, hover-citable provenance on every value (Group A · System-of-Record Premium); an MCP server exposing the same data to a foundation-model agent so it can draft the workpaper for the Controller (Group B · Wrapper Era); a Practice-arm production console where an FDE pod reviews agent drafts and ships customer-signed deliverables to external auditors without rework (Group C · Agent Commodity Hell).
+Audit-grade output layer for Optro — hedging **all four** scenarios in the pre-IPO scenario plan from one codebase. A Big-4-style workpaper with live, hover-citable provenance on every value (Group A · System-of-Record Premium); an MCP server exposing the same data to a foundation-model agent so it can draft the workpaper for the Controller (Group B · Wrapper Era); a Practice-arm production console where an FDE pod reviews agent drafts and ships customer-signed deliverables to external auditors without rework (Group C · Agent Commodity Hell); a self-serve customer-facing wizard with workpaper generation, evidence mapping, defensibility scoring, and walkthrough rehearsal (Group D · AI-Native Newcomers).
 
 **Live demo:** [sandersonboard.github.io/provenance-borb](https://sandersonboard.github.io/provenance-borb/) (BORB-gated)
 
@@ -8,12 +8,12 @@ Audit-grade output layer for Optro — hedging **three** scenarios in the pre-IP
 
 ## What is in this repo
 
-Nine demo formats — three per hedge — plus the runnable MCP server source:
+Twelve demo formats — three per hedge — plus the runnable MCP server source:
 
-1. **Static frontend prototype** — nine HTML demos, deployed as GitHub Pages. Plain HTML/CSS/JS, no build step. Pattern matches the rest of the Optro demo family.
+1. **Static frontend prototype** — twelve HTML demos, deployed as GitHub Pages. Plain HTML/CSS/JS, no build step. Pattern matches the rest of the Optro demo family.
 2. **MCP server (`server.ts`, `provenance.ts`)** — real, runnable code behind Options D–F. Run `npm install && npm run smoke` to exercise the five tools, or wire into Claude Desktop locally.
 
-## The nine demos
+## The twelve demos
 
 **Group A — System-of-Record Premium hedge — the Controller sees the workpaper**
 
@@ -32,6 +32,12 @@ Nine demo formats — three per hedge — plus the runnable MCP server source:
 - **Option G** (`option-7.html` → `option-7-editor.html` → `-scorer` → `-templates` → `-handoff`) — the production console. Engagement queue, split-pane workpaper editor with streaming agent drafts, defensibility scorer, Big-4 template library, customer handoff package with manifest + CSV export.
 - **Option H** (`option-8.html`) — Practice principal portfolio. Higher-altitude exec view: three engagements, pod utilization, rework rate (4% vs 18% baseline).
 - **Option I** (`option-9.html`) — Jamie's Tuesday. Day-in-the-life long-scroll: four workpapers shipped, one customer handoff, zero rework.
+
+**Group D — AI-Native Newcomers hedge — the customer self-serves**
+
+- **Option J** (`option-10.html` → `option-10-evidence.html` → `-check` → `-rehearsal` → `-package`) — the self-serve acceptance flow. Streaming Deloitte workpaper generator, evidence drag-drop with agent-suggested slot mapping, defensibility self-check (78→92 fix loop), walkthrough rehearsal (Big-4 senior persona, 5 question areas, grading rubric), package export with PDF/manifest/CSV.
+- **Option K** (`option-11.html`) — Speed vs Big-4 advisory one-pager. End-to-end multipliers, walkthrough-rehearsal moat callout, shipped-X-days-after-request changelog.
+- **Option L** (`option-12.html`) — Riya beats the walkthrough in 25 minutes. Day-in-the-life long-scroll closing with the real walkthrough six weeks later.
 
 The acceptance script is in `DEMO.md`.
 

@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Velocity · Provenance vs Big-4 advisory — one-pager</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+<style>
+  body { background: #fafaf5; }
+  .b-shell { max-width: 1100px; margin: 0 auto; padding: 24px; }
+  .b-hero {
+    background: white; border: 1px solid #ececec; border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 16px;
+  }
+  .b-hero .eyebrow { font-family: var(--mono); font-size: 11px; font-weight: 700; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; }
+  .b-hero h1 { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; margin: 8px 0 8px; }
+  .b-hero p { font-size: 15px; color: var(--ink-light); line-height: 1.6; margin: 0; max-width: 760px; }
+
+  .nav-back { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+  .nav-back a { color: var(--accent); text-decoration: none; }
+
+  .b-kpis {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+    margin-bottom: 14px;
+  }
+  @media (max-width: 800px) { .b-kpis { grid-template-columns: repeat(2, 1fr); } }
+  .b-kpi {
+    background: white; border: 1px solid #ececec; border-radius: 8px;
+    padding: 16px 18px;
+    text-align: left;
+  }
+  .b-kpi.accent { background: #fffafa; border-color: #fed7d7; }
+  .b-kpi .v-num { font-family: var(--mono); font-size: 28px; font-weight: 700; color: var(--accent); letter-spacing: -0.02em; }
+  .b-kpi .v-vs { font-family: var(--mono); font-size: 11px; color: var(--muted); margin-top: 4px; }
+  .b-kpi .v-big4 { font-family: var(--mono); font-size: 12px; color: var(--ink-light); text-decoration: line-through; }
+  .b-kpi .v-lbl { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 6px; }
+
+  .b-section {
+    background: white; border: 1px solid #ececec; border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+  }
+  .b-section h2 { font-size: 18px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 12px; }
+  .b-section .deck { font-size: 13.5px; color: var(--ink-light); line-height: 1.6; margin: 0 0 12px; max-width: 720px; }
+
+  .closer {
+    background: var(--ink); color: white;
+    border-radius: 10px; padding: 28px 32px;
+    margin-top: 18px;
+  }
+  .closer .lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #fca5a5; margin-bottom: 8px; }
+  .closer h2 { font-size: 22px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 12px; line-height: 1.3; }
+  .closer p { font-size: 14px; color: #cbd5e1; line-height: 1.65; margin: 0 0 8px; max-width: 760px; }
+  .closer p strong { color: white; }
+
+  .moat-callout {
+    background: linear-gradient(135deg, #fffafa 0%, #fef2f2 100%);
+    border: 1px solid #fed7d7;
+    border-radius: 10px;
+    padding: 22px 26px;
+    margin-bottom: 14px;
+  }
+  .moat-callout .lbl {
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700;
+    color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .moat-callout h2 {
+    font-size: 22px; font-weight: 700; letter-spacing: -0.015em; line-height: 1.25;
+    margin: 0 0 12px; color: var(--ink); max-width: 720px;
+  }
+  .moat-callout p { font-size: 14px; line-height: 1.6; color: var(--ink); margin: 0 0 10px; max-width: 720px; }
+  .moat-callout p strong { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<div class="b-shell">
+
+  <div class="nav-back"><a href="index.html">← Back to demo home</a></div>
+
+  <div class="b-hero">
+    <div class="eyebrow">Option K · Speed vs Big-4 advisory · one-pager</div>
+    <h1>How Velocity beats Vanta for the pre-IPO segment.</h1>
+    <p>Audit-grade output at AI-native speed. <strong>25 minutes from blank workpaper to Deloitte-ready package</strong>, versus three weeks of Big-4 advisory hours at ~$47K per quarter. The walkthrough-rehearsal mode is the moat — no other AI-native vendor has it.</p>
+  </div>
+
+  <div class="b-kpis">
+    <div class="b-kpi accent">
+      <div class="v-num">25 min</div>
+      <div class="v-vs">vs</div>
+      <div class="v-big4">3 weeks Big-4 advisory</div>
+      <div class="v-lbl">End-to-end customer time</div>
+    </div>
+    <div class="b-kpi accent">
+      <div class="v-num">$1,800/mo</div>
+      <div class="v-vs">vs</div>
+      <div class="v-big4">$47K / quarter Big-4 fee</div>
+      <div class="v-lbl">Total customer cost</div>
+    </div>
+    <div class="b-kpi">
+      <div class="v-num">92/100</div>
+      <div class="v-lbl">Defensibility (Deloitte standard) after 1 iteration</div>
+    </div>
+    <div class="b-kpi">
+      <div class="v-num">5</div>
+      <div class="v-lbl">Walkthrough question areas rehearsed before the real walkthrough</div>
+    </div>
+  </div>
+
+  <div class="b-section">
+    <h2>Step-by-step speed comparison</h2>
+    <div class="speed-grid">
+      <div class="sg-row sg-th">
+        <div>Step</div>
+        <div>Velocity</div>
+        <div>Big-4 advisory</div>
+        <div style="text-align: center;">Multiplier</div>
+      </div>
+      <div id="speed-rows"></div>
+    </div>
+  </div>
+
+  <div class="moat-callout">
+    <div class="lbl">The moat</div>
+    <h2>Walkthrough rehearsal mode — what no other AI-native vendor has.</h2>
+    <p>Vanta, Drata, Secureframe — every AI-native compliance vendor in the pre-IPO segment ships workpaper generation. None of them ship a <strong>Big-4 senior reviewer</strong> that interrogates the customer the way Naomi Wilkes will during the real walkthrough. Velocity prompts Claude with the engagement-partner persona, asks five questions in the areas most likely to generate review notes, and grades each answer against the specifics a senior reviewer expects.</p>
+    <p>Big-4 advisory hours typically deliver the equivalent at $20K per engagement, scheduled days in advance. Velocity delivers it on-demand for the cost of the monthly subscription. <strong>That spread is the wedge that wins the pre-IPO segment.</strong></p>
+  </div>
+
+  <div class="b-section">
+    <h2>The recent shipped-X-days-ago changelog</h2>
+    <div class="deck">Visible iteration is part of the value prop. Velocity ships audit-grade features faster than Big-4 advisory can update their workpaper templates.</div>
+    <div id="changelog-rows" style="margin-top: 6px;"></div>
+  </div>
+
+  <div class="closer">
+    <div class="lbl">Bottom line</div>
+    <h2>The customer gets defensibility at AI-native speed.</h2>
+    <p>The walkthrough rehearsal mode is the moat. Vanta and the YC speed-shops can match the workpaper generator inside one quarter. They cannot match the <strong>Big-4 senior persona prompt + 5-question rehearsal loop + grading rubric</strong> without sitting on the same pre-IPO walkthrough data Optro sits on.</p>
+    <p>Beta-grade defensibility is the point: we're shipping audit-grade output faster than Big-4 can update their workpaper templates. <strong>That's how Velocity beats Vanta for the pre-IPO segment.</strong></p>
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    const steps = window.VELOCITY_SPEED_COMPARE.steps;
+    document.getElementById('speed-rows').innerHTML = steps.map(s => `
+      <div class="sg-row">
+        <div class="sg-step">${escapeHtml(s.step)}</div>
+        <div class="sg-velocity">${escapeHtml(s.velocity)}</div>
+        <div class="sg-big4">${escapeHtml(s.big4)}</div>
+        <div class="sg-mult">${escapeHtml(s.multiplier)}</div>
+      </div>
+    `).join('');
+
+    // Changelog
+    document.getElementById('changelog-rows').innerHTML = window.VELOCITY_CHANGELOG.map(c => `
+      <div class="changelog-row">
+        <div class="cl-date">${escapeHtml(c.date)}</div>
+        <div class="cl-days">${c.days_after_request === 0 ? 'GA' : c.days_after_request + 'd'}</div>
+        <div class="cl-change">${escapeHtml(c.change)}</div>
+        <div class="cl-customer">${escapeHtml(c.customer)}</div>
+      </div>
+    `).join('');
+  })();
+</script>
+</body>
+</html>

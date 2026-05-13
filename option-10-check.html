@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Velocity · Defensibility self-check — RC-047</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav v-nav">
+  <div class="brand"><span class="pip"></span><strong>Velocity · Provenance</strong> <span class="beta-badge">Beta</span></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-10.html">Generate</a>
+    <span class="sep">/</span>
+    <span>RC-047 defensibility</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab" href="option-10.html">Generate</a>
+    <a class="wp-tab" href="option-10-evidence.html">Evidence</a>
+    <a class="wp-tab active" href="option-10-check.html">Defensibility</a>
+    <a class="wp-tab" href="option-10-rehearsal.html">Rehearsal</a>
+    <a class="wp-tab" href="option-10-package.html">Package</a>
+  </div>
+  <span class="as-of">As of 2026-05-13 09:42 PT</span>
+</nav>
+
+<div class="check-shell">
+
+  <div style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap;">
+    <div>
+      <h1 style="font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 4px;">Would this pass a Big-4 walkthrough?</h1>
+      <p style="font-size: 13px; color: var(--muted); margin: 0;">One-click defensibility check. Claude reviews the workpaper + evidence against the Deloitte checklist and returns specific fixes.</p>
+    </div>
+    <div class="speed-callout">
+      <span class="v-time">3 sec</span>
+      <span class="v-vs">vs</span>
+      <span class="v-big4">4–6 hr senior pass</span>
+      <span class="v-mult">~3,000×</span>
+    </div>
+  </div>
+
+  <div class="check-score-wrap">
+    <div class="score-gauge">
+      <div><span class="score-num mid" id="score-num">78</span><span class="score-out">/100</span></div>
+      <div class="score-lbl">Defensibility · Deloitte standard</div>
+      <div class="score-bar"><div class="score-marker" id="score-marker" style="left: 78%;"></div></div>
+    </div>
+    <div class="score-projected">
+      <div><span class="badge" id="score-badge">+14 points after fixes → 92</span></div>
+      Velocity surfaces three fixes. Applying all three brings the workpaper above Deloitte's pass threshold (typically 85+). Each fix has a single-click auto-action.
+      <div style="margin-top: 10px; font-family: var(--mono); font-size: 11px; color: var(--muted);">claude-sonnet-4-5 · 2026-05-13 09:42 PT · 3.1s elapsed</div>
+    </div>
+  </div>
+
+  <div class="check-checklist">
+    <h3>10-item checklist — Deloitte standard</h3>
+    <div class="defens-checklist" id="checklist"></div>
+  </div>
+
+  <div class="check-fixes">
+    <h3 style="display: flex; justify-content: space-between; align-items: center;">
+      <span>Specific fixes — apply one-click</span>
+      <span id="fixes-summary" style="font-family: var(--mono); font-size: 11px; color: var(--muted);">3 outstanding</span>
+    </h3>
+    <div id="fixes-list"></div>
+    <div id="all-applied-banner" style="display: none; margin-top: 12px; padding: 14px 16px; background: #ecfdf5; border: 1px solid #a7f3d0; border-radius: 6px; font-size: 13px; color: #065f46; line-height: 1.55;">
+      <strong>✓ All fixes applied.</strong> Defensibility score now 92/100 — above the Deloitte pass threshold. Velocity recommends running walkthrough rehearsal before exporting the package.
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <a href="option-10-rehearsal.html" style="padding: 7px 14px; background: var(--accent); color: white; text-decoration: none; border-radius: 5px; font-weight: 600; font-size: 12px;">Start walkthrough rehearsal →</a>
+        <a href="option-10-package.html" style="padding: 7px 14px; background: white; color: var(--ink); border: 1px solid #ececec; text-decoration: none; border-radius: 5px; font-weight: 600; font-size: 12px;">Skip to package export</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    const D = window.VELOCITY_DEFENSIBILITY_CHECK;
+    const icons = { ok: '✓', partial: '~', miss: '×' };
+    document.getElementById('checklist').innerHTML = D.checklist.map(c =>
+      `<div class="ci ${c.state}" id="ci-${c.id}"><div class="box">${icons[c.state]}</div><div class="lbl">${escapeHtml(c.item)}</div></div>`
+    ).join('');
+
+    const fixesList = document.getElementById('fixes-list');
+    fixesList.innerHTML = D.fixes.map(f =>
+      `<div class="check-fix ${f.priority}" id="fix-${f.id}">
+        <div class="cf-head">
+          <span class="cf-prio">${f.priority}</span>
+          <span class="cf-lift">+${f.score_lift} pts</span>
+        </div>
+        <div class="cf-title">${escapeHtml(f.title)}</div>
+        <div class="cf-desc">${escapeHtml(f.description)}</div>
+        <button class="cf-btn" data-fix="${f.id}">${escapeHtml(f.auto_action)} →</button>
+      </div>`
+    ).join('');
+
+    let score = D.initial_score;
+    let appliedCount = 0;
+    document.querySelectorAll('.cf-btn').forEach(b => b.addEventListener('click', () => {
+      const fid = b.getAttribute('data-fix');
+      const f = D.fixes.find(x => x.id === fid);
+      if (!f) return;
+      const card = document.getElementById('fix-' + fid);
+      card.classList.add('applied');
+      b.textContent = '✓ Applied';
+      b.disabled = true;
+      // animate score
+      const target = score + f.score_lift;
+      animateScore(score, target, () => {
+        score = target;
+      });
+      // flip the checklist items this fix addresses
+      f.addresses.forEach(ckId => {
+        const ci = document.getElementById('ci-' + ckId);
+        if (!ci) return;
+        ci.classList.remove('miss', 'partial');
+        ci.classList.add('ok');
+        ci.querySelector('.box').textContent = '✓';
+      });
+      appliedCount += 1;
+      const remaining = D.fixes.length - appliedCount;
+      document.getElementById('fixes-summary').textContent = remaining === 0 ? '✓ all applied' : remaining + ' outstanding';
+      if (remaining === 0) {
+        document.getElementById('all-applied-banner').style.display = 'block';
+      }
+    }));
+
+    function animateScore(from, to, done) {
+      const startTs = performance.now();
+      const num = document.getElementById('score-num');
+      const marker = document.getElementById('score-marker');
+      const dur = 500;
+      function frame(now) {
+        const t = Math.min(1, (now - startTs) / dur);
+        const v = Math.round(from + (to - from) * t);
+        num.textContent = v;
+        num.classList.remove('mid'); num.classList.remove('good');
+        if (v >= 85) num.classList.add('good');
+        else if (v >= 70) num.classList.add('mid');
+        marker.style.left = v + '%';
+        if (t < 1) requestAnimationFrame(frame);
+        else if (done) done();
+      }
+      requestAnimationFrame(frame);
+    }
+  })();
+</script>
+</body>
+</html>

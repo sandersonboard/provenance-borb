@@ -823,3 +823,354 @@ window.PORTFOLIO_METRICS = {
   hours_saved_vs_baseline: 1840,  // hours saved by agent drafting + scorer
   customer_handoff_pkgs_shipped: 3,
 };
+
+// ===================================================================
+// GROUP D — Velocity self-serve customer (AI-Native Newcomers hedge)
+// ===================================================================
+
+// Riya — Velocity self-serve VP Finance at Helios (different persona
+// from Anton/Pranav, who are Optro Practice customers in Tabs A/C).
+window.VELOCITY_BUYER = {
+  name: "Riya Patel",
+  role: "VP Finance Operations",
+  org: "Helios Robotics",
+  initials: "RP",
+  color: "#0e7490",
+  signed_up: "2026-04-22",
+  pricing_tier: "Velocity self-serve · $1,800/mo",
+  controls_generated_minutes: 11,   // Velocity wizard ran in 11 min
+  s1_t_minus_months: 3,             // T-3 to S-1
+  walkthrough_in_weeks: 6,          // Deloitte walkthrough in 6 weeks
+  walkthrough_date: "2026-06-24",
+};
+
+// 12 sample workpapers in various states of completion
+window.VELOCITY_WORKPAPERS = [
+  { id: "RC-047", name: "Manual JE approval — revenue recognition", state: "ready_to_export", defensibility: 92, evidence_attached: 5, evidence_required: 5, big4: "Deloitte" },
+  { id: "RC-012", name: "Revenue recognition — contract review (ASC 606)", state: "rehearsed", defensibility: 88, evidence_attached: 4, evidence_required: 5, big4: "Deloitte" },
+  { id: "FR-018", name: "Lease accounting (ASC 842) classification", state: "rehearsed", defensibility: 90, evidence_attached: 4, evidence_required: 4, big4: "Deloitte" },
+  { id: "RC-053", name: "Sales returns and allowances accrual", state: "checked", defensibility: 78, evidence_attached: 3, evidence_required: 5, big4: "Deloitte" },
+  { id: "IT-001", name: "Logical access — production database", state: "checked", defensibility: 71, evidence_attached: 2, evidence_required: 4, big4: "Deloitte" },
+  { id: "IT-003", name: "Privileged user access review — quarterly", state: "checked", defensibility: 74, evidence_attached: 3, evidence_required: 4, big4: "Deloitte" },
+  { id: "PC-002", name: "Trial balance review and approval", state: "evidence_pending", defensibility: 0, evidence_attached: 1, evidence_required: 3, big4: "Deloitte" },
+  { id: "PC-007", name: "Bank reconciliation review", state: "evidence_pending", defensibility: 0, evidence_attached: 2, evidence_required: 4, big4: "Deloitte" },
+  { id: "FR-002", name: "Period-end accruals review", state: "generated", defensibility: 0, evidence_attached: 0, evidence_required: 4, big4: "Deloitte" },
+  { id: "FR-007", name: "Goodwill impairment indicator analysis", state: "generated", defensibility: 0, evidence_attached: 0, evidence_required: 3, big4: "Deloitte" },
+  { id: "OP-003", name: "Vendor master file change review", state: "draft", defensibility: 0, evidence_attached: 0, evidence_required: 3, big4: "Deloitte" },
+  { id: "TX-002", name: "Income tax provision review", state: "draft", defensibility: 0, evidence_attached: 0, evidence_required: 4, big4: "Deloitte" },
+];
+
+window.VELOCITY_STATE_LABELS = {
+  draft:            "Draft",
+  generated:        "Agent-generated",
+  evidence_pending: "Evidence pending",
+  checked:          "Defensibility checked",
+  rehearsed:        "Rehearsed",
+  ready_to_export:  "Ready to export",
+};
+window.VELOCITY_STATE_COLORS = {
+  draft:            "#94a3b8",
+  generated:        "#6d28d9",
+  evidence_pending: "#f59e0b",
+  checked:          "#0e7490",
+  rehearsed:        "#047857",
+  ready_to_export:  "#1B5E20",
+};
+
+// ---------- Streaming workpaper generator (Deloitte template, RC-047) ----------
+// Split into tokens for fake streaming; total ~280 tokens, feels like 30-60s.
+window.VELOCITY_GENERATOR_RC_047 = {
+  big4: "Deloitte",
+  control_id: "RC-047",
+  control_name: "Manual journal entry approval — revenue recognition",
+  generated_at: "2026-05-13T09:11:00-07:00",
+  generated_by: "Velocity workpaper generator · claude-sonnet-4-5",
+  generation_seconds: 47,  // Total streaming time we target
+  sections: [
+    { id: "header", title: "Workpaper header", tokens: [
+      "Workpaper ", "reference: ", "VLC-WP-RC-047-Q22026\n",
+      "Control: ", "RC-047 — ", "Manual ", "journal ", "entry ", "approval — ", "revenue ", "recognition\n",
+      "Period: ", "Q2 2026 ", "(Apr 1 — ", "Jun 30, ", "2026)\n",
+      "Framework: ", "COSO 2013 / AS 2201 · ", "Deloitte ", "tickmark ", "conventions\n",
+      "Prepared by: ", "Riya ", "Patel ", "(VP ", "Finance ", "Ops, ", "Helios) · ", "[date]\n",
+      "Reviewed by: ", "[pending]"
+    ]},
+    { id: "narrative", title: "Control narrative", tokens: [
+      "Helios ", "Robotics ", "applies ", "a ", "$250,000 ", "single-entry ", "threshold ",
+      "to ", "its ", "manual ", "journal ", "entry ", "(\"MJE\") ", "approval ", "workflow ",
+      "within ", "NetSuite. ", "Manual ", "entries ", "posted ", "to ", "any ", "of ",
+      "the ", "47 ", "in-scope ", "revenue ", "ledger ", "accounts ", "that ", "meet ",
+      "or ", "exceed ", "the ", "threshold ", "require ", "a ", "second-level ", "approval ",
+      "from ", "the ", "VP Finance ", "Ops ", "prior ", "to ", "posting. ", "Entries ",
+      "below ", "the ", "threshold ", "require ", "single ", "approval ", "by ", "a ",
+      "Senior ", "Accountant. ", "The ", "threshold ", "is ", "reviewed ", "quarterly ",
+      "against ", "the ", "materiality ", "benchmark ", "for ", "the ", "audit ", "period."
+    ]},
+    { id: "procedures", title: "Testing procedures", tokens: [
+      "1. Obtain ", "the ", "population ", "of ", "all ", "manual ", "journal ", "entries ",
+      "posted ", "to ", "revenue ", "accounts ", "during ", "Q2 2026 ", "from ", "NetSuite. ",
+      "Foot ", "the ", "population ", "and ", "reconcile ", "to ", "general ", "ledger ", "activity. ",
+      "[PBC, b, ¶]\n\n",
+      "2. ", "Select ", "a ", "sample ", "of ", "25 ", "entries ", "using ", "stratified ", "sampling: ",
+      "100% ", "of ", "entries ", "≥ ", "$1M; ", "judgmental ", "selection ", "across ", "remainder, ",
+      "period-end-weighted. ", "[§]\n\n",
+      "3. ", "Agree ", "each ", "sampled ", "approval ", "to ", "the ", "NetSuite ", "workflow ",
+      "record ", "and ", "verify ", "approver ", "independence ", "and ", "authorization ", "level. ",
+      "[✓, c]\n\n",
+      "4. ", "Verify ", "dual ", "approval ", "for ", "all ", "entries ", "≥ ", "$250,000 ",
+      "prior ", "to ", "posting. ", "[✓, c]\n\n",
+      "5. ", "Inspect ", "weekly ", "exception ", "report; ", "verify ", "each ", "flagged ",
+      "entry ", "was ", "dispositioned ", "within ", "5 ", "business ", "days. ", "[✓, †]\n\n",
+      "6. ", "[REQUIRES ", "HUMAN ", "REVIEW: ", "threshold ", "review ", "procedure — ",
+      "draft ", "with ", "reference ", "to ", "Helios ", "materiality ", "memo.]"
+    ]},
+    { id: "sampling", title: "Sample selection rationale", tokens: [
+      "Stratified ", "judgmental ", "selection ", "of ", "25 ", "entries ", "from ", "a ",
+      "population ", "of ", "~220 ", "Q2 ", "manual ", "entries. ", "Tier ", "1 ", "(≥ $1M): ",
+      "100% ", "coverage. ", "Tier ", "2 ", "($250k–$1M): ", "judgmental, ", "period-end-weighted. ",
+      "Tier ", "3 ", "(< ", "$250k): ", "judgmental, ", "biased ", "toward ", "unusual ", "postings. ",
+      "Methodology ", "to ", "be ", "agreed ", "with ", "Deloitte ", "engagement ", "team ", "in ",
+      "walkthrough; ", "Velocity ", "will ", "flag ", "as ", "pending ", "until ", "memo ", "attached."
+    ]},
+    { id: "tickmarks", title: "Tickmark legend (Deloitte standard)", tokens: [
+      "✓ ", "Agreed ", "to ", "source ", "document ", "without ", "exception\n",
+      "§ ", "Recalculated; ", "mathematically ", "accurate\n",
+      "¶ ", "Footed ", "and ", "cross-footed\n",
+      "b ", "Traced ", "to ", "general ", "ledger\n",
+      "c ", "Compared ", "to ", "threshold; ", "within ", "policy\n",
+      "‡ ", "Significant ", "judgment; ", "reviewer ", "note ", "required\n",
+      "† ", "Reviewer ", "override; ", "rationale ", "documented\n",
+      "PBC ", "Provided ", "by ", "client; ", "agreed ", "to ", "underlying"
+    ]},
+    { id: "evidence_slots", title: "Evidence attachment slots", tokens: [
+      "[SLOT 1] ", "Population ", "query ", "export ", "from ", "NetSuite ", "(NS-Saved-Search-MJE-ALL-047) · ", "PBC\n",
+      "[SLOT 2] ", "Sample ", "selection ", "memo ", "(Velocity-generated, ", "FDE-reviewed) · ", "§\n",
+      "[SLOT 3] ", "NetSuite ", "workflow ", "configuration ", "screenshot · ", "✓\n",
+      "[SLOT 4] ", "Approval ", "evidence ", "export ", "(per-sample) · ", "✓\n",
+      "[SLOT 5] ", "Weekly ", "exception ", "report ", "(Q2 2026) · ", "†"
+    ]},
+    { id: "exceptions", title: "Exceptions template", tokens: [
+      "[Template ", "for ", "customer ", "to ", "populate ", "as ", "testing ", "proceeds. ",
+      "Each ", "exception: ", "entry ", "reference, ", "description, ", "severity, ",
+      "disposition, ", "dispositioned ", "by, ", "date.]"
+    ]},
+    { id: "conclusion", title: "Conclusion", tokens: [
+      "Based ", "on ", "procedures ", "performed, ", "the ", "control ", "operated ",
+      "effectively ", "throughout ", "the ", "testing ", "period. ", "[Update ", "after ",
+      "evidence ", "attached ", "and ", "exceptions ", "logged. ", "Add ", "reviewer ", "sign-off.]"
+    ]},
+  ],
+};
+
+// ---------- Evidence files for the upload demo (4 files, agent maps to slots) ----------
+window.VELOCITY_EVIDENCE_FILES = [
+  {
+    filename: "RC-047_Q2_population_export.csv",
+    size: "94 KB", type: "CSV",
+    mock_thumb: "csv",
+    suggested_slot: 1,
+    suggested_label: "Population query export — NS-Saved-Search-MJE-ALL-047",
+    suggested_confidence: 0.96,
+    rationale: "Filename matches RC-047 + Q2 + population pattern; CSV format consistent with NetSuite saved-search export schema.",
+    hash: "sha256:7f0c19...",
+  },
+  {
+    filename: "RC-047_sample_memo_v3.pdf",
+    size: "186 KB", type: "PDF",
+    mock_thumb: "pdf",
+    suggested_slot: 2,
+    suggested_label: "Sample selection memo · stratified methodology",
+    suggested_confidence: 0.92,
+    rationale: "PDF, RC-047 + sample_memo naming; content scan detects stratified-sampling language and tier breakdown.",
+    hash: "sha256:c3b801...",
+  },
+  {
+    filename: "NS_workflow_screenshot_WF-MJE-RR-047.png",
+    size: "318 KB", type: "PNG",
+    mock_thumb: "png",
+    suggested_slot: 3,
+    suggested_label: "NetSuite workflow rule WF-MJE-RR-047 configuration",
+    suggested_confidence: 0.98,
+    rationale: "Filename references the exact NetSuite workflow rule cited in the workpaper narrative; image dimensions consistent with admin-panel screenshot.",
+    hash: "sha256:9a2f3c...",
+  },
+  {
+    filename: "Q2_exception_report_weekly_RC-047.xlsx",
+    size: "62 KB", type: "XLSX",
+    mock_thumb: "xlsx",
+    suggested_slot: 5,
+    suggested_label: "Weekly exception report (Q2 2026)",
+    suggested_confidence: 0.94,
+    rationale: "XLSX with Q2 + exception_report + RC-047 naming; structure detected (13 weekly tabs) matches expected schema.",
+    hash: "sha256:a14c22...",
+  },
+  // Slot 4 (approval evidence per sample) is intentionally NOT attached — surfaces as a defensibility-check gap.
+];
+
+// ---------- Defensibility self-check (78 → 92 fix loop) ----------
+window.VELOCITY_DEFENSIBILITY_CHECK = {
+  control_id: "RC-047",
+  big4: "Deloitte",
+  generated_at: "2026-05-13T09:42:00-07:00",
+  generated_by: "Velocity defensibility scorer · claude-sonnet-4-5",
+  initial_score: 78,
+  after_fixes_estimate: 92,
+  checklist: [
+    { id: "ck_01", state: "ok",  item: "Workpaper header includes period, framework, preparer" },
+    { id: "ck_02", state: "ok",  item: "Tickmark legend matches Deloitte standard" },
+    { id: "ck_03", state: "ok",  item: "Every procedure annotated with tickmark references" },
+    { id: "ck_04", state: "miss", item: "Slot 4 (approval evidence per sample) missing — 25 sampled entries each need an approval export" },
+    { id: "ck_05", state: "ok",  item: "Sample population stratification rationale present" },
+    { id: "ck_06", state: "miss", item: "Sample methodology not yet referenced to Deloitte walkthrough memo (pending — to be confirmed in walkthrough)" },
+    { id: "ck_07", state: "miss", item: "Reviewer sign-off field empty; needs Controller signature before package export" },
+    { id: "ck_08", state: "ok",  item: "Exceptions template prepared; awaiting customer-logged exceptions" },
+    { id: "ck_09", state: "ok",  item: "Conclusion section drafted with placeholder for sign-off note" },
+    { id: "ck_10", state: "partial", item: "Procedure 6 (threshold review) flagged REQUIRES HUMAN REVIEW — needs Velocity user to draft with materiality memo reference" },
+  ],
+  fixes: [
+    { id: "fix_01", priority: "high",
+      addresses: ["ck_04"],
+      title: "Generate approval-evidence export for 25 sampled entries",
+      description: "Slot 4 is empty. A real Big-4 reviewer expects per-sample evidence that approval was captured prior to posting. Run the NetSuite saved-search NS-Saved-Search-MJE-APPR-047 (Velocity will pre-build this for you) and attach the CSV to Slot 4.",
+      auto_action: "Generate the saved-search and attach the export",
+      score_lift: 8,
+    },
+    { id: "fix_02", priority: "high",
+      addresses: ["ck_07"],
+      title: "Reviewer sign-off — Controller signature",
+      description: "Send the workpaper to the Controller (Pranav Iyer) for sign-off. Velocity will route it via the workflow and capture the timestamp on signature.",
+      auto_action: "Route to Pranav Iyer for sign-off",
+      score_lift: 4,
+    },
+    { id: "fix_03", priority: "medium",
+      addresses: ["ck_10"],
+      title: "Draft procedure 6 (threshold review) using materiality memo",
+      description: "Procedure 6 is flagged REQUIRES HUMAN REVIEW. Reference the Q1 materiality memo (M-2026-Q1-MJE) in the procedure text and tag with ‡. Velocity will pre-fill the procedure outline; you confirm.",
+      auto_action: "Pre-fill procedure 6 outline; you confirm and tag",
+      score_lift: 2,
+    },
+  ],
+};
+
+// ---------- Walkthrough rehearsal — Q&A flow (THE moat for Tab D) ----------
+// Agent acts as a Big-4 senior reviewer asking the customer questions.
+window.VELOCITY_REHEARSAL = {
+  control_id: "RC-047",
+  big4: "Deloitte",
+  reviewer_persona: "Deloitte senior preparing for Q2 walkthrough",
+  generated_at: "2026-05-13T11:18:00-07:00",
+  generated_by: "Velocity walkthrough rehearsal · claude-sonnet-4-5",
+  questions: [
+    {
+      n: 1,
+      area: "Sample selection",
+      prompt: "Walk me through how you selected your sample for RC-047 this quarter. Why 25 entries? Why stratified and not statistical?",
+      practice_answer_hint: "Cover: population size (~220), stratification rationale (Tier 1/2/3), period-end weighting, agreement with the engagement team on methodology.",
+      good_answer:
+        "Sample size of 25 was selected to balance coverage with audit effort. We stratified into three tiers: Tier 1 (entries ≥ $1M) at 100% coverage because of materiality; Tier 2 ($250k–$1M) using judgmental selection weighted toward period-end where unusual postings concentrate; Tier 3 (< $250k) using judgmental selection biased toward round-dollar amounts and reversal pairs that often signal manual offsets. The methodology was agreed with the Deloitte engagement team during our 2026-02-04 walkthrough; memo MEMO-SS-RC-047 attached to the workpaper.",
+      bad_answer:
+        "We used 25 because that's what the prior period workpaper said. We picked entries that looked interesting.",
+      feedback_for_bad_answer:
+        "This would likely trigger a sufficiency-of-procedures finding. A Big-4 senior will ask why 25 specifically (not 20, not 50) and what made each entry 'interesting'. Refer to the stratification tiers and the methodology memo when you answer.",
+    },
+    {
+      n: 2,
+      area: "Threshold rationale",
+      prompt: "The $250,000 dual-approval threshold — how did you establish it, and how often is it reviewed?",
+      practice_answer_hint: "Cover: materiality benchmark for the audit period, quarterly review, who signs the threshold review memo, prior-period threshold for comparison.",
+      good_answer:
+        "The $250,000 threshold is set against the Deloitte engagement team's materiality benchmark for the audit period, which is currently $312,000 at 5% of pre-tax income normalized for our growth profile. We set the dual-approval bar deliberately below materiality to provide a margin for aggregated exposures. The threshold is reviewed quarterly; the Controller signs the threshold review memo at each cycle. Prior period was $200,000, raised in Q1 to reflect the increase in materiality.",
+      bad_answer:
+        "The threshold was set when the control was designed; I'd have to check what it was.",
+      feedback_for_bad_answer:
+        "A senior reviewer will probe this hard. Threshold judgments are exactly where management-letter findings live. Make sure you can speak to the materiality basis, the review cadence, and the most recent change.",
+    },
+    {
+      n: 3,
+      area: "Exception disposition",
+      prompt: "I see entry JE-2026-0214 was flagged in the exception report — what did you do?",
+      practice_answer_hint: "Cover: the entry-specific story, why the override was needed, who reviewed, that the rationale was documented, how this differs from a control deficiency.",
+      good_answer:
+        "JE-2026-0214 was a $248,900 deferred-revenue true-up posted at period-end. It was below our $250k dual-approval threshold but flagged by the exception report because of the round-dollar amount and the manual offset pattern. The override was a system-level bypass for the period-end true-up workflow; the rationale was documented in override log entry ovr_rc047_021 referencing the ticket SF-2026-0419 that drove the true-up. The Controller reviewed and signed off on the rationale; the control operated as designed — the exception report exists precisely to surface this kind of pattern for human review, not to indicate a deficiency.",
+      bad_answer:
+        "I think Pranav approved it. The exception report had a note.",
+      feedback_for_bad_answer:
+        "Vague. A Big-4 senior wants the entry number, the dollar amount, the override log id, the ticket reference, the date of the disposition, and who signed. If you can't recall these, pull up the override log before the walkthrough.",
+    },
+    {
+      n: 4,
+      area: "Reviewer independence",
+      prompt: "Who reviewed the testing for this control, and how do we know they were independent of the preparer?",
+      practice_answer_hint: "Cover: preparer name + role, reviewer name + role, why the reviewer is independent, when the review happened.",
+      good_answer:
+        "The workpaper was prepared by me — Riya Patel, VP Finance Operations — and reviewed by Pranav Iyer, our Controller. Pranav is independent of the preparation in two ways: he was not involved in selecting the sample or running the procedures, and his role as Controller is hierarchically removed from the VP Finance Ops function. The review was performed on 2026-05-13 and signed off via Velocity's workflow with the timestamp captured.",
+      bad_answer:
+        "Pranav reviewed it. He always reviews these.",
+      feedback_for_bad_answer:
+        "Add the date and the independence rationale. \"Always reviews these\" is exactly the kind of answer that prompts a follow-up about whether the reviewer is actually independent. Walk through why Pranav's role qualifies as independent of yours.",
+    },
+    {
+      n: 5,
+      area: "Velocity-generated content disclosure",
+      prompt: "I notice this workpaper was generated by an AI tool. Walk me through what was generated, what you reviewed, and what edits you made.",
+      practice_answer_hint: "Cover: which sections were Velocity-generated, the disclosure that they're tagged in the audit trail, what you reviewed, where you applied judgment, and the REQUIRES HUMAN REVIEW markers.",
+      good_answer:
+        "Velocity generated the initial draft — narrative, procedures, tickmark annotations, sample-selection rationale, exception template. Every section is tagged in the workpaper's audit trail with the model and timestamp; the trail is exportable as CSV. I reviewed every section against Helios's actual policies, applied edits where the agent made generic assumptions (the threshold was wrong in the first pass; Velocity assumed $50k but our policy is $250k), and explicitly drafted procedure 6 — the threshold review procedure — myself because the agent flagged it as REQUIRES HUMAN REVIEW. The reviewer sign-off captures my edits and Pranav's review.",
+      bad_answer:
+        "The agent generated most of it. I read it and it looked right.",
+      feedback_for_bad_answer:
+        "This will trigger a sufficiency-of-procedures finding. A Big-4 senior will treat any AI-generated content as needing explicit human review evidence. Be specific about what you reviewed, what you changed, where you applied judgment, and where the agent deferred to human review.",
+    },
+  ],
+};
+
+// ---------- Speed comparison — vs Big-4 advisory (the visceral pitch) ----------
+window.VELOCITY_SPEED_COMPARE = {
+  end_to_end: {
+    velocity_minutes: 25,
+    big4_weeks: 3,
+    velocity_cost_usd: 1800,    // monthly platform fee
+    big4_cost_usd: 47000,       // typical pre-IPO advisory engagement per quarter
+  },
+  steps: [
+    { step: "Workpaper draft generated", velocity: "47 seconds", big4: "3–5 days of advisory hours", multiplier: "~500×" },
+    { step: "Evidence mapped to procedures", velocity: "90 seconds", big4: "Half-day of admin time", multiplier: "~150×" },
+    { step: "Defensibility self-check", velocity: "3 seconds", big4: "Senior-review pass · 4–6 hours", multiplier: "~3,000×" },
+    { step: "Walkthrough rehearsal — 5 questions", velocity: "15 minutes", big4: "Big-4 prep session · $20K", multiplier: "~$1,300/min" },
+    { step: "Package export — PDF + manifest", velocity: "8 seconds", big4: "1 day of formatting", multiplier: "~900×" },
+  ],
+};
+
+// ---------- Changelog (visible iteration is the value prop) ----------
+window.VELOCITY_CHANGELOG = [
+  { date: "2026-05-13", days_after_request: 4, change: "Walkthrough rehearsal mode — 5 question types, Big-4 senior persona", customer: "Helios Robotics" },
+  { date: "2026-05-09", days_after_request: 6, change: "Defensibility scorer — Deloitte template, 10-item checklist with auto-fix actions", customer: "Helios Robotics" },
+  { date: "2026-05-02", days_after_request: 8, change: "Evidence drag-drop with agent-suggested slot mapping", customer: "Pelagic Climate" },
+  { date: "2026-04-25", days_after_request: 3, change: "Big-4 firm template selector (Deloitte + EY)", customer: "Aperture Materials" },
+  { date: "2026-04-22", days_after_request: 0, change: "Workpaper generator GA — streaming output, tickmark annotations", customer: "Helios Robotics" },
+];
+
+// ---------- Walkthrough package export manifest ----------
+window.VELOCITY_PACKAGE_RC_047 = {
+  package_id: "VLC-PKG-HELIOS-RC-047-Q2",
+  generated_at: "2026-05-13T11:45:00-07:00",
+  generated_by: "Riya Patel · VP Finance Operations · Helios Robotics",
+  big4_recipient: { firm: "Deloitte & Touche LLP", contact: "Naomi Wilkes, Engagement Partner" },
+  walkthrough_scheduled: "2026-06-24",
+  cover_memo: {
+    scope: "Q2 2026 SOX 404 testing — RC-047 (manual JE approval, revenue recognition). Single-control walkthrough package; full Q2 batch will follow.",
+    methodology: "Stratified judgmental sampling pre-agreed with Deloitte (memo MEMO-SS-RC-047). Velocity-generated workpaper reviewed and edited by VP Finance Ops; Controller sign-off captured 2026-05-13. Every section in the audit trail.",
+    optro_metadata: "Velocity Provenance v1 signature attached. 5 evidence artifacts, sha256-verified at ingest. Audit log (53 entries) exported alongside.",
+  },
+  contents: [
+    { file: "VLC-PKG-RC-047-Q2_cover_memo.pdf", size: "72 KB", role: "Cover memo + scope" },
+    { file: "VLC-WP-RC-047-Q22026_workpaper.pdf", size: "486 KB", role: "Full workpaper (header, narrative, procedures, sampling, evidence, exceptions, conclusion)" },
+    { file: "RC-047_Q2_population_export.csv", size: "94 KB", role: "Slot 1 · population query" },
+    { file: "RC-047_sample_memo_v3.pdf", size: "186 KB", role: "Slot 2 · sample selection memo" },
+    { file: "NS_workflow_screenshot_WF-MJE-RR-047.png", size: "318 KB", role: "Slot 3 · NetSuite workflow configuration" },
+    { file: "RC-047_approval_export_per_sample_Q2.csv", size: "112 KB", role: "Slot 4 · per-sample approval evidence" },
+    { file: "Q2_exception_report_weekly_RC-047.xlsx", size: "62 KB", role: "Slot 5 · weekly exception report" },
+    { file: "VLC-PKG-RC-047-Q2_audit_log.csv", size: "28 KB", role: "53-row provenance trail" },
+    { file: "VLC-PKG-RC-047-Q2_manifest.json", size: "11 KB", role: "Provenance metadata for external-auditor working-paper system" },
+  ],
+};

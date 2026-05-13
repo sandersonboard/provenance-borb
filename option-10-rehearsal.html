@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Velocity · Walkthrough rehearsal — RC-047</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
+<link rel="stylesheet" href="shared.css" />
+<script src="data.js"></script>
+<script src="shared.js" defer></script>
+</head>
+<body>
+
+<nav class="wp-topnav v-nav">
+  <div class="brand"><span class="pip"></span><strong>Velocity · Provenance</strong> <span class="beta-badge">Beta</span></div>
+  <div class="breadcrumb">
+    <a href="index.html">Demo home</a>
+    <span class="sep">/</span>
+    <a href="option-10.html">Generate</a>
+    <span class="sep">/</span>
+    <span>RC-047 rehearsal</span>
+  </div>
+  <div class="spacer"></div>
+  <div class="wp-tabs">
+    <a class="wp-tab" href="option-10.html">Generate</a>
+    <a class="wp-tab" href="option-10-evidence.html">Evidence</a>
+    <a class="wp-tab" href="option-10-check.html">Defensibility</a>
+    <a class="wp-tab active" href="option-10-rehearsal.html">Rehearsal</a>
+    <a class="wp-tab" href="option-10-package.html">Package</a>
+  </div>
+  <span class="as-of">As of 2026-05-13 11:18 PT</span>
+</nav>
+
+<div class="rehearsal-shell">
+
+  <div class="rehearsal-intro">
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 8px;">
+      <h1>Walkthrough rehearsal</h1>
+      <div class="speed-callout">
+        <span class="v-time">15 min</span>
+        <span class="v-vs">vs</span>
+        <span class="v-big4">$20K Big-4 prep</span>
+        <span class="v-mult">~$1,300/min</span>
+      </div>
+    </div>
+    <p><strong>The killer feature.</strong> Velocity's agent acts as a Big-4 senior reviewer and asks you the questions you'll be asked during the real walkthrough. Practice answers. The agent grades them. <strong>No other AI-native vendor has this</strong>, and Big-4 advisory hours typically deliver the equivalent at $20K per engagement.</p>
+    <div style="margin-top: 14px; padding: 10px 14px; background: var(--bg); border-radius: 6px; font-size: 12px; color: var(--ink-light); display: flex; align-items: center; gap: 10px;">
+      <span style="font-family: var(--mono); font-size: 10px; font-weight: 700; padding: 2px 7px; background: var(--accent); color: white; border-radius: 3px; letter-spacing: 0.06em;">PERSONA</span>
+      Claude is prompted as a <strong style="color: var(--ink);">Deloitte senior preparing for the Q2 walkthrough at Helios Robotics</strong>. Questions are drawn from areas that typically generate review notes for pre-IPO controls. Try writing a quick answer, then click <strong style="color: var(--ink);">Grade it</strong>.
+    </div>
+  </div>
+
+  <div id="questions-list"></div>
+
+  <div style="background: white; border: 1px solid #ececec; border-radius: 8px; padding: 18px 22px; margin-top: 14px; font-size: 13px; color: var(--ink-light); line-height: 1.6;">
+    <strong style="color: var(--ink);">Done rehearsing?</strong> The agent has surfaced the five areas most likely to come up in your walkthrough on 2026-06-24. Velocity recommends sending the workpaper to Pranav (Controller) for sign-off before exporting the package.
+    <div style="display: flex; gap: 10px; margin-top: 12px;">
+      <a href="option-10-package.html" style="padding: 8px 16px; background: var(--accent); color: white; text-decoration: none; border-radius: 5px; font-weight: 600; font-size: 12px;">Export walkthrough package →</a>
+    </div>
+  </div>
+
+</div>
+
+<div class="family-footer">
+  <span class="ff-label">Optro family</span>
+  <span class="ff-links">
+    <a href="https://sandersonboard.github.io/velocity-borb/">Velocity</a>
+    <a href="https://sandersonboard.github.io/benchmark-borb/">Benchmark</a>
+    <a href="https://sandersonboard.github.io/practice-borb/">Practice</a>
+    <a href="https://sandersonboard.github.io/context-borb/">Context</a>
+    <span class="ff-self">Provenance</span>
+  </span>
+</div>
+
+<script>
+  injectGate();
+  (function () {
+    const R = window.VELOCITY_REHEARSAL;
+    const list = document.getElementById('questions-list');
+    list.innerHTML = R.questions.map(q => `
+      <div class="rehearsal-q" id="q-${q.n}">
+        <div class="q-head">
+          <span>Question ${q.n} of ${R.questions.length}</span>
+          <span class="q-area">${escapeHtml(q.area)}</span>
+        </div>
+        <div class="q-bubble">${escapeHtml(q.prompt)}</div>
+        <details style="margin-bottom: 12px;">
+          <summary style="font-size: 11px; font-weight: 600; color: var(--ink-light); cursor: pointer; padding: 4px 0; list-style: none;">▸ Show coverage hint</summary>
+          <div class="q-hint" style="margin-top: 6px;">
+            <div class="lbl">What a good answer covers</div>
+            ${escapeHtml(q.practice_answer_hint)}
+          </div>
+        </details>
+        <textarea class="q-answer-box" data-n="${q.n}" placeholder="Type your practice answer here, then click Grade it."></textarea>
+        <div class="q-actions">
+          <button class="q-btn primary" data-action="grade" data-n="${q.n}">Grade it</button>
+          <button class="q-btn" data-action="bad-example" data-n="${q.n}">Try a bad example</button>
+          <button class="q-btn" data-action="good-example" data-n="${q.n}">See a strong answer</button>
+        </div>
+        <div class="q-feedback" id="fb-${q.n}"></div>
+      </div>
+    `).join('');
+
+    document.querySelectorAll('.q-btn').forEach(btn => btn.addEventListener('click', () => {
+      const n = parseInt(btn.getAttribute('data-n'), 10);
+      const q = R.questions.find(x => x.n === n);
+      const action = btn.getAttribute('data-action');
+      const box = document.querySelector(`textarea[data-n="${n}"]`);
+      const fb = document.getElementById('fb-' + n);
+
+      if (action === 'bad-example') {
+        box.value = q.bad_answer;
+        return;
+      }
+      if (action === 'good-example') {
+        box.value = q.good_answer;
+        return;
+      }
+      if (action === 'grade') {
+        const ans = (box.value || '').trim();
+        if (!ans) {
+          fb.className = 'q-feedback improve show';
+          fb.innerHTML = `<span class="lbl">Heads up</span>Type a practice answer first — even a sentence helps Velocity calibrate the feedback.`;
+          return;
+        }
+        // Heuristic grading — answers that include specific tokens (numbers, memo refs, role names) score well
+        const strong = countMatches(ans, [
+          /\$\d/i, /\bmemo\b/i, /\bm-?2026/i, /\bcontroller\b/i, /\b25\b/, /\btier\b/i, /\bdeloitte\b/i,
+          /\bje-?\d/i, /\bovr_/i, /\bsf-?2026/i, /\bjudgmental\b/i, /\bmateriality\b/i, /\bindepend/i,
+          /\bvelocity\b/i, /\bclaude\b/i, /\baudit trail\b/i, /\brequires human review\b/i,
+        ]);
+        // Very short answers are weak by default
+        const wordCount = ans.split(/\s+/).filter(Boolean).length;
+        const isWeak = wordCount < 25 || strong < 2;
+        if (isWeak) {
+          fb.className = 'q-feedback improve show';
+          fb.innerHTML = `<span class="lbl">Walkthrough risk</span>${escapeHtml(q.feedback_for_bad_answer)}<br><br><em style="color: var(--ink); font-style: italic;">Try to include specifics: dollar amounts, memo references, role names, dates. A senior reviewer probes for them.</em>`;
+        } else {
+          fb.className = 'q-feedback good show';
+          fb.innerHTML = `<span class="lbl">Strong answer</span>You hit ${strong} of the specifics a Big-4 senior is looking for (${wordCount} words). A reviewer would likely move to the next question rather than probe further. The exemplar Velocity would have given:<br><br><em style="color: var(--ink); font-style: italic;">"${escapeHtml(q.good_answer)}"</em>`;
+        }
+        fb.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }));
+
+    function countMatches(text, patterns) {
+      return patterns.reduce((n, re) => n + (re.test(text) ? 1 : 0), 0);
+    }
+  })();
+</script>
+</body>
+</html>

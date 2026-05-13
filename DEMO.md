@@ -1,6 +1,6 @@
 # Provenance — Demo
 
-**Three scenario hedges, one data backbone, nine demos.**
+**Four scenario hedges, one data backbone, twelve demos.**
 
 **Group A (Options 1–3) — System-of-Record Premium.** *This is what audit-grade output looks like when Optro's data lineage IS the product. Every hover reveals provenance no other vendor can produce. The peer-defensibility benchmark is the moat made visible.* The Controller and Big-4 partner read the workpaper directly; every value is hover-citable to its source record.
 
@@ -8,7 +8,9 @@
 
 **Group C (Options 7–9) — Agent Commodity Hell.** *This is what audit-grade output looks like when the FDE team is the moat and the workpaper production line is the product. Foundation models draft; Optro experts review and attach provenance; external auditors sign without rework. That's the Practice value chain in tool form.* The pod owns the judgment-shaped 24%, the agent draws the routine 76%, and the audit trail captures the seam between them.
 
-Same Helios Robotics fixture. Same Optro Provenance v1 signature. Three different consumers — Controller, agent, FDE.
+**Group D (Options 10–12) — AI-Native Newcomers.** *This is what audit-grade output looks like in an AI-Native Newcomers world. The customer gets defensibility at AI-native speed. The walkthrough rehearsal mode is the moat — no other AI-native vendor has it, and Big-4 advisory can't match the price or speed. This is how Velocity beats Vanta for the pre-IPO segment.* The customer self-serves through the wizard; Provenance bolts on as the audit-grade output layer.
+
+Same Helios Robotics fixture. Same Optro Provenance v1 signature. Four different consumers — Controller, agent, FDE, self-serve customer.
 
 ## The single demo claim
 
@@ -30,7 +32,7 @@ That's the bet, in one sentence. Provenance is the proof artifact.
 
 (Smoke-and-mirrors HTML — no Next.js, no router. The PRD's `/workpapers/[id]/chain` becomes `option-1-chain.html`.)
 
-## The nine demo formats
+## The twelve demo formats
 
 **Group A — System-of-Record Premium hedge — the Controller sees the workpaper**
 
@@ -49,6 +51,12 @@ That's the bet, in one sentence. Provenance is the proof artifact.
 - **Option G** (`option-7.html` → `option-7-editor.html` → `-scorer` → `-templates` → `-handoff`) — the production console. Engagement queue → split-pane editor (streaming agent drafts) → defensibility scorer → Big-4 template library → customer handoff package. Hover-trigger streaming; CSV export of the full audit log.
 - **Option H** (`option-8.html`) — Practice principal portfolio. Three engagements, one pod of three, the rework-rate KPI that defines the moat (4% vs 18% baseline).
 - **Option I** (`option-9.html`) — Jamie ships four workpapers in one day. Day-in-the-life long-scroll from 07:48 to 16:47.
+
+**Group D — AI-Native Newcomers hedge — the customer self-serves**
+
+- **Option J** (`option-10.html` → `option-10-evidence.html` → `-check` → `-rehearsal` → `-package`) — the 5-surface acceptance flow. Generate a Deloitte workpaper in 47s, drag-drop 4 evidence files (agent maps to slots), run defensibility from 78→92 via 3 fixes, rehearse 5 walkthrough questions (Claude as Deloitte senior), export PDF + manifest.
+- **Option K** (`option-11.html`) — Speed vs Big-4 advisory one-pager. KPIs, step-by-step speed multipliers, the walkthrough-rehearsal moat callout, ship-X-days-after-request changelog.
+- **Option L** (`option-12.html`) — Riya beats the walkthrough in 25 minutes. Day-in-the-life long-scroll closing with the real walkthrough six weeks later.
 
 ---
 
@@ -75,18 +83,20 @@ That's the acceptance loop. Everything else is supporting cast.
 
 ## Why this prototype matters (the strategic frame)
 
-This is **no-regret move #2 (audit-grade output layer)** from the four-scenario plan — and it pays out across three scenarios, not one.
+This is **no-regret move #2 (audit-grade output layer)** from the four-scenario plan — and it pays out across all four scenarios.
 
 - In **System-of-Record Premium** (Options A–C), the moat is the live citation chain on every value in the workpaper. The peer-defensibility benchmark — a number Helios can compute only because Optro sits on the actual data of 47 consented pre-IPO peers — is the moat made visible.
 - In the **Wrapper Era** (Options D–F), the moat is the structured citation envelope around every tool response the agent receives. The MCP server is the proof that the underlying data shape works for an LLM consumer too.
 - In **Agent Commodity Hell** (Options G–I), the moat is the FDE production line: agent drafts the routine 76% in seconds; the FDE pod owns the judgment-shaped 24%; the audit trail captures the seam so external auditors sign deliverables without rework. Measured at 4% rework vs an 18% industry baseline.
+- In **AI-Native Newcomers** (Options J–L), the moat is the walkthrough-rehearsal mode. The customer gets defensibility at AI-native speed — 25 minutes end-to-end vs three weeks of Big-4 advisory at ~$47K per quarter — and Claude prompted as a Deloitte senior grades the customer's practice answers in advance of the real walkthrough. Nobody else ships this.
 
-Defensibility holds across all four scenarios; the audit firm cares about the chain whether the agent drafts the workpaper, the Controller drafts it, or the FDE pod drafts it. Build the audit-grade output layer once; ship it under whatever GTM motion wins.
+Defensibility holds across all four scenarios; the audit firm cares about the chain whether the agent drafts the workpaper, the Controller drafts it, the FDE pod drafts it, or the customer self-serves through the wizard. Build the audit-grade output layer once; ship it under whatever GTM motion wins.
 
-The three closing pull-quotes are the demo's spine:
+The four closing moments are the demo's spine:
 
 - **Group A · Naomi at the walkthrough.** *"Defensibility evidence is rendered live against the underlying source-of-record systems at the point of review. Reduces substantive testing requirement on selected revenue-cycle controls."*
-- **Group B · the management assertion package.** Every disclosure in the LLM-drafted assertion ships with its <code>optro_record_id</code> — no hallucination, no buried risk, no fabricated tickmark.
+- **Group B · the management assertion package.** Every disclosure in the LLM-drafted assertion ships with its `optro_record_id` — no hallucination, no buried risk, no fabricated tickmark.
 - **Group C · Naomi after the handoff.** *"Reviewed all four workpapers and the cover memo. No rework requested."*
+- **Group D · Naomi at the real walkthrough.** *"Sample methodology satisfies sufficiency-of-procedures requirement. No follow-up required."* (Riya rehearsed the answer six weeks ago, in 15 minutes, for the cost of a monthly subscription.)
 
-Same Naomi. Different vehicle. Same outcome: the audit firm signs without rework. That is what Optro is selling, across every scenario the plan covers.
+Same Naomi. Four different vehicles. Same outcome: the audit firm signs without rework. That is what Optro is selling, across every scenario the plan covers.
