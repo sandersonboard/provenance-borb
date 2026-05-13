@@ -1343,8 +1343,8 @@ code.inline {
 body.walkthrough { background: #fafaf5; }
 body.walkthrough .wp-topnav { background: #fafaf5; border-bottom: 1px solid var(--border-strong); }
 body.walkthrough .paper {
-  max-width: 1080px; padding: 60px 72px 72px;
-  font-size: 17px; line-height: 1.75;
+  max-width: 900px; padding: 56px 60px 64px;
+  font-size: 16px; line-height: 1.7;
 }
 body.walkthrough .paper-header h1 { font-size: 28px; }
 body.walkthrough .paper-meta { font-size: 14px; }
