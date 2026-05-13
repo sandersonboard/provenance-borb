@@ -196,7 +196,8 @@
   .opt-card {
     text-decoration: none; color: inherit;
     border: 1px solid var(--rule); border-radius: 12px;
-    padding: 28px 26px 24px;
+    padding: 0;
+    overflow: hidden;
     background: white;
     display: flex; flex-direction: column;
     transition: border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
@@ -211,11 +212,50 @@
   .opt-card.primary { border-color: var(--accent); }
   .opt-card.primary::before {
     content: 'Acceptance path';
-    position: absolute; top: -10px; left: 20px;
-    background: var(--accent); color: white;
+    position: absolute; top: 16px; right: 18px; z-index: 2;
+    background: rgba(255, 255, 255, 0.95); color: var(--accent);
     font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
     text-transform: uppercase;
     padding: 4px 10px; border-radius: 999px;
+  }
+  /* Gradient header band — group-coded */
+  .opt-glyph {
+    height: 96px;
+    padding: 18px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    overflow: hidden;
+  }
+  .opt-glyph .og-letter {
+    font-family: var(--mono);
+    font-size: 44px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.05em;
+    line-height: 1;
+  }
+  .opt-glyph .og-deck {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.85);
+    text-align: right;
+    max-width: 56%;
+    line-height: 1.45;
+  }
+  .opt-glyph[data-g="a"] { background: linear-gradient(135deg, #8e2734 0%, #A8313F 55%, #c44b58 100%); }
+  .opt-glyph[data-g="b"] { background: linear-gradient(135deg, #1e3a8a 0%, #2956c9 100%); }
+  .opt-glyph[data-g="c"] { background: linear-gradient(135deg, #78350f 0%, #b45309 60%, #d97706 100%); }
+  .opt-glyph[data-g="d"] { background: linear-gradient(135deg, #0c4a6e 0%, #0e7490 60%, #0891b2 100%); }
+  .opt-body {
+    padding: 22px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
   .opt-card .o-label {
     font-family: var(--mono); font-size: 10px; font-weight: 700;
@@ -746,25 +786,34 @@
 
   <div class="grid">
     <a class="opt-card primary" href="option-1.html">
-      <span class="o-label">Option A</span>
+      <div class="opt-glyph" data-g="a"><span class="og-letter">A</span><span class="og-deck">Live walkthrough · 5 stages</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option A</span>
       <h3>Walk the workpaper end-to-end</h3>
       <p class="o-desc">The product as a Controller would actually use it before the Deloitte walkthrough — workpaper viewer, evidence chain graph, peer-defensibility benchmark, walkthrough mode, print to PDF.</p>
       <div class="o-aud">Controller (Anton Dam, Helios) preparing for the Q1 walkthrough</div>
       <div class="o-cta">Open the click-through <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-2.html">
-      <span class="o-label">Option B</span>
+      <div class="opt-glyph" data-g="a"><span class="og-letter">B</span><span class="og-deck">Big-4 one-pager · 3 frames</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option B</span>
       <h3>Big-4 walkthrough — one-pager</h3>
       <p class="o-desc">A condensed, screenshare-ready surface for the moment a Deloitte engagement partner sees Provenance live. Three frames: the workpaper, the chain, the peer-defensibility distribution.</p>
       <div class="o-aud">Deloitte engagement partner during the Q1 walkthrough</div>
       <div class="o-cta">Open the pitch view <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-3.html">
-      <span class="o-label">Option C</span>
+      <div class="opt-glyph" data-g="a"><span class="og-letter">C</span><span class="og-deck">Long-scroll · 8 scenes</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option C</span>
       <h3>The walkthrough, as Anton lived it</h3>
       <p class="o-desc">Narrative scroll — eight scenes from the morning of the Q1 walkthrough at Helios Robotics. T-8 months to S-1. What changes when the Controller can defend any number on the screen.</p>
       <div class="o-aud">AuditBoard exec considering the audit-grade output bet</div>
       <div class="o-cta">Read the scroll <span class="arr">→</span></div>
+      </div>
     </a>
   </div>
 </div>
@@ -806,25 +855,34 @@
 
   <div class="grid">
     <a class="opt-card" href="option-4.html">
-      <span class="o-label">Option D</span>
+      <div class="opt-glyph" data-g="b"><span class="og-letter">D</span><span class="og-deck">MCP install · 5 tools</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option D</span>
       <h3>Wire Provenance into Claude Desktop</h3>
       <p class="o-desc">Install walkthrough for the MCP server. Five tools — <code>get_evidence_chain</code>, <code>get_tickmark_legend</code>, <code>draft_workpaper_section</code>, <code>list_management_assertion_inputs</code>, <code>validate_audit_trail</code>.</p>
       <div class="o-aud">Implementer wiring Optro into a foundation-model agent</div>
       <div class="o-cta">Open the install <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-5.html">
-      <span class="o-label">Option E</span>
+      <div class="opt-glyph" data-g="b"><span class="og-letter">E</span><span class="og-deck">Claude transcript · 3 prompts</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option E</span>
       <h3>Watch Claude draft an assertion</h3>
       <p class="o-desc">Simulated Claude Desktop transcript — the Controller types three prompts; the agent calls Provenance, surfaces citations, and refuses to fabricate where evidence is missing. Tool calls are inspectable and collapsible.</p>
       <div class="o-aud">AuditBoard exec evaluating the Wrapper-Era hedge</div>
       <div class="o-cta">Open the transcript <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-6.html">
-      <span class="o-label">Option F</span>
+      <div class="opt-glyph" data-g="b"><span class="og-letter">F</span><span class="og-deck">Workpaper output · rendered</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option F</span>
       <h3>See workpaper-grade output</h3>
       <p class="o-desc">A worked example of the artifact the agent produces — workpaper for RC-047 with structured slots, Deloitte tickmark annotations, and explicit <code>REQUIRES HUMAN REVIEW</code> markers where judgment was applied.</p>
       <div class="o-aud">Big-4 audit partner asking "what does LLM output look like?"</div>
       <div class="o-cta">Open the output <span class="arr">→</span></div>
+      </div>
     </a>
   </div>
 </div>
@@ -866,25 +924,34 @@
 
   <div class="grid">
     <a class="opt-card primary" href="option-7.html">
-      <span class="o-label">Option G</span>
+      <div class="opt-glyph" data-g="c"><span class="og-letter">G</span><span class="og-deck">Production line · 4 stages</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option G</span>
       <h3>Jamie ships RC-047 in 4 stages</h3>
       <p class="o-desc">A Monday morning at Optro Practice. Jamie Okonkwo (FDE Pod Lead) moves RC-047 from queue → editor → defensibility scorer → handoff to Deloitte. Four stages, one workpaper, one production line. Climax: Naomi's "no rework" email at 16:47.</p>
       <div class="o-aud">FDE pod lead working through the Helios queue</div>
       <div class="o-cta">Walk the production line <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-8.html">
-      <span class="o-label">Option H</span>
+      <div class="opt-glyph" data-g="c"><span class="og-letter">H</span><span class="og-deck">Practice portfolio · 3 engagements</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option H</span>
       <h3>Practice principal portfolio</h3>
       <p class="o-desc">Higher-altitude exec view across three engagements (Helios, Aperture, Pelagic), pod utilization for Jamie/Priya/Marcus, and the rework-rate KPI that defines the moat.</p>
       <div class="o-aud">Optro Practice principal reviewing pod performance</div>
       <div class="o-cta">Open the portfolio <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-9.html">
-      <span class="o-label">Option I</span>
+      <div class="opt-glyph" data-g="c"><span class="og-letter">I</span><span class="og-deck">Jamie's Tuesday · long-scroll</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option I</span>
       <h3>Jamie ships four workpapers in one day</h3>
       <p class="o-desc">Day-in-the-life long-scroll. Eight scenes from 07:48 to 16:47 — picking up FR-021 in fde_review, applying the scorer's three review-note fixes, closing on Naomi Wilkes' "no rework" email.</p>
       <div class="o-aud">AuditBoard exec evaluating the services-arm pivot</div>
       <div class="o-cta">Read the scroll <span class="arr">→</span></div>
+      </div>
     </a>
   </div>
 </div>
@@ -926,25 +993,34 @@
 
   <div class="grid">
     <a class="opt-card primary" href="option-10.html">
-      <span class="o-label">Option J</span>
+      <div class="opt-glyph" data-g="d"><span class="og-letter">J</span><span class="og-deck">Self-serve · 5 surfaces</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option J</span>
       <h3>Generate → evidence → check → rehearse → export</h3>
       <p class="o-desc">The 5-surface acceptance flow. Stream a Deloitte workpaper for RC-047 in under 60s, drag-drop 4 evidence files mapped to slots, run defensibility from 78→92, rehearse 5 walkthrough questions, export a Deloitte-acceptable PDF + manifest.</p>
       <div class="o-aud">Riya Patel (VP Finance Ops, Helios) preparing for Q2 walkthrough</div>
       <div class="o-cta">Open the click-through <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-11.html">
-      <span class="o-label">Option K</span>
+      <div class="opt-glyph" data-g="d"><span class="og-letter">K</span><span class="og-deck">Speed vs Big-4 · 1-pager</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option K</span>
       <h3>Speed vs Big-4 advisory — one-pager</h3>
       <p class="o-desc">Condensed pitch view. KPIs, step-by-step speed multipliers, the walkthrough-rehearsal moat callout, and the visible-iteration changelog showing audit-grade features shipped weekly.</p>
       <div class="o-aud">AuditBoard exec evaluating the AI-Native Newcomers hedge</div>
       <div class="o-cta">Open the pitch <span class="arr">→</span></div>
+      </div>
     </a>
     <a class="opt-card" href="option-12.html">
-      <span class="o-label">Option L</span>
+      <div class="opt-glyph" data-g="d"><span class="og-letter">L</span><span class="og-deck">Riya's Tuesday · long-scroll</span></div>
+      <div class="opt-body">
+        <span class="o-label">Option L</span>
       <h3>Riya beats the walkthrough in 25 minutes</h3>
       <p class="o-desc">Day-in-the-life long-scroll. Eight scenes from Riya's first Tuesday on Velocity — blank workpaper at 08:54 to walkthrough package shipped at 09:33, with rehearsal at lunch and the real Deloitte walkthrough six weeks later closing the loop.</p>
       <div class="o-aud">AuditBoard exec considering the audit-grade output bet</div>
       <div class="o-cta">Read the scroll <span class="arr">→</span></div>
+      </div>
     </a>
   </div>
 </div>
