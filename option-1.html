@@ -32,8 +32,8 @@
 </div>
 
 <div class="wp-index">
-  <h1>Anton's testing queue</h1>
-  <p class="sub">175 controls in scope · Q1 2026 · RC-047 is on Naomi's walkthrough agenda this morning · the rest is Helios's Q1 program for context</p>
+  <h1>Anton's Q1 testing queue · context only</h1>
+  <p class="sub">175 controls in scope across the period. <strong style="color: var(--accent);">RC-047 is the only row that opens in this demo</strong> — it's today's walkthrough target. The other 174 are in scope but read-only here.</p>
 
   <div class="wp-stats">
     <div class="stat-card"><div class="stat-num" id="stat-complete">—</div><div class="stat-label">Chain complete</div></div>
@@ -82,21 +82,36 @@
   injectGate();
   (function () {
     const tbody = document.getElementById('wp-tbody');
+    // Only RC-047 is a real link in this demo — it's today's walkthrough
+    // target. Every other row is read-only context so users don't click
+    // into a workpaper that doesn't exist.
     const rows = window.CONTROLS.map(c => {
       const big4Pill = c.big4_visible ? '<span class="wp-big4">Big-4</span>' : '<span class="wp-big4 no">—</span>';
       const sp = c.status === 'chain_complete' ? '<span class="status-pill complete"><span class="sp-dot"></span>Complete</span>'
               : c.status === 'chain_partial'  ? '<span class="status-pill partial"><span class="sp-dot"></span>Partial</span>'
               : c.status === 'chain_broken'   ? '<span class="status-pill broken"><span class="sp-dot"></span>Broken</span>'
               : '<span class="status-pill untested"><span class="sp-dot"></span>Untested</span>';
-      const href = c.id === 'RC-047' ? 'option-1-viewer.html' : 'option-1-viewer.html?id=' + encodeURIComponent(c.id);
-      return `<a class="wp-row" href="${href}" data-status="${c.status}" data-big4="${c.big4_visible ? 1 : 0}" data-id="${escapeHtml(c.id)}" data-name="${escapeHtml(c.name)}">
-        <div class="wp-id">${escapeHtml(c.id)}</div>
-        <div class="wp-name">${escapeHtml(c.name)}</div>
+      const isToday = c.id === 'RC-047';
+      const todayPill = isToday ? '<span class="today-pill">▸ today\'s walkthrough</span>' : '';
+      const innerCells = `<div class="wp-id">${escapeHtml(c.id)}</div>
+        <div class="wp-name">${escapeHtml(c.name)} ${todayPill}</div>
         <div class="wp-cat">${escapeHtml(c.category_name)}</div>
         <div class="wp-num">${c.evidence_count}</div>
         <div class="wp-num">${c.reviewer_signoff_layers.toFixed(1)}</div>
-        <div>${sp} ${big4Pill}</div>
-      </a>`;
+        <div>${sp} ${big4Pill}</div>`;
+      // RC-047 → clickable link.  Other rows → static div, no hover, no nav.
+      if (isToday) {
+        return `<a class="wp-row wp-row-today" href="option-1-viewer.html"
+                  data-status="${c.status}" data-big4="${c.big4_visible ? 1 : 0}"
+                  data-id="${escapeHtml(c.id)}" data-name="${escapeHtml(c.name)}">
+          ${innerCells}
+        </a>`;
+      }
+      return `<div class="wp-row wp-row-static"
+                data-status="${c.status}" data-big4="${c.big4_visible ? 1 : 0}"
+                data-id="${escapeHtml(c.id)}" data-name="${escapeHtml(c.name)}">
+        ${innerCells}
+      </div>`;
     }).join('');
     tbody.innerHTML = rows;
 

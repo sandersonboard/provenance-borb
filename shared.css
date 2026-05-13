@@ -2599,6 +2599,71 @@ body.walkthrough [data-prov] { border-bottom: 1px dotted rgba(168, 49, 63, 0.7);
 /* Reduce noise — drop the redundant text-init avatar styles */
 .review-row > .av { display: none; }
 
+/* ============================================================
+   QUEUE / INDEX ROWS — today-target vs static-context distinction
+   ============================================================ */
+/* Today's walkthrough target — the one interactive row */
+.wp-row-today {
+  background: #fffafa;
+  border-left: 3px solid var(--accent) !important;
+  padding-left: calc(16px - 3px) !important;
+}
+.wp-row-today:hover {
+  background: #fef2f3;
+  border-color: var(--accent) !important;
+}
+.wp-row-today .wp-id { color: var(--accent) !important; font-weight: 700; }
+
+/* Read-only context rows — no hover, no cursor, slightly muted */
+.wp-row-static {
+  cursor: default !important;
+}
+.wp-row-static:hover {
+  background: white !important;
+}
+.wp-row-static .wp-name,
+.wp-row-static .wp-cat,
+.wp-row-static .wp-num,
+.wp-row-static .wp-id {
+  opacity: 0.7;
+}
+
+/* Queue (option-7) — same today/static treatment as wp-row */
+.q-row-today {
+  background: #fffafa;
+  border-left: 3px solid var(--accent) !important;
+  padding-left: calc(16px - 3px) !important;
+}
+.q-row-today:hover {
+  background: #fef2f3;
+}
+.q-row-today .cid { color: var(--accent) !important; font-weight: 700; }
+.q-row-static {
+  cursor: default !important;
+}
+.q-row-static:hover { background: white !important; }
+.q-row-static .eng,
+.q-row-static .cid,
+.q-row-static .wpname,
+.q-row-static .firm,
+.q-row-static .tminus,
+.q-row-static .defens,
+.q-row-static .assigned { opacity: 0.7; }
+
+/* The "today's walkthrough" inline pill that sits next to RC-047's name */
+.today-pill {
+  display: inline-flex; align-items: center;
+  font-family: var(--mono);
+  font-size: 9.5px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--accent);
+  background: white;
+  padding: 2px 8px; border-radius: 999px;
+  border: 1px solid var(--accent);
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
 /* Setup-reference tab — visually de-emphasized from the numbered flow */
 .wp-tab-ref {
   color: #94a3b8 !important;

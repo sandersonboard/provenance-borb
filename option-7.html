@@ -144,21 +144,33 @@
     const tbody = document.getElementById('q-tbody');
     // Sort by deadline ascending
     const sorted = [...window.WP_QUEUE].sort((a,b) => a.deadline_days - b.deadline_days);
+    // Only RC-047 actually opens in the demo. Others stay as read-only
+    // context rows so users don't end up in an RC-047 editor that
+    // claims to be for FR-007.
     tbody.innerHTML = sorted.map(w => {
       const p = pod[w.assigned];
       const urgent = w.deadline_days <= 3;
       const defens = w.defensibility >= 85 ? 'good' : w.defensibility >= 70 ? 'mid' : 'low';
-      const href = w.id === 'RC-047' ? 'option-7-editor.html' : 'option-7-editor.html?id=' + encodeURIComponent(w.id);
-      return `<a class="q-row" href="${href}" data-state="${w.state}" data-eng="${w.engagement_id}">
-        <div class="eng">${escapeHtml(w.engagement_short)}</div>
+      const isToday = w.id === 'RC-047';
+      const todayPill = isToday ? '<span class="today-pill">▸ today\'s focus</span>' : '';
+      const cells = `<div class="eng">${escapeHtml(w.engagement_short)}</div>
         <div class="cid">${escapeHtml(w.id)}</div>
-        <div class="wpname">${escapeHtml(controlName(w.id))}</div>
+        <div class="wpname">${escapeHtml(controlName(w.id))} ${todayPill}</div>
         <div><span class="state-pill ${w.state}"><span class="sp-dot"></span>${escapeHtml(window.WP_STATE_LABELS[w.state])}</span></div>
         <div class="tminus${urgent ? ' urgent' : ''}" style="text-align:right;">T${w.deadline_days < 0 ? '+' : '-'}${Math.abs(w.deadline_days)}d</div>
         <div class="defens ${defens}" style="text-align:right;">${w.defensibility}/100</div>
         <div class="firm">${escapeHtml(w.audit_firm)}</div>
-        <div class="assigned">${birdAvatar(p, { size: 22 })}<span>${escapeHtml(p.name.split(' ')[0])}</span></div>
-      </a>`;
+        <div class="assigned">${birdAvatar(p, { size: 22 })}<span>${escapeHtml(p.name.split(' ')[0])}</span></div>`;
+      if (isToday) {
+        return `<a class="q-row q-row-today" href="option-7-editor.html"
+                  data-state="${w.state}" data-eng="${w.engagement_id}">
+          ${cells}
+        </a>`;
+      }
+      return `<div class="q-row q-row-static"
+                data-state="${w.state}" data-eng="${w.engagement_id}">
+        ${cells}
+      </div>`;
     }).join('');
 
     // ----- Filters
