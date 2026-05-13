@@ -32,39 +32,26 @@
 </div>
 
 <div class="wp-index">
-  <h1>Anton's Q1 testing queue · context only</h1>
-  <p class="sub">175 controls in scope across the period. <strong style="color: var(--accent);">RC-047 is the only row that opens in this demo</strong> — it's today's walkthrough target. The other 174 are in scope but read-only here.</p>
-
-  <div class="wp-stats">
-    <div class="stat-card"><div class="stat-num" id="stat-complete">—</div><div class="stat-label">Chain complete</div></div>
-    <div class="stat-card"><div class="stat-num" id="stat-partial" style="color:#c2410c;">—</div><div class="stat-label">Chain partial</div></div>
-    <div class="stat-card broken"><div class="stat-num broken" id="stat-broken">—</div><div class="stat-label">Chain broken</div></div>
-    <div class="stat-card"><div class="stat-num" id="stat-big4">—</div><div class="stat-label">Big-4 visible</div></div>
-  </div>
-
-  <div class="wp-filters">
-    <span class="fl-label">Status</span>
-    <span class="fl-chip active" data-status="all">All</span>
-    <span class="fl-chip" data-status="chain_complete"><span class="fl-dot complete"></span>Complete</span>
-    <span class="fl-chip" data-status="chain_partial"><span class="fl-dot partial"></span>Partial</span>
-    <span class="fl-chip" data-status="chain_broken"><span class="fl-dot broken"></span>Broken</span>
-    <span class="fl-chip" data-big4>Big-4 visible only</span>
-    <span class="fl-spacer"></span>
-    <input class="fl-search" type="text" placeholder="Search id or name…" />
-    <span class="fl-count">— of —</span>
-  </div>
-
-  <div class="wp-table">
-    <div class="wp-th">
-      <div>Control</div>
-      <div>Name</div>
-      <div>Category</div>
-      <div style="text-align:right;">Evidence</div>
-      <div style="text-align:right;">Sign-offs</div>
-      <div>Status</div>
+  <details class="queue-details">
+    <summary>
+      <span class="qd-summary-label">Full Q1 testing queue · 175 controls</span>
+      <span class="qd-summary-hint">click to expand · read-only context</span>
+    </summary>
+    <div class="qd-body">
+      <p class="qd-intro">The 175-control universe Helios is testing this period. <strong>RC-047 is highlighted as today's walkthrough target;</strong> the other 174 are in scope but not interactive in this demo.</p>
+      <div class="wp-table">
+        <div class="wp-th">
+          <div>Control</div>
+          <div>Name</div>
+          <div>Category</div>
+          <div style="text-align:right;">Evidence</div>
+          <div style="text-align:right;">Sign-offs</div>
+          <div>Status</div>
+        </div>
+        <div id="wp-tbody"></div>
+      </div>
     </div>
-    <div id="wp-tbody"></div>
-  </div>
+  </details>
 </div>
 
 <div class="family-footer">
@@ -114,15 +101,6 @@
       </div>`;
     }).join('');
     tbody.innerHTML = rows;
-
-    const counts = window.CONTROLS.reduce((acc, c) => { acc[c.status] = (acc[c.status]||0)+1; return acc; }, {});
-    const big4 = window.CONTROLS.filter(c => c.big4_visible).length;
-    document.getElementById('stat-complete').textContent = counts.chain_complete || 0;
-    document.getElementById('stat-partial').textContent  = counts.chain_partial || 0;
-    document.getElementById('stat-broken').textContent   = counts.chain_broken || 0;
-    document.getElementById('stat-big4').innerHTML       = big4 + ' <small>of ' + window.CONTROLS.length + '</small>';
-
-    setupWpFilters();
   })();
 </script>
 </body>
