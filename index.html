@@ -594,10 +594,12 @@
 </div>
 
 <script>
-  injectGate();
+  // shared.js is loaded with defer, so we must wait until it's executed
+  // before calling injectGate(). Run all setup on DOMContentLoaded.
+  document.addEventListener('DOMContentLoaded', function () {
+    if (typeof injectGate === 'function') injectGate();
 
-  // Tab switching with URL-hash deep linking
-  (function () {
+    // Tab switching with URL-hash deep linking
     const tabs = document.querySelectorAll('.scenario-tab');
     const panes = document.querySelectorAll('.tab-pane');
     function activate(key) {
@@ -605,10 +607,12 @@
       panes.forEach(p => p.classList.toggle('active', p.id === 'pane-' + key));
       try { history.replaceState(null, '', '#' + key); } catch (e) {}
     }
-    tabs.forEach(t => t.addEventListener('click', () => activate(t.getAttribute('data-tab'))));
+    tabs.forEach(t => t.addEventListener('click', function () {
+      activate(t.getAttribute('data-tab'));
+    }));
     const initial = (location.hash || '').replace('#', '');
     if (['a', 'b', 'c', 'd'].includes(initial)) activate(initial);
-  })();
+  });
 </script>
 </body>
 </html>
