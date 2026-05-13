@@ -1311,8 +1311,8 @@ code.inline {
 .peer-chart .bar.helios-band { background: var(--accent); }
 .peer-chart .bar:hover { background: var(--ink); }
 .peer-chart .bar.helios-band:hover { background: #8e2734; }
-.peer-chart .x-axis { display: flex; gap: 6px; font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 4px; padding: 0 4px; }
-.peer-chart .x-axis div { flex: 1; text-align: center; }
+.x-axis { display: flex; gap: 6px; font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 4px; padding: 0 4px; }
+.x-axis > div { flex: 1; text-align: center; }
 .peer-chart .helios-marker {
   position: absolute; top: -6px;
   font-family: var(--mono); font-size: 9px; font-weight: 700;
