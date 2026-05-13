@@ -188,12 +188,16 @@ function renderPeerChart(containerId, metric) {
   const xs = metric.distribution_bin_labels.map(l => `<div>${escapeHtml(l)}</div>`).join('');
   // Helios marker — positioned over the relevant bar
   const pct = ((heliosBin + 0.5) / counts.length) * 100;
+  // Clamp label position so it doesn't clip the chart edges
+  const labelPct = Math.max(8, Math.min(92, pct));
   el.innerHTML =
-    `<div class="peer-chart" style="position:relative;">
-       <div class="helios-marker" style="left: ${pct}%;">Helios ${metric.helios}</div>
-       ${bars}
-     </div>
-     <div class="x-axis">${xs}</div>`;
+    `<div class="peer-chart-wrap">
+       <div class="helios-marker" style="left: ${labelPct}%;">Helios ${metric.helios}</div>
+       <div class="peer-chart">
+         ${bars}
+       </div>
+       <div class="x-axis">${xs}</div>
+     </div>`;
 }
 
 function pickHeliosBin(metric) {

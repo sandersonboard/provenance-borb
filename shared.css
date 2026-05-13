@@ -1306,22 +1306,25 @@ code.inline {
 .peer-card .pc-num-lbl { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 4px; }
 
 /* Distribution bar chart */
-.peer-chart { height: 110px; position: relative; display: flex; align-items: flex-end; gap: 6px; padding: 0 4px; }
+.peer-chart-wrap { position: relative; padding-top: 32px; margin-top: 6px; }
+.peer-chart { height: 110px; display: flex; align-items: flex-end; gap: 6px; padding: 0 4px; }
 .peer-chart .bar { flex: 1; background: var(--border-strong); border-radius: 3px 3px 0 0; position: relative; min-height: 6px; transition: background-color 0.15s; }
 .peer-chart .bar.helios-band { background: var(--accent); }
 .peer-chart .bar:hover { background: var(--ink); }
 .peer-chart .bar.helios-band:hover { background: #8e2734; }
 .x-axis { display: flex; gap: 6px; font-family: var(--mono); font-size: 9px; color: var(--muted); margin-top: 4px; padding: 0 4px; }
 .x-axis > div { flex: 1; text-align: center; }
-.peer-chart .helios-marker {
-  position: absolute; top: -6px;
+.peer-chart-wrap .helios-marker {
+  position: absolute; top: 0;
   font-family: var(--mono); font-size: 9px; font-weight: 700;
   color: var(--accent);
   white-space: nowrap;
   transform: translateX(-50%);
+  text-align: center;
+  line-height: 1.1;
 }
-.peer-chart .helios-marker::after {
-  content: '▼'; display: block; font-size: 10px; line-height: 1; margin-top: 1px;
+.peer-chart-wrap .helios-marker::after {
+  content: '▼'; display: block; font-size: 10px; line-height: 1; margin-top: 2px;
 }
 .peer-card .pc-interp {
   margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);
