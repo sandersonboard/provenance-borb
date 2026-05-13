@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Provenance — Optro audit-grade output layer</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@400;600&display=swap" />
-<link rel="stylesheet" href="shared.css?v=20260513h" />
+<link rel="stylesheet" href="shared.css?v=20260513i" />
 <script src="data.js"></script>
 <script src="shared.js"></script>
 <style>
@@ -27,7 +27,9 @@
   }
   .topbar .brand-line { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--ink); }
   .topbar .brand-line .pip {
-    width: 8px; height: 8px; border-radius: 2px; background: var(--accent); display: inline-block;
+    width: 22px; height: 14px;
+    background: url("optro-mark.svg") center/contain no-repeat;
+    display: inline-block;
   }
   .topbar .meta { font-family: var(--mono); font-size: 11px; }
 
@@ -247,7 +249,7 @@
     max-width: 56%;
     line-height: 1.45;
   }
-  .opt-glyph[data-g="a"] { background: linear-gradient(135deg, #8e2734 0%, #A8313F 55%, #c44b58 100%); }
+  .opt-glyph[data-g="a"] { background: linear-gradient(135deg, #062540 0%, #0A3655 55%, #1a5a86 100%); }
   .opt-glyph[data-g="b"] { background: linear-gradient(135deg, #1e3a8a 0%, #2956c9 100%); }
   .opt-glyph[data-g="c"] { background: linear-gradient(135deg, #78350f 0%, #b45309 60%, #d97706 100%); }
   .opt-glyph[data-g="d"] { background: linear-gradient(135deg, #0c4a6e 0%, #0e7490 60%, #0891b2 100%); }
@@ -466,7 +468,7 @@
     padding: 18px 20px; border: 1px solid #ececec; border-radius: 8px;
   }
   .ex-compare-cell.without { background: #fafafa; }
-  .ex-compare-cell.with { background: #fffafa; border-color: #fed7d7; }
+  .ex-compare-cell.with { background: #eef4f9; border-color: #cbdae4; }
   .ex-compare-cell h4 {
     font-family: var(--sans); font-size: 11px; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.08em;
@@ -600,8 +602,8 @@
             <text x="90" y="152" text-anchor="middle" font-size="13" font-weight="600" fill="#1f2937">Workday</text>
 
             <!-- Box 2 (Output layer - highlighted) -->
-            <rect x="195" y="60" width="160" height="120" rx="6" fill="#fffafa" stroke="#A8313F" stroke-width="2"/>
-            <text x="275" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#A8313F" letter-spacing="0.5">AUDIT-GRADE OUTPUT LAYER</text>
+            <rect x="195" y="60" width="160" height="120" rx="6" fill="#eef4f9" stroke="#0A3655" stroke-width="2"/>
+            <text x="275" y="80" text-anchor="middle" font-size="10" font-weight="700" fill="#0A3655" letter-spacing="0.5">AUDIT-GRADE OUTPUT LAYER</text>
             <text x="275" y="100" text-anchor="middle" font-size="12" fill="#1f2937">Provenance signature</text>
             <text x="275" y="116" text-anchor="middle" font-size="12" fill="#1f2937">SHA-256 at ingest</text>
             <text x="275" y="132" text-anchor="middle" font-size="12" fill="#1f2937">Captor + timestamp</text>
@@ -659,9 +661,9 @@
         <svg viewBox="0 0 900 260" preserveAspectRatio="xMidYMid meet" style="width: 100%;">
           <g font-family="Inter, system-ui, sans-serif">
             <!-- Center: output layer -->
-            <rect x="370" y="100" width="160" height="60" rx="6" fill="#fffafa" stroke="#A8313F" stroke-width="2"/>
-            <text x="450" y="124" text-anchor="middle" font-size="11" font-weight="700" fill="#A8313F" letter-spacing="0.5">AUDIT-GRADE</text>
-            <text x="450" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="#A8313F" letter-spacing="0.5">OUTPUT LAYER</text>
+            <rect x="370" y="100" width="160" height="60" rx="6" fill="#eef4f9" stroke="#0A3655" stroke-width="2"/>
+            <text x="450" y="124" text-anchor="middle" font-size="11" font-weight="700" fill="#0A3655" letter-spacing="0.5">AUDIT-GRADE</text>
+            <text x="450" y="140" text-anchor="middle" font-size="11" font-weight="700" fill="#0A3655" letter-spacing="0.5">OUTPUT LAYER</text>
 
             <!-- Top-left consumer: Controller -->
             <rect x="80" y="20" width="180" height="68" rx="6" fill="white" stroke="#d1d5db" stroke-width="1.5"/>
