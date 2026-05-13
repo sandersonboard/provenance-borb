@@ -62,8 +62,6 @@ body {
   display: inline-block;
   flex-shrink: 0;
 }
-/* In-app topbars use the .pip child element for the mark; suppress the ::before so we don't double-render */
-.wp-topnav .brand::before { display: none; }
 .accent { color: var(--accent); }
 
 .card {
@@ -846,12 +844,7 @@ code.inline {
   border-bottom: 1px solid var(--border);
   position: sticky; top: 0; z-index: 30;
 }
-.wp-topnav .brand { display: flex; align-items: center; gap: 8px; font-size: 15px; }
-.wp-topnav .brand .pip {
-  width: 28px; height: 18px;
-  background: url("optro-mark.svg") center/contain no-repeat;
-  display: inline-block;
-}
+.wp-topnav .brand { font-size: 15px; }
 .wp-topnav .breadcrumb { color: var(--muted); font-size: 13px; display: flex; align-items: center; gap: 8px; }
 .wp-topnav .breadcrumb a { color: var(--muted); text-decoration: none; }
 .wp-topnav .breadcrumb a:hover { color: var(--ink); }
