@@ -1122,7 +1122,7 @@ code.inline {
 #prov-pop .pp-foot .pp-rec { color: #fca5a5; }
 
 /* Workpaper index — list of controls */
-.wp-index { max-width: 1200px; margin: 24px auto 64px; padding: 0 24px; }
+.wp-index { max-width: 900px; margin: 24px auto 64px; padding: 0; }
 .wp-index h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.01em; margin: 0 0 4px; }
 .wp-index .sub { color: var(--muted); font-size: 13px; margin-bottom: 24px; }
 
@@ -2771,7 +2771,7 @@ body.walkthrough [data-prov] { border-bottom: 1px dotted rgba(168, 49, 63, 0.7);
    QUEUE DISCLOSURE — collapsed-by-default "show full queue"
    ============================================================ */
 .queue-details {
-  max-width: 900px; margin: 24px auto 64px; padding: 0 24px;
+  max-width: 900px; margin: 24px auto 64px; padding: 0;
 }
 /* 4-col grid scoped to the option-1 queue (overrides the 6-col default) */
 .queue-details .wp-table .wp-th,
