@@ -309,14 +309,35 @@
               <span>Period: Q1 2026 (Jan–Mar)</span>
               <span>Framework: COSO 2013 · AS 2201</span>
             </div>
-            <div class="wp-title">RC-047 — Revenue contract modification approval (>$100K ARR delta)</div>
+            <div class="wp-title">RC-047 — Manual journal entry approval (revenue recognition)</div>
             <div class="wp-header-row" style="margin-top: 6px;">
-              <span>Preparer: Controller (Anton Dam)</span>
-              <span>Reviewer: Controller</span>
+              <span>Preparer: Anton Dam · Senior Accountant, Helios</span>
+              <span>Reviewer: Pranav Iyer · Controller, Helios</span>
             </div>
           </div>
 
-          <div class="wp-section-label">Testing procedures performed</div>
+          <div class="wp-section-label">Control attributes</div>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 12px; margin-bottom: 6px; font-size: 12px;">
+            <div><span style="color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Owner</span><br>Pranav Iyer (Controller)</div>
+            <div><span style="color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Frequency</span><br>Per-transaction (continuous)</div>
+            <div><span style="color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;">Nature · Type</span><br>Manual · Preventive · Key</div>
+          </div>
+
+          <div class="wp-section-label">Risk addressed &amp; assertions</div>
+          <div style="font-size: 13px; line-height: 1.5; margin-bottom: 4px;">Manual entries posted to revenue accounts may bypass authorization at the materiality threshold, may be posted outside authorized periods, or may be posted with intent to manipulate period-end results. Misstatement risk: revenue, deferred revenue, related balances.</div>
+          <div style="font-size: 11.5px; color: var(--muted); margin-bottom: 4px;">Assertions: Occurrence · Accuracy · Cutoff · Classification</div>
+
+          <div class="wp-section-label">Test of design (TOD)</div>
+          <div class="step-line">
+            <div class="num">D1.</div>
+            <div>Inspected NetSuite workflow rule WF-MJE-RR-047; configuration enforces dual approval at $250K threshold and matches the documented control narrative. <span class="tick">✓</span> &nbsp;<code class="cite">art_rc047_r1</code></div>
+          </div>
+          <div class="step-line">
+            <div class="num">D2.</div>
+            <div>Walked through end-to-end posting for one in-scope manual entry; workflow gates fire as designed; exception report captures any bypass. <span class="tick">✓</span> &nbsp;<code class="cite">art_rc047_walk</code></div>
+          </div>
+
+          <div class="wp-section-label">Test of operating effectiveness (TOE)</div>
 
           <div class="step-line">
             <div class="num">1.</div>
@@ -339,24 +360,30 @@
             <div>Traced 5 highest-impact modifications to general ledger journal entries. <span class="tick">b</span> <span class="tick">†</span> &nbsp;<code class="cite">art_rc047_q2</code></div>
           </div>
 
+          <div class="wp-section-label">IPE — Information Produced by Entity</div>
+          <div style="font-size: 12px; line-height: 1.55; margin-bottom: 4px;">Two saved-search reports relied upon as audit evidence: <code class="cite">NS-Saved-Search-MJE-ALL-047</code> (population) and <code class="cite">NS-Saved-Search-MJE-EX-047</code> (weekly exception report). Both inspected for completeness (parameters agreed to control narrative; row counts reconciled to G/L) and accuracy (sample of entries re-traced to source records). Appropriate to rely upon. <span class="tick">PBC</span></div>
+
           <div class="wp-section-label">Preparer attestation</div>
           <div style="font-style: italic; color: var(--ink); margin-bottom: 6px;">
-            "All 25 sampled modifications had documented Controller approval and reconciled ASC 606 analysis. No exceptions. Deloitte (Naomi Wilkes) walked through this control on 2026-04-22; no follow-up requested."
+            "All 25 sampled manual journal entries had documented approval evidence in NetSuite workflow WF-MJE-RR-047. Two minor exceptions dispositioned (JE-2026-0098 illegible initials, electronically reconfirmed; JE-2026-0214 threshold-bypass override, rationale documented in ovr_rc047_021). Deloitte (Naomi Wilkes) walked through this control on 2026-04-22; no follow-up requested."
           </div>
-          <div style="font-family: var(--sans); font-size: 11px; color: var(--muted);">Anton Dam, Controller · 2026-04-16T17:20:00Z &nbsp;<code class="cite">rec_attest_rc047</code></div>
+          <div style="font-family: var(--sans); font-size: 11px; color: var(--muted);">Anton Dam, Senior Accountant · 2026-04-12 16:48 PT &nbsp;<code class="cite">rec_attest_rc047</code></div>
 
-          <div class="wp-section-label">Conclusion</div>
-          <div>Control operated effectively for Q1 2026 cycle. Big 4 walkthrough complete; no findings.</div>
+          <div class="wp-section-label">Conclusion — test of design</div>
+          <div style="margin-bottom: 8px; font-size: 13px;">The control as designed addresses the identified risk through (a) a system-enforced workflow at the $250K threshold within NetSuite, (b) an independent reviewer requirement, and (c) weekly exception monitoring with documented disposition. Design effectively addresses the risk.</div>
+
+          <div class="wp-section-label">Conclusion — operating effectiveness</div>
+          <div style="font-size: 13px;">Based on inspection of 25 sampled entries (population 218), the weekly exception report for the 13-week period, and the threshold-review memo, the control operated effectively throughout Q1 2026. Two minor exceptions noted; neither indicates a control deficiency.</div>
         </div>
 
         <!-- Defensibility gauge -->
         <div class="def-gauge" style="margin-top: 12px;">
           <div class="def-gauge-head">
             <span class="def-gauge-label">Defensibility · how ready is this to file?</span>
-            <span class="def-gauge-score good">100 <span style="font-size: 13px; color: var(--muted); font-weight: 500;">/ 100</span></span>
+            <span class="def-gauge-score good">96 <span style="font-size: 13px; color: var(--muted); font-weight: 500;">/ 100</span></span>
           </div>
           <div class="def-gauge-track">
-            <div class="def-gauge-ind" style="left: 100%;"></div>
+            <div class="def-gauge-ind" style="left: 96%;"></div>
           </div>
           <div class="def-gauge-scale">
             <span>0 · blocked</span>

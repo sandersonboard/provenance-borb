@@ -763,29 +763,29 @@ window.SCORER_RC_047 = {
     {
       id: "find_01",
       priority: "high",
-      category: "Sample selection rationale",
-      finding: "Procedure 3 references stratified sampling and judgmental selection, but the workpaper does not explicitly document the agreed-upon methodology with the engagement team. A Big-4 senior will flag this as a sufficiency-of-procedures risk.",
-      fix: "Add a single sentence to the sample-selection rationale: \"Methodology agreed in walkthrough with Deloitte engagement team on 2026-02-04, memo MEMO-SS-RC-047.\" Reference the artifact directly.",
-      effort: "2 min",
+      category: "IPE evaluation gap",
+      finding: "The population query (NS-Saved-Search-MJE-ALL-047) is relied upon as audit evidence, but the workpaper does not document the auditor's evaluation of completeness and accuracy of the report (IPE). Per AS 2201, any system-generated report used as audit evidence requires IPE testing — this is a near-universal sufficiency-of-evidence finding when missing.",
+      fix: "Add an IPE section after the Evidence list. Document for each saved-search: (1) completeness — the query parameters agreed to control scope and row count reconciled to G/L activity, and (2) accuracy — a sample of records was re-traced to source. Conclude that IPE is appropriate to rely upon for the testing period.",
+      effort: "5 min",
     },
     {
       id: "find_02",
       priority: "medium",
-      category: "Tickmark coverage",
-      finding: "Tickmarks ‡ (significant judgment) and † (reviewer override) appear in the procedure list but are not used in the evidence section. Big-4 conventions expect that any significant-judgment procedure has at least one evidence artifact tagged with the same mark.",
-      fix: "Tag the threshold memo (M-2026-Q1-MJE) artifact with ‡ in the evidence list, since it documents the management judgment that established the $250k threshold.",
-      effort: "1 min",
+      category: "Test-of-design vs test-of-operating-effectiveness",
+      finding: "Procedures 1–7 conflate test of design with test of operating effectiveness. Procedures 1 and 6 (inspect workflow rule + threshold-review memo) are TOD steps; procedures 2–5 are TOE. A Big-4 reviewer expects the workpaper to surface design and operating-effectiveness conclusions as separate professional judgments.",
+      fix: "Split the procedures into a Test-of-Design subsection (workflow-rule inspection + walkthrough) and a Test-of-Operating-Effectiveness subsection (sample testing). Add separate design and operating-effectiveness conclusions at the end of the workpaper.",
+      effort: "8 min",
     },
     {
       id: "find_03",
-      priority: "low",
+      priority: "medium",
       category: "Reviewer comment specificity",
-      finding: "Reviewer comment rc_01 says \"sample weighting toward period-end is appropriate\" but does not state what specifically was reviewed to reach that conclusion. Partner-level reviewers prefer comments that point to the evidence consulted.",
+      finding: "Reviewer comment rc_01 says \"sample weighting toward period-end is appropriate\" but does not state what specifically was reviewed to reach that conclusion. Partner-level reviewers prefer comments that point to the evidence consulted — this kind of vague comment is the easiest target for a review-note follow-up.",
       fix: "Reword rc_01 to: \"Sample Tier 2 weighting toward period-end (March 2026) reviewed against the Q1 close calendar (M-2026-Q1-CALENDAR) and population concentration (NS-Saved-Search-MJE-ALL-047, row 47-218); appropriate given Q1 close timing.\"",
       effort: "3 min",
     },
   ],
-  defensibility_before: 86,
+  defensibility_before: 82,
   defensibility_after_estimate: 96,
 };
 
@@ -950,6 +950,25 @@ window.VELOCITY_GENERATOR_RC_047 = {
       "Prepared by: ", "Riya ", "Patel ", "(VP ", "Finance ", "Ops, ", "Helios) · ", "[date]\n",
       "Reviewed by: ", "[pending]"
     ]},
+    { id: "attributes", title: "Control attributes", tokens: [
+      "Owner: ", "Pranav Iyer ", "(Controller, ", "Helios)\n",
+      "Frequency: ", "Per-transaction ", "(continuous)\n",
+      "Nature: ", "Manual\n",
+      "Type: ", "Preventive\n",
+      "Key control: ", "Yes — ", "in-scope ", "for ", "SOX 404\n",
+      "Automated vs ", "manual components: ", "NetSuite ", "workflow ", "rule ", "WF-MJE-RR-047 ",
+      "enforces ", "dual-approval ", "gate; ", "exception ", "report ", "is ", "automated. ",
+      "Approval ", "judgment ", "and ", "exception ", "disposition ", "are ", "human."
+    ]},
+    { id: "risk", title: "Risk addressed", tokens: [
+      "Manual ", "journal ", "entries ", "posted ", "to ", "revenue ", "ledger ", "accounts ",
+      "may ", "be ", "recorded ", "inaccurately ", "or ", "fraudulently — ", "for ", "example, ",
+      "posted ", "without ", "dual ", "approval ", "at ", "or ", "above ", "the ", "materiality ",
+      "threshold, ", "posted ", "outside ", "authorized ", "periods, ", "or ", "posted ", "with ",
+      "intent ", "to ", "manipulate ", "period-end ", "results. ", "Risk: ", "misstatement ",
+      "of ", "revenue, ", "deferred ", "revenue, ", "and ", "related ", "balance-sheet ", "accounts.\n\n",
+      "Assertions ", "addressed: ", "Occurrence, ", "Accuracy, ", "Cutoff, ", "Classification."
+    ]},
     { id: "narrative", title: "Control narrative", tokens: [
       "Helios ", "Robotics ", "applies ", "a ", "$250,000 ", "single-entry ", "threshold ",
       "to ", "its ", "manual ", "journal ", "entry ", "(\"MJE\") ", "approval ", "workflow ",
@@ -961,23 +980,53 @@ window.VELOCITY_GENERATOR_RC_047 = {
       "Senior ", "Accountant. ", "The ", "threshold ", "is ", "reviewed ", "quarterly ",
       "against ", "the ", "materiality ", "benchmark ", "for ", "the ", "audit ", "period."
     ]},
-    { id: "procedures", title: "Testing procedures", tokens: [
-      "1. Obtain ", "the ", "population ", "of ", "all ", "manual ", "journal ", "entries ",
-      "posted ", "to ", "revenue ", "accounts ", "during ", "Q2 2026 ", "from ", "NetSuite. ",
-      "Foot ", "the ", "population ", "and ", "reconcile ", "to ", "general ", "ledger ", "activity. ",
-      "[PBC, b, ¶]\n\n",
-      "2. ", "Select ", "a ", "sample ", "of ", "25 ", "entries ", "using ", "stratified ", "sampling: ",
-      "100% ", "of ", "entries ", "≥ ", "$1M; ", "judgmental ", "selection ", "across ", "remainder, ",
-      "period-end-weighted. ", "[§]\n\n",
-      "3. ", "Agree ", "each ", "sampled ", "approval ", "to ", "the ", "NetSuite ", "workflow ",
-      "record ", "and ", "verify ", "approver ", "independence ", "and ", "authorization ", "level. ",
+    { id: "procedures_tod", title: "Test of design (TOD)", tokens: [
+      "TOD-1. ", "Obtain ", "and ", "inspect ", "the ", "control ", "narrative ", "and ", "the ",
+      "NetSuite ", "workflow ", "configuration ", "(rule ", "WF-MJE-RR-047) ", "to ", "corroborate ",
+      "the ", "documented ", "threshold ", "and ", "dual-approval ", "requirements ", "match ",
+      "what ", "is ", "enforced ", "at ", "the ", "application ", "layer. ", "[✓]\n\n",
+      "TOD-2. ", "Walk ", "through ", "end-to-end ", "posting ", "workflow ", "for ", "one ",
+      "in-scope ", "manual ", "journal ", "entry; ", "observe ", "that ", "workflow ", "gates ",
+      "fire ", "as ", "designed ", "and ", "the ", "exception ", "report ", "captures ", "any ",
+      "bypasses. ", "[✓]"
+    ]},
+    { id: "procedures_toe", title: "Test of operating effectiveness (TOE)", tokens: [
+      "TOE-1. ", "Obtain ", "the ", "population ", "of ", "all ", "manual ", "journal ", "entries ",
+      "posted ", "to ", "in-scope ", "revenue ", "accounts ", "during ", "Q2 2026 ", "from ",
+      "NetSuite ", "saved-search ", "NS-Saved-Search-MJE-ALL-047. ", "Test ", "IPE — ", "see ",
+      "IPE ", "section. ", "[PBC, b]\n\n",
+      "TOE-2. ", "Foot ", "the ", "population ", "and ", "reconcile ", "to ", "general ", "ledger ",
+      "activity ", "in ", "the ", "in-scope ", "revenue ", "accounts. ", "[¶, TB]\n\n",
+      "TOE-3. ", "Select ", "a ", "sample ", "of ", "25 ", "entries ", "using ", "stratified ",
+      "judgmental ", "sampling: ", "100% ", "of ", "entries ", "≥ ", "$1M; ", "judgmental ",
+      "selection ", "across ", "remainder, ", "period-end-weighted. ", "Methodology ", "pre-agreed ",
+      "with ", "Deloitte ", "engagement ", "team. ", "[§]\n\n",
+      "TOE-4. ", "Agree ", "each ", "sampled ", "approval ", "to ", "the ", "NetSuite ", "workflow ",
+      "record; ", "verify ", "approver ", "independence ", "and ", "authorization ", "level. ",
       "[✓, c]\n\n",
-      "4. ", "Verify ", "dual ", "approval ", "for ", "all ", "entries ", "≥ ", "$250,000 ",
-      "prior ", "to ", "posting. ", "[✓, c]\n\n",
-      "5. ", "Inspect ", "weekly ", "exception ", "report; ", "verify ", "each ", "flagged ",
+      "TOE-5. ", "Verify ", "dual ", "approval ", "for ", "entries ", "≥ ", "$250,000 ", "prior ",
+      "to ", "posting. ", "[✓, c]\n\n",
+      "TOE-6. ", "Inspect ", "weekly ", "exception ", "report; ", "verify ", "each ", "flagged ",
       "entry ", "was ", "dispositioned ", "within ", "5 ", "business ", "days. ", "[✓, †]\n\n",
-      "6. ", "[REQUIRES ", "HUMAN ", "REVIEW: ", "threshold ", "review ", "procedure — ",
+      "TOE-7. ", "[REQUIRES ", "HUMAN ", "REVIEW: ", "threshold ", "review ", "procedure — ",
       "draft ", "with ", "reference ", "to ", "Helios ", "materiality ", "memo.]"
+    ]},
+    { id: "ipe", title: "IPE — Information Produced by Entity", tokens: [
+      "When ", "reports ", "from ", "Helios's ", "systems ", "are ", "used ", "as ", "audit ",
+      "evidence, ", "the ", "auditor ", "must ", "verify ", "the ", "report ", "is ", "complete ",
+      "and ", "accurate.\n\n",
+      "Population ", "query ", "(NS-Saved-Search-MJE-ALL-047)\n",
+      "  Completeness: ", "saved-search ", "definition ", "inspected; ", "parameters ", "agreed ",
+      "to ", "control ", "scope; ", "row ", "count ", "reconciled ", "to ", "G/L ", "activity.\n",
+      "  Accuracy: ", "five ", "entries ", "from ", "export ", "re-traced ", "to ", "NetSuite ",
+      "source ", "records — ", "no ", "exception.\n\n",
+      "Weekly ", "exception ", "report ", "(NS-Saved-Search-MJE-EX-047)\n",
+      "  Completeness: ", "saved-search ", "definition ", "inspected; ", "flagging ", "logic ",
+      "agreed ", "to ", "design ", "memo; ", "spot-tested ", "for ", "completeness.\n",
+      "  Accuracy: ", "all ", "flagged ", "entries ", "re-tested ", "for ", "the ", "trigger ",
+      "condition — ", "no ", "exception.\n\n",
+      "Conclusion: ", "IPE ", "is ", "complete ", "and ", "accurate ", "for ", "the ", "testing ",
+      "period; ", "appropriate ", "to ", "rely ", "upon ", "as ", "audit ", "evidence."
     ]},
     { id: "sampling", title: "Sample selection rationale", tokens: [
       "Stratified ", "judgmental ", "selection ", "of ", "25 ", "entries ", "from ", "a ",
@@ -1009,10 +1058,20 @@ window.VELOCITY_GENERATOR_RC_047 = {
       "Each ", "exception: ", "entry ", "reference, ", "description, ", "severity, ",
       "disposition, ", "dispositioned ", "by, ", "date.]"
     ]},
-    { id: "conclusion", title: "Conclusion", tokens: [
-      "Based ", "on ", "procedures ", "performed, ", "the ", "control ", "operated ",
-      "effectively ", "throughout ", "the ", "testing ", "period. ", "[Update ", "after ",
-      "evidence ", "attached ", "and ", "exceptions ", "logged. ", "Add ", "reviewer ", "sign-off.]"
+    { id: "conclusion_design", title: "Conclusion — test of design", tokens: [
+      "The ", "control ", "as ", "designed ", "addresses ", "the ", "identified ", "risk ",
+      "through ", "(a) ", "a ", "system-enforced ", "workflow ", "at ", "the ", "$250,000 ",
+      "threshold ", "within ", "NetSuite, ", "(b) ", "an ", "independent ", "reviewer ",
+      "requirement ", "at ", "the ", "appropriate ", "authorization ", "level, ", "and ",
+      "(c) ", "weekly ", "exception ", "monitoring ", "with ", "documented ", "disposition. ",
+      "Design ", "effectively ", "addresses ", "the ", "risk."
+    ]},
+    { id: "conclusion_op", title: "Conclusion — operating effectiveness", tokens: [
+      "[Update ", "after ", "evidence ", "attached ", "and ", "exceptions ", "logged. ",
+      "Typical ", "wording: ", "\"Based ", "on ", "inspection ", "of ", "25 ", "sampled ",
+      "entries, ", "the ", "weekly ", "exception ", "report, ", "and ", "the ", "threshold-",
+      "review ", "memo, ", "the ", "control ", "operated ", "effectively ", "throughout ",
+      "the ", "testing ", "period.\" ", "Add ", "reviewer ", "sign-off.]"
     ]},
   ],
 };
@@ -1175,6 +1234,30 @@ window.VELOCITY_REHEARSAL = {
         "The agent generated most of it. I read it and it looked right.",
       feedback_for_bad_answer:
         "This will trigger a sufficiency-of-procedures finding. A Big-4 senior will treat any AI-generated content as needing explicit human review evidence. Be specific about what you reviewed, what you changed, where you applied judgment, and where the agent deferred to human review.",
+    },
+    {
+      n: 6,
+      area: "Test of design vs operating effectiveness",
+      prompt: "Walk me through how you separated test of design from test of operating effectiveness for this control. Why does the distinction matter here?",
+      practice_answer_hint: "Cover: what each phase tests, which procedures fall under TOD vs TOE, why conflating them is a problem, and how you concluded on each phase separately.",
+      good_answer:
+        "Test of design asks whether the control, as documented, would prevent or detect the risk if it operated as designed. Test of operating effectiveness asks whether the control actually operated that way across the period. For RC-047 the design test was procedures 1 and 2: I inspected the NetSuite workflow rule WF-MJE-RR-047 to confirm the threshold and dual-approval gates are encoded in the application, and I walked through one in-scope entry end-to-end to observe that the gates fire as designed. The operating-effectiveness test was procedures 3 through 9: population, sample, agreed approvals, threshold compliance, exception report. I drew separate conclusions: design effectively addresses the risk, and operating-effectiveness was achieved across Q2 with two minor non-deficiency exceptions. Conflating these is a common deficiency because a designed-but-not-operating control still fails — auditors need both judgments documented separately.",
+      bad_answer:
+        "We tested it by pulling a sample of entries and checking approvals. The control worked.",
+      feedback_for_bad_answer:
+        "This is purely operating-effectiveness; it misses the design test entirely. A senior reviewer will follow up with \"how do you know the workflow gates are actually encoded the way the narrative says?\" — that's the design question. Inspect the system configuration and walk through one entry end-to-end before relying on sample testing.",
+    },
+    {
+      n: 7,
+      area: "IPE — Information Produced by Entity",
+      prompt: "The population for your sampling came out of NetSuite. How did you verify the report itself is complete and accurate before relying on it?",
+      practice_answer_hint: "Cover: the IPE concept, what completeness and accuracy mean, the two reports relied upon, and the specific evidence you have for each.",
+      good_answer:
+        "Both reports relied upon as audit evidence — the population query NS-Saved-Search-MJE-ALL-047 and the weekly exception report NS-Saved-Search-MJE-EX-047 — required IPE evaluation before the testing could rely on them. For completeness I inspected each saved-search definition, agreed the query parameters to the control narrative scope (in-scope revenue accounts, manual-entry source flag, testing date range), and reconciled the population row count to the general-ledger activity in revenue accounts for the period with no variance. For accuracy I re-traced five randomly selected entries from each export back to NetSuite source records; all field-level values agreed without exception. The exception-report flagging logic was agreed to the exception-report design memo. Both reports are appropriate to rely upon as audit evidence for the period.",
+      bad_answer:
+        "I pulled the report from NetSuite. NetSuite is the source of truth, so the report is accurate.",
+      feedback_for_bad_answer:
+        "A Big-4 senior will hard-stop on this. \"NetSuite is the source\" doesn't address whether the query parameters are right, whether the export is complete, or whether the field-level values were preserved on export. Always test IPE at two layers: completeness (query parameters + total reconciliation) and accuracy (re-trace a sample to source). Without this the entire testing chain is unsupported.",
     },
   ],
 };
